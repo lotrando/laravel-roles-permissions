@@ -20,20 +20,42 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
 
-        $user = new User([
+        $admin = new User([
             'name' => 'Administrator',
             'email' => 'admin@email.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('password'),
+            'password' => bcrypt('admin'),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $admin->save();
+        $admin->assignRole('admin');
+
+        $supervisor = new User([
+            'name' => 'Supervisor',
+            'email' => 'supervisor@email.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('supervisor'),
+            'remember_token' => Str::random(10),
+        ]);
+
+        $supervisor->save();
+        $supervisor->assignRole('supervisor');
+
+        $user = new User([
+            'name' => 'User',
+            'email' => 'user@email.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('user'),
             'remember_token' => Str::random(10),
         ]);
 
         $user->save();
+        $user->assignRole('user');
 
-        $user->assignRole('admin')->givePermissionTo(Permission::all());
 
-        User::factory(1)->create()->each(function ($user) {
-            $user->assignRole('user')->givePermissionTo('show users');
+        User::factory(100)->create()->each(function ($user) {
+            $user->assignRole('user');
         });
     }
 }

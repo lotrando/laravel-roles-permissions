@@ -5,7 +5,9 @@
 @endsection
 
 @section('page')
-  <div class="row">
-
-  </div>
+  @can('edit users')
+    <div class="row">
+      {{ Auth::user()->roles->pluck('name')->implode(',') }}<br>
+    </div>
+  @endcan
 @endsection

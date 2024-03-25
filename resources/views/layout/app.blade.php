@@ -22,7 +22,7 @@
       }
 
       .navbar-expand-md .navbar-nav .nav-link {
-        --tblr-navbar-nav-link-padding-x: 0.25rem;
+        --tblr-navbar-nav-link-padding-x: 0.55rem;
       }
 
       body {
@@ -63,8 +63,10 @@
     <div class="page">
       {{-- Topbar --}}
       @include('layout.include.topbar')
-      {{-- Navbar --}}
-      @include('layout.include.navbar')
+      @auth
+        {{-- Navbar --}}
+        @include('layout.include.navbar')
+      @endauth
       {{-- Page wrapper --}}
       <div class="page-wrapper">
         {{-- Page header --}}
@@ -81,8 +83,10 @@
     </div>
     @include('layout.include.logout')
     @yield('modals')
+    <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" defer></script>
     <script src="{{ asset('js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('js/demo.min.js') }}" defer></script>
+    @stack('scripts')
   </body>
 
 </html>

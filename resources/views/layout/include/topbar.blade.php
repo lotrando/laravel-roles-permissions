@@ -4,7 +4,7 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <h1 class="navbar-brand d-none-navbar-horizontal pe-md-3 pe-0">
+      <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-md-3 pe-0">
         <a href="{{ route('home') }}">
           <img class="navbar-brand-image" src="{{ asset('img/logo.png') }}" alt="Intranet KHN" width="50" height="32">
         </a>
@@ -52,26 +52,12 @@
             <a class="nav-link d-flex text-reset p-0" data-bs-toggle="dropdown" href="#" aria-label="Open user menu">
               <div class="d-none d-xl-block ps-1">
                 <div>{{ Auth::user()->name ?? '' }}</div>
-                <div class="small text-muted">{{ Auth::user()->personal_number ?? '' }}</div>
+                <div class="small text-muted">{{ Auth::user()->email }}</div>
               </div>
-              @if (strlen(Auth::user()->avatar) == 2)
-                <span class="avatar avatar-sm ms-2">{{ Auth::user()->avatar }}</span>
-              @else
-                <span class="avatar avatar-sm ms-2" style="background-image: url({{ asset('foto/' . Auth::user()->avatar) }})"></span>
-              @endif
+              <span class="avatar avatar-sm ms-2" style="background-image: url({{ asset('img/avatar.png') }})"></span>
             </a>
             {{-- User Dropdown Menu --}}
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#settings-modal" href="#">
-                <svg class="icon dropdown-item-icon text-muted" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
-                  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-                </svg>
-                {{ __('Settings') }}
-              </a>
               <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout-modal" href="#">
                 <svg class="icon dropdown-item-icon text-red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                   stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
