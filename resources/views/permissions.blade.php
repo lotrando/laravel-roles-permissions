@@ -59,7 +59,6 @@
         <table class="table-vcenter card-table table" id="permissionTable">
           <thead>
             <tr>
-              <th>#</th>
               <th>name</th>
               <th>Guard</th>
               <th>Vytvořeno</th>
@@ -102,7 +101,10 @@
           </div>
           <div class="modal-footer">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
+            <button class="btn btn-primary" id="submitButton" type="submit">
+              <span class="spinner-border spinner-border-sm me-2" id="buttonSpinner" role="status"></span>
+              {{ __('Save') }}
+            </button>
           </div>
         </form>
       </div>
@@ -114,7 +116,6 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <form action="" method="post">
         <div class="modal-content">
-          <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
           <div class="modal-status bg-danger"></div>
           <div class="modal-body py-4 text-center">
             <svg class="icon text-danger icon-lg mb-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -125,8 +126,11 @@
               <path d="M12 16h.01"></path>
             </svg>
             <h3>Are you sure?</h3>
+            [ <span id="permissionName"></span> / <span id="permissionGuard"></span> ]
             <div class="text-secondary">
-              Do you really want to remove permission <span id="permissionName"></span> / <span id="permissionGuard"></span> ?<br>
+              Do you really want to permanent remove this permission ?<br>
+            </div>
+            <div class="text-secondary">
               What you've done cannot be undone.
             </div>
           </div>
@@ -154,8 +158,10 @@
   <script>
     $(document).ready(function() {
 
-      $('#createForm').submit(function(e) {
-        e.preventDefault();
+      $('#buttonSpinner').hide();
+
+      $('#createForm').submit(function(event) {
+        event.preventDefault();
 
         var form = $(this);
         var actionUrl = form.attr('action');
@@ -170,10 +176,12 @@
           data: form.serialize(),
           dataType: 'json',
           beforeSend: function() {
-
+            $('#buttonSpinner').show();
+            $('#submitButton').attr('disabled', 'disabled');
             setTimeout(function() {
-
-            }, 3000)
+              $('#buttonSpinner').hide()
+              $('#submitButton').removeAttr('disabled');
+            }, 1000)
           },
           success: function(data) {
             if (data.errors) {
@@ -182,11 +190,13 @@
               }
             } else {
               toastr.success(data.success)
-              $('#createModal').hide()
-              $('#createForm')[0].reset()
               setTimeout(function() {
+                $('#buttonSpinner').hide()
+                $('#createForm')[0].reset()
+                $('#submitButton').removeAttr('disabled');
+                $('#createModal').hide()
                 location.reload();
-              }, 3000)
+              }, 1000)
             }
           },
           error: function(xhr, status, error) {
@@ -232,23 +242,19 @@
           }
         },
         columns: [{
-            data: 'id',
-            "width": "auto",
-          },
-          {
             data: 'name',
-            "width": "69%",
+            "width": "85%",
           },
           {
             data: 'guard_name',
-            "width": "20%",
+            "width": "10%",
           },
           {
             data: 'created_at',
-            "width": "15%",
+            "width": "5%",
             render: function(data, type, full, meta) {
               var date = moment(data).locale('cs');
-              return date.format('DD. MM. YYYY');
+              return date.format('DD.MM.YYYY');
             }
           }
         ]

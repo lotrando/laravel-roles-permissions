@@ -22,10 +22,6 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-
-Route::post('permission/store', [PermissionController::class, 'create'])->name('permission.create');
-Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
-
 Route::middleware(['auth'])->group(function () {
 
     Route::get('home', function () {
@@ -50,4 +46,7 @@ Route::middleware(['auth'])->group(function () {
         // return $roles;
         return view('roles', ['roles' => $roles]);
     })->middleware('role:admin|supervisor')->name('roles');
+
+    Route::post('permission/store', [PermissionController::class, 'create'])->middleware('role:admin|supervisor')->name('permission.create');
+    Route::get('permissions', [PermissionController::class, 'index'])->middleware('role:admin|supervisor')->name('permissions');
 });
