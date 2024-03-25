@@ -7,11 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @yield('favicon')
     <title>{{ env('APP_NAME' ?? 'Laravel') }}</title>
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
     <link href="{{ asset('css/tabler.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-flags.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-payments.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/toastr/toastr.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/datatables/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/datatables/css/fixedHeader.dataTables.min.css') }}" rel="stylesheet">
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
@@ -62,6 +66,7 @@
   </head>
 
   <body>
+    <!-- particles.js container -->
     <script src="{{ asset('js/demo-theme.min.js') }}"></script>
     {{-- Page --}}
     <div class="page">
@@ -87,9 +92,14 @@
     </div>
     @include('layout.include.logout')
     @yield('modals')
-    <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" defer></script>
+    <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('js/demo.min.js') }}" defer></script>
+    <script src="{{ asset('libs/toastr/toastr.min.js') }}" defer></script>
+    <script src="{{ asset('libs/moment/moment-with-locales.min.js') }}" defer></script>
+    <script src="{{ asset('libs/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables/js/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables/js/dataTables.scroller.min.js') }}"></script>
     @stack('scripts')
   </body>
 

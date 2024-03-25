@@ -6,7 +6,7 @@
       </button>
       <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-md-3 pe-0">
         <a href="{{ route('index') }}">
-          <img class="navbar-brand-image" src="{{ asset('img/logo.png') }}" alt="Intranet KHN" width="50" height="32">
+          <img class="navbar-brand-image" src="{{ asset('img/logo.png') }}" alt="Laravel logo">
         </a>
       </h1>
       <div class="navbar-nav order-md-last flex-row">
@@ -58,9 +58,9 @@
             </a>
             {{-- User Dropdown Menu --}}
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout-modal" href="#">
-                <svg class="icon dropdown-item-icon text-red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal" href="#">
+                <svg class="icon dropdown-item-icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
                   <path d="M7 12h14l-3 -3m0 6l3 -3"></path>

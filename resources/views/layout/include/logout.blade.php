@@ -1,5 +1,5 @@
   {{-- Logout Modal --}}
-  <div class="modal modal-sm modal-blur fade" id="logout-modal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
+  <div class="modal modal-sm modal-blur fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content shadow-lg">
         <div class="modal-status bg-danger"></div>

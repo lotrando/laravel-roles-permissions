@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -21,12 +22,15 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
+
+Route::post('permission/store', [PermissionController::class, 'create'])->name('permission.create');
+Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('home', function () {
         return view('home');
     })->middleware('role:user|admin|supervisor')->name('home');
-
 
     Route::get('users', function () {
         // return $grouped sorted by first letter from name
@@ -40,19 +44,10 @@ Route::middleware(['auth'])->group(function () {
         return view('users', ['users' => $groupedUsers]);
     })->middleware('role:user|admin|supervisor')->name('users');
 
-
     Route::get('roles', function () {
         // return sorted $roles;
         $roles = Role::with('permissions')->orderBy('name')->get();
         // return $roles;
         return view('roles', ['roles' => $roles]);
     })->middleware('role:admin|supervisor')->name('roles');
-
-
-    Route::get('permissions', function () {
-        // return sorted $permissions;
-        $permissions = Permission::with('roles')->orderBy('name')->get();
-        // return $permissions;
-        return view('permissions', ['permissions' => $permissions]);
-    })->middleware('role:admin')->name('permissions');
 });
