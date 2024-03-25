@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-md-3 pe-0">
-        <a href="{{ route('home') }}">
+        <a href="{{ route('index') }}">
           <img class="navbar-brand-image" src="{{ asset('img/logo.png') }}" alt="Intranet KHN" width="50" height="32">
         </a>
       </h1>

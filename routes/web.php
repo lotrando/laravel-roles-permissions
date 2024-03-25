@@ -24,27 +24,29 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('home', function () {
         return view('home');
-    })->name('home');
+    })->middleware('role:user|admin|supervisor')->name('home');
 
     Route::get('users', function () {
+        // return $grouped sorted by first letter from name
         $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
             return $item->name[0];
         });
-
-        $groupedUsers->sortBy(function ($key) {      //sorts A-Z at the top level
+        // sorts A-Z at the top level
+        $groupedUsers->sortBy(function ($key) {
             return $key;
         });
-        // return $grouped;
         return view('users', ['users' => $groupedUsers]);
     })->middleware('role:user|admin|supervisor')->name('users');
 
     Route::get('roles', function () {
+        // return sorted $roles;
         $roles = Role::with('permissions')->orderBy('name')->get();
         // return $roles;
         return view('roles', ['roles' => $roles]);
     })->middleware('role:admin|supervisor')->name('roles');
 
     Route::get('permissions', function () {
+        // return sorted $permissions;
         $permissions = Permission::with('roles')->orderBy('name')->get();
         // return $permissions;
         return view('permissions', ['permissions' => $permissions]);

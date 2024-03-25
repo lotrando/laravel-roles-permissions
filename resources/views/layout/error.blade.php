@@ -29,15 +29,9 @@
   <body>
     <script src="{{ asset('js/demo-theme.min.js') }}"></script>
     {{-- Page --}}
-    <div class="page">
-      {{-- Page wrapper --}}
-      <div class="page-wrapper">
-        {{-- Page body --}}
-        <div class="page-body">
-          <div class="container-fluid">
-            @yield('page')
-          </div>
-        </div>
+    <div class="page page-center">
+      <div class="container-tight container">
+        @yield('page')
       </div>
     </div>
     <script src="{{ asset('js/tabler.min.js') }}" defer></script>

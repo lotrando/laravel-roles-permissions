@@ -7,7 +7,7 @@
 @section('page')
   <div class="col-12">
     <div class="card">
-      <div class="card-header bg-yellow-lt">
+      <div class="card-header bg-muted-lt">
         <span class="nav-link-icon d-md-none d-lg-inline-block">
           <svg class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -28,13 +28,16 @@
             <div class="row align-items-center">
               <div class="col-auto"><input class="form-check-input" type="checkbox"></div>
               <div class="col-auto">
-                <a href="#">
-                  <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
-                </a>
+                <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
               </div>
               <div class="col text-truncate">
-                <div class="text-secondary d-block mb-1">Permission name: <span class="text-azure">{{ $permission->name }}</span></div>
-                <div class="text-secondary text-truncate mt-n1">Guard name: <span class="text-yellow">{{ $permission->guard_name }}</span></div>
+                <div class="text-secondary d-block mb-1"><span class="text-azure">{{ $permission->name }}</span> / <span class="text-yellow">{{ $permission->guard_name }}</span>
+                </div>
+                <div class="col text-truncate">
+                  @foreach ($permission->roles as $role)
+                    <span class="badge text-lime">{{ $role->name }}</span>
+                  @endforeach
+                </div>
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@
 @section('page')
   <div class="col-12">
     <div class="card">
-      <div class="card-header bg-lime-lt">
+      <div class="card-header bg-muted-lt">
         <span class="nav-link-icon d-md-none d-lg-inline-block">
           <svg class="icon icon-tabler icons-tabler-outline icon-tabler-users text-lime" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -28,13 +28,11 @@
               <div class="row align-items-center">
                 <div class="col-auto"><input class="form-check-input" type="checkbox"></div>
                 <div class="col-auto">
-                  <a href="#">
-                    <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
-                  </a>
+                  <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
                 </div>
-                <div class="col text-truncate">
+                <div class="col">
                   <span class="text-body d-block mb-1">{{ $item->name }}</span>
-                  <div class="text-secondary text-truncate mt-n1">{{ $item->email }}</div>
+                  <div class="text-secondary mt-n1">{{ $item->email }}</div>
                 </div>
               </div>
             </div>
