@@ -26,7 +26,9 @@
         @foreach ($permissions as $permission)
           <div class="list-group-item">
             <div class="row align-items-center">
-              <div class="col-auto"><input class="form-check-input" type="checkbox"></div>
+              @role('admin')
+                <div class="col-auto"><input class="form-check-input" type="checkbox"></div>
+              @endrole
               <div class="col-auto">
                 <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
               </div>

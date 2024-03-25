@@ -22,6 +22,10 @@
 
       body {
         font-feature-settings: "cv03", "cv04", "cv11";
+        background-image: url('../img/b.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
       }
     </style>
   </head>
