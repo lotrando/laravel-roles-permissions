@@ -30,7 +30,7 @@
                 <div class="col-auto"><input class="form-check-input" type="checkbox"></div>
               @endrole
               <div class="col-auto">
-                <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
+                <span class="avatar" style="background-image: url({{ asset('img/permission.png') }})"></span>
               </div>
               <div class="col text-truncate">
                 <div class="text-secondary d-block mb-1"><span class="text-azure">{{ $permission->name }}</span> / <span class="text-yellow">{{ $permission->guard_name }}</span>

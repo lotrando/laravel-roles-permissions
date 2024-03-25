@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     })->middleware('role:user|admin|supervisor')->name('home');
 
+
     Route::get('users', function () {
         // return $grouped sorted by first letter from name
         $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
@@ -38,12 +40,14 @@ Route::middleware(['auth'])->group(function () {
         return view('users', ['users' => $groupedUsers]);
     })->middleware('role:user|admin|supervisor')->name('users');
 
+
     Route::get('roles', function () {
         // return sorted $roles;
         $roles = Role::with('permissions')->orderBy('name')->get();
         // return $roles;
         return view('roles', ['roles' => $roles]);
     })->middleware('role:admin|supervisor')->name('roles');
+
 
     Route::get('permissions', function () {
         // return sorted $permissions;

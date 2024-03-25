@@ -32,7 +32,7 @@
                 <div class="col-auto"><input class="form-check-input" type="checkbox"></div>
               @endrole
               <div class="col-auto">
-                <span class="avatar" style="background-image: url({{ asset('img/avatar.png') }})"></span>
+                <span class="avatar" style="background-image: url({{ asset('img/folder.png') }})"></span>
               </div>
               <div class="col">
                 <div class="text-secondary d-block mb-1"><span class="text-azure">{{ $role->name }}</span> / <span class="text-yellow">{{ $role->guard_name }}</span>
