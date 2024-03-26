@@ -59,9 +59,10 @@
         <table class="table-vcenter card-table table" id="permissionTable">
           <thead>
             <tr>
-              <th>name</th>
-              <th>Guard</th>
-              <th>Vytvořeno</th>
+              <th>#</th>
+              <th>Permission Name</th>
+              <th>Permission Guard Name</th>
+              <th>Created_at</th>
             </tr>
           </thead>
         </table>
@@ -194,7 +195,7 @@
                 $('#buttonSpinner').hide()
                 $('#createForm')[0].reset()
                 $('#submitButton').removeAttr('disabled');
-                $('#createModal').hide()
+                // $('#createModal').hide()
                 location.reload();
               }, 1000)
             }
@@ -242,6 +243,10 @@
           }
         },
         columns: [{
+            data: 'id',
+            "width": "auto",
+          },
+          {
             data: 'name',
             "width": "85%",
           },
