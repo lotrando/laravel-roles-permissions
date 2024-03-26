@@ -13,7 +13,12 @@ class PermissionController extends Controller
     {
         if ($request->ajax()) {
             $model = Permission::with('roles')->select('*');
-            return DataTables::eloquent($model)->toJson();
+            return DataTables::eloquent($model)
+                ->addColumn('buttons', function ($row) {
+                    return  '<button class="btn btn-icon btn-red delete" id="' . $row->id . '"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7h16" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /><path d="M10 12l4 4m0 -4l-4 4" /></svg></button>';
+                })
+                ->rawColumns(['buttons'])
+                ->make(true);
         }
         return view('permissions');
     }
@@ -36,7 +41,13 @@ class PermissionController extends Controller
                 'name'  => $request->permission_name,
             ]);
 
-            return response()->json(['success' => 'Permission saved']);
+            return response()->json(['success' => __('Permisssion saved')]);
         }
+    }
+
+    public function destroy($id)
+    {
+        Permission::find($id)->delete();
+        return response()->json(['success' => __('Permission deleted')]);
     }
 }

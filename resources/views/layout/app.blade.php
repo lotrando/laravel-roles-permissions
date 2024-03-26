@@ -72,10 +72,8 @@
     <div class="page">
       {{-- Topbar --}}
       @include('layout.include.topbar')
-      @auth
-        {{-- Navbar --}}
-        @include('layout.include.navbar')
-      @endauth
+      {{-- Navbar --}}
+      @include('layout.include.navbar')
       {{-- Page wrapper --}}
       <div class="page-wrapper">
         {{-- Page header --}}

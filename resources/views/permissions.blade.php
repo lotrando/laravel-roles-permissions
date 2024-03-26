@@ -63,6 +63,7 @@
               <th>Permission Name</th>
               <th>Permission Guard Name</th>
               <th>Created_at</th>
+              <th></th>
             </tr>
           </thead>
         </table>
@@ -74,7 +75,7 @@
 @section('modals')
   {{-- Create Modal --}}
   <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm" action="{{ route('permission.create') }}" method="POST">
           @csrf
@@ -102,16 +103,13 @@
           </div>
           <div class="modal-footer">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            <button class="btn btn-primary" id="submitButton" type="submit">
-              <span class="spinner-border spinner-border-sm me-2" id="buttonSpinner" role="status"></span>
-              {{ __('Save') }}
-            </button>
+            <button class="btn btn-primary" id="submitButton" type="submit">{{ __('Save') }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  {{-- Create Modal End --}}
+
   {{-- Delete Modal --}}
   <div class="modal modal-sm modal-blur fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -126,25 +124,26 @@
               <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
               <path d="M12 16h.01"></path>
             </svg>
-            <h3>Are you sure?</h3>
-            [ <span id="permissionName"></span> / <span id="permissionGuard"></span> ]
-            <div class="text-secondary">
-              Do you really want to permanent remove this permission ?<br>
-            </div>
-            <div class="text-secondary">
-              What you've done cannot be undone.
+            <h3>{{ __('Do you really want to remove this permission ?') }}</h3>
+            <span class="badge badge-outline badge-yellow" id="permissionName"></span>
+            <div class="text-red mt-3">
+              {{ __('What you\'ve done cannot be undone.') }}
             </div>
           </div>
           <div class="modal-footer">
             <input id="permissionId" name="permission_id" type="hidden" value="">
             <div class="w-100">
               <div class="row">
-                <div class="col"><a class="btn w-100" data-bs-dismiss="modal" href="#">
+                <div class="col">
+                  <button class="btn w-100" data-bs-dismiss="modal">
                     Cancel
-                  </a></div>
-                <div class="col"><a class="btn btn-danger w-100" data-bs-dismiss="modal" href="#">
+                  </button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-danger w-100 delete-button" data-bs-dismiss="modal">
                     Delete item
-                  </a></div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -152,14 +151,29 @@
       </form>
     </div>
   </div>
-  {{-- Delete Modal End --}}
 @endsection
 
 @push('scripts')
   <script>
     $(document).ready(function() {
 
-      $('#buttonSpinner').hide();
+      toastr.options = {
+        "closeButton": false,
+        "debug": true,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "500",
+        "hideDuration": "500",
+        "timeOut": "2000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
 
       $('#createForm').submit(function(event) {
         event.preventDefault();
@@ -169,35 +183,36 @@
         var actionType = form.attr('method');
 
         $.ajax({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
           type: actionType,
           url: actionUrl,
+          token: "{{ csrf_token() }}",
           data: form.serialize(),
           dataType: 'json',
           beforeSend: function() {
             $('#buttonSpinner').show();
-            $('#submitButton').attr('disabled', 'disabled');
+            $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
             setTimeout(function() {
-              $('#buttonSpinner').hide()
-              $('#submitButton').removeAttr('disabled');
+              $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
             }, 1000)
           },
           success: function(data) {
             if (data.errors) {
               for (var count = 0; count < data.errors.length; count++) {
                 toastr.error(data.errors[count])
+                setTimeout(function() {
+                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                }, 2000);
               }
             } else {
-              toastr.success(data.success)
-              setTimeout(function() {
-                $('#buttonSpinner').hide()
-                $('#createForm')[0].reset()
-                $('#submitButton').removeAttr('disabled');
-                // $('#createModal').hide()
-                location.reload();
-              }, 1000)
+              if (data.success) {
+                toastr.success(data.success)
+                setTimeout(function() {
+                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                  $('#createModal').modal('hide')
+                  $('#createForm')[0].reset()
+                }, 2000);
+                myTable.draw()
+              }
             }
           },
           error: function(xhr, status, error) {
@@ -244,15 +259,15 @@
         },
         columns: [{
             data: 'id',
-            "width": "auto",
+            "width": "1%",
           },
           {
             data: 'name',
-            "width": "85%",
+            "width": "70%",
           },
           {
             data: 'guard_name',
-            "width": "10%",
+            "width": "5%",
           },
           {
             data: 'created_at',
@@ -261,21 +276,24 @@
               var date = moment(data).locale('cs');
               return date.format('DD.MM.YYYY');
             }
+          },
+          {
+            data: 'buttons',
+            "width": "3%",
+            orderable: false,
+            searchable: false
           }
         ]
+      });
+
+      $('.delete').on('click', function() {
+        alert('Test')
       });
 
       $('#searchBox').on('keyup', function() {
         myTable.search($(this).val()).draw();
       });
 
-      myTable.on('click', 'tr', function() {
-        var data = myTable.row(this).data()
-        $('#permissionId').val(data.id)
-        $('#permissionName').html(data.name).addClass('text-red')
-        $('#permissionGuard').html(data.guard_name).addClass('text-yellow')
-        $('#deleteModal').modal('show')
-      });
 
     });
   </script>
