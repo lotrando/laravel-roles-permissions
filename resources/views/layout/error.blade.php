@@ -13,16 +13,16 @@
     <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
       :root {
-        --tblr-font-sans-serif: 'Roboto Condensed', sans-serif;
-        --tblr-body-color: #516274;
+        --tblr-font-sans-serif: 'Ubuntu', sans-serif;
+        --tblr-body-color: #aab2b9;
       }
 
       body {
-        font-feature-settings: "cv03", "cv04", "cv11";
-        /* background-image: url('../img/b.jpg');
+        /* font-feature-settings: "cv03", "cv04", "cv11";
+        background-image: url('../img/blocks.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover; */

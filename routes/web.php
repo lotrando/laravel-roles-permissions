@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -49,16 +50,17 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:supervisor|admin')->group(function () {
         // Route group for roles [supervisor, admin] allowed
 
-        Route::get('roles', function () {
-            $roles = Role::with('permissions')->orderBy('name')->get();
-            return view('roles', ['roles' => $roles]);
-        })->name('roles');
+        Route::get('roles', [RoleController::class, 'index'])->name('roles');
+
+        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
     });
 
     Route::middleware('role:admin')->group(function () {
         // Route group only admin allowed
 
-        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
+        Route::post('role/store', [RoleController::class, 'create'])->name('role.create');
+        Route::get('role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+
         Route::post('permission/store', [PermissionController::class, 'create'])->name('permission.create');
         Route::get('permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
     });
