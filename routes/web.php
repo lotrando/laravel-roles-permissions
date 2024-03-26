@@ -18,35 +18,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Index page
 Route::get('/', function () {
     return view('index');
 })->name('index');
 
+
+// Routes group for all authorized users
 Route::middleware(['auth'])->group(function () {
 
+    // Home page new registered users
     Route::get('home', function () {
         return view('home');
-    })->middleware('role:user|admin|supervisor')->name('home');
+    })->name('home');
 
-    Route::get('users', function () {
-        // return $grouped sorted by first letter from name
-        $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
-            return $item->name[0];
-        });
-        // sorts A-Z at the top level
-        $groupedUsers->sortBy(function ($key) {
-            return $key;
-        });
-        return view('users', ['users' => $groupedUsers]);
-    })->middleware('role:user|admin|supervisor')->name('users');
+    Route::middleware('role:user|supervisor|admin')->group(function () {
+        // Defaut user role ( new user register ). Route group for all roles [user, supervisor, admin] allowed
 
-    Route::get('roles', function () {
-        // return sorted $roles;
-        $roles = Role::with('permissions')->orderBy('name')->get();
-        // return $roles;
-        return view('roles', ['roles' => $roles]);
-    })->middleware('role:admin|supervisor')->name('roles');
+        Route::get('users', function () {
+            $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
+                return $item->name[0];
+            });
+            $groupedUsers->sortBy(function ($key) {
+                return $key;
+            });
+            return view('users', ['users' => $groupedUsers]);
+        })->name('users');
+    });
 
-    Route::post('permission/store', [PermissionController::class, 'create'])->middleware('role:admin|supervisor')->name('permission.create');
-    Route::get('permissions', [PermissionController::class, 'index'])->middleware('role:admin|supervisor')->name('permissions');
+    Route::middleware('role:supervisor|admin')->group(function () {
+        // Route group for roles [supervisor, admin] allowed
+
+        Route::get('roles', function () {
+            $roles = Role::with('permissions')->orderBy('name')->get();
+            return view('roles', ['roles' => $roles]);
+        })->name('roles');
+    });
+
+    Route::middleware('role:admin')->group(function () {
+        // Route group only admin allowed
+
+        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
+        Route::post('permission/store', [PermissionController::class, 'create'])->name('permission.create');
+        Route::get('permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
+    });
 });

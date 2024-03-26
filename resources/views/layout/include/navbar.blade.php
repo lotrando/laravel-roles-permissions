@@ -158,7 +158,7 @@
                       <path d="M21 21l-6 -6"></path>
                     </svg>
                   </span>
-                  <input class="form-control" id="searchBox" type="text" value="" aria-label="Search in website" placeholder="Search…">
+                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search…') }}">
                 </div>
               </form>
             </div>
