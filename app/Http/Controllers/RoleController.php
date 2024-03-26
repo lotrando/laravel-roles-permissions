@@ -48,10 +48,13 @@ class RoleController extends Controller
                 return response()->json(['errors' => $error->errors()->all()]);
             }
 
-            Role::create([
-                'name'  => $request->role_name,
-            ]);
-            return response()->json(['success' => __('Permisssion saved')]);
+            $permissions = [
+                'show'
+            ];
+
+            Role::create(['name' => $request->role_name])->givePermissionTo('show');
+
+            return response()->json(['success' => __('Role saved')]);
         }
     }
 
@@ -59,6 +62,6 @@ class RoleController extends Controller
     {
         $permission = Role::find($id);
         $permission->delete();
-        return response()->json(['success' => __('Permission deleted')]);
+        return response()->json(['success' => __('Role deleted')]);
     }
 }

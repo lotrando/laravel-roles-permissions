@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 // Index page
 Route::get('/', function () {
-    return view('index');
+    return view('test');
 })->name('index');
 
 
