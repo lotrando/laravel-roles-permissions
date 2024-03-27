@@ -325,9 +325,11 @@
             "width": "10%",
           },
           {
-            data: 'permissions',
+            data: 'permissions[ | ].name',
             "className": 'text-yellow',
-            "width": "70%"
+            "width": "60%",
+            orderable: false,
+            searchable: false
           },
           {
             data: 'guard_name',
@@ -336,7 +338,7 @@
           },
           {
             data: 'created_at',
-            "width": "10%",
+            "width": "5%",
             render: function(data, type, full, meta) {
               return moment(data).format('DD. MM. YYYY')
             }
@@ -344,7 +346,7 @@
           @role('admin')
             {
               data: 'buttons',
-              "width": "3%",
+              "width": "1%",
               orderable: false,
               searchable: false
             }
