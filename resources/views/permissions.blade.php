@@ -36,15 +36,15 @@
           {{-- Buttons --}}
           <div class="btn-list">
             @role('admin')
-              <button class="btn btn-lime d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
                   <path d="M15 12h-6" />
                   <path d="M12 9v6" />
                 </svg>
-                {{ __('Create') }}
+                {{ __('New') }}
               </button>
             @endrole
           </div>
@@ -54,14 +54,11 @@
   </div>
 @endsection
 
-@section('searchbox')
-@endsection
-
 @section('page')
   <div class="col-12">
     <div class="card p-0 shadow-sm">
-      <div class="card-header bg-muted-lt p-2">
-        <div class="d-block col">
+      <div class="card-body p-2">
+        <div class="d-block col mb-1">
           <form method="get" autocomplete="off" novalidate="">
             <div class="input-icon">
               <span class="input-icon-addon">
@@ -76,18 +73,14 @@
             </div>
           </form>
         </div>
-      </div>
-      <div class="card-body p-0">
         <div class="table-responsive">
-          <table class="table-vcenter card-table table" id="permissionTable">
+          <table class="table-vcenter card-table table" id="Table">
             <thead>
               <tr>
                 <th class="bg-muted-lt">{{ __('Permission Name') }}</th>
                 <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
                 <th class="bg-muted-lt">{{ __('Created') }}</th>
-                @role('admin')
-                  <th class="bg-muted-lt"></th>
-                @endrole
+                <th class="bg-muted-lt">{{ __('Updated') }}</th>
               </tr>
             </thead>
           </table>
@@ -99,37 +92,42 @@
 
 @section('modals')
   {{-- Create Modal --}}
-  <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
-        <form id="createForm" action="{{ route('permission.create') }}" method="POST">
+        <form id="createForm">
           @csrf
           <div class="modal-header bg-lime-lt">
-            <h5 class="modal-title">{{ 'Create permission' }}</h5>
+            <h5 class="modal-title"></h5>
             {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button> --}}
           </div>
           <div class="modal-body">
             <div class="input-icon mb-3">
               <span class="input-icon-addon">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-forms" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" />
-                  <path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" />
-                  <path d="M13 7h7a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-7" />
-                  <path d="M5 7h-1a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1h1" />
-                  <path d="M17 12h.01" />
-                  <path d="M13 12h.01" />
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path>
+                  <path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path>
+                  <path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path>
+                  <path d="M11 6l9 0"></path>
+                  <path d="M11 12l9 0"></path>
+                  <path d="M11 18l9 0"></path>
                 </svg>
               </span>
-              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror"" id="name" name="permission_name" type="text" value=""
+              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text" value=""
                 placeholder="{{ __('e.g. post create') }}">
               </label>
             </div>
           </div>
           <div class="modal-footer">
+            <input id="action" type="hidden">
+            <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            <button class="btn btn-primary" id="submitButton" type="submit">{{ __('Save') }}</button>
+            @role('admin')
+              <button class="btn btn-danger" id="deleteButton" type="button"></button>
+              <button class="btn btn-primary" id="submitButton" type="submit"></button>
+            @endrole
           </div>
         </form>
       </div>
@@ -164,7 +162,7 @@
                 </button>
               </div>
               <div class="col">
-                <button class="btn btn-danger w-100" id="deleteButton">
+                <button class="btn btn-danger w-100" id="deleteSubmit">
                   {{ __('Delete') }}
                 </button>
               </div>
@@ -180,8 +178,7 @@
   <script>
     $(document).ready(function() {
 
-      $('#searchBox').val('');
-
+      // Toastr options
       toastr.options = {
         "closeButton": false,
         "debug": true,
@@ -200,16 +197,165 @@
         "hideMethod": "fadeOut"
       }
 
+      // Datatable
+      var myTable = new DataTable('#Table', {
+        dom: 'lrt',
+        paging: true,
+        serverSide: true,
+        processing: true,
+        stateSave: true,
+        pageSave: true,
+        pageLength: -1,
+        lengthChange: false,
+        responsive: true,
+        fixedHeader: true,
+        scrollY: 480,
+        deferRender: true,
+        searchHighlight: true,
+        scroller: false,
+        language: {
+          url: "{{ asset('libs/datatables/js/cs.json') }}",
+        },
+        order: [
+          [0, "desc"]
+        ],
+        ajax: {
+          type: "GET",
+          url: "{{ route('permissions') }}",
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          dataType: "json",
+          contentType: 'application/json; charset=utf-8',
+          data: function(data) {
+            console.log(data)
+          },
+          complete: function(response) {
+            console.log(response)
+          }
+        },
+        columns: [{
+            data: 'name',
+            "className": 'text-yellow',
+            'width': '75%',
+          },
+          {
+            data: 'guard_name',
+            "className": 'text-lime',
+            'width': '5%',
+            orderable: false,
+            searchable: false
+          },
+          {
+            data: 'created_at',
+            'width': '8%',
+            render: function(data, type, full, meta) {
+              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
+            }
+          },
+          {
+            data: 'updated_at',
+            'width': '8%',
+            render: function(data, type, full, meta) {
+              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
+            }
+          }
+        ]
+      });
+
+      // Edit form after click datatable row
+      myTable.on('click', 'tbody tr', function() {
+        var data = myTable.row(this).data();
+        $('#action').val('Edit')
+        $('#permission_name').val(data.name)
+        $('#item-id').val(data.id)
+        $('#deleteButton').text("{{ __('Delete') }}")
+        $('#submitButton').text("{{ __('Update') }}")
+        $('#createModal .modal-title').text("{{ __('Edit permission') }}")
+        $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
+        $('#deleteButton').show()
+        $('#createModal').modal('show')
+      });
+
+      // Datatable custom search box
+      $('#searchBox').on('keyup', function() {
+        myTable.search($(this).val()).draw()
+      });
+
+      // New button
+      $('#createButton').on('click', function() {
+        $('#deleteButton').hide()
+        $('#createForm')[0].reset()
+        $('#createModal .modal-title').text("{{ __('Create permission') }}")
+        $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
+        $('#submitButton').html("{{ __('Create') }}")
+        $('#action').val('Add')
+      });
+
+      // Delete button
+      $('#deleteButton').on('click', function() {
+        $('#createModal').modal('hide')
+        $('#deleteModal').modal('show')
+      });
+
+      // Delete confirm button - click delete item
+      $('#deleteSubmit').click(function() {
+        var id = $('#item-id').val()
+        var action = $('#action').val()
+        $.ajax({
+          url: "permission/destroy/" + id,
+          beforeSend: function() {
+            $('#buttonSpinner').show();
+            $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
+            setTimeout(function() {
+              $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+            }, 2000)
+          },
+          success: function(data) {
+            if (data.errors) {
+              for (var count = 0; count < data.errors.length; count++) {
+                toastr.error(data.errors[count])
+                setTimeout(function() {
+                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+                }, 2000);
+              }
+            } else {
+              if (data.success) {
+                $('#createModal').modal('hide')
+                toastr.success(data.success)
+                setTimeout(function() {
+                  $('#deleteModal').modal('hide')
+                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+                }, 2000);
+                myTable.draw()
+              }
+            }
+          },
+          error: function(xhr, status, error) {
+            toastr.error(error)
+          }
+        })
+      });
+
+      // Create / Edit Form
       $('#createForm').submit(function(event) {
         event.preventDefault();
 
         var form = $(this);
-        var actionUrl = form.attr('action');
-        var actionType = form.attr('method');
+        var type = $('#action').val()
+        if (type == 'Add') {
+          var action = 'permission/store';
+          var method = 'POST';
+        }
+        if (type == 'Edit') {
+          var id = $('#item-id').val()
+          var action = 'permission/update/' + id;
+          var method = 'POST';
+        }
 
         $.ajax({
-          type: actionType,
-          url: actionUrl,
+          url: action,
+          type: method,
           token: "{{ csrf_token() }}",
           data: form.serialize(),
           dataType: 'json',
@@ -234,7 +380,6 @@
                 setTimeout(function() {
                   $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
                   // $('#createModal').modal('hide')
-                  // $('#createForm')[0].reset()
                 }, 2000);
                 myTable.draw()
               }
@@ -244,113 +389,6 @@
             toastr.error(error)
           }
         });
-      });
-
-      $(document).on('click', '.delete', function() {
-        pid = this.id
-      });
-
-      $('#deleteButton').click(function() {
-        $.ajax({
-          url: "permission/destroy/" + pid,
-          beforeSend: function() {
-            $('#buttonSpinner').show();
-            $('#deleteButton').addClass('btn-loading').attr('disabled', 'disabled')
-            setTimeout(function() {
-              $('#deleteButton').removeClass('btn-loading').removeAttr('disabled')
-            }, 2000)
-          },
-          success: function(data) {
-            if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#deleteButton').removeClass('btn-loading').removeAttr('disabled')
-                }, 2000);
-              }
-            } else {
-              if (data.success) {
-                toastr.success(data.success)
-                setTimeout(function() {
-                  $('#deleteModal').modal('hide')
-                  $('#deleteButton').removeClass('btn-loading').removeAttr('disabled')
-                }, 2000);
-                myTable.draw()
-              }
-            }
-          },
-          error: function(xhr, status, error) {
-            toastr.error(error)
-          }
-        })
-      });
-
-      var myTable = new DataTable('#permissionTable', {
-        dom: 'lrt',
-        paging: true,
-        serverSide: true,
-        processing: true,
-        stateSave: true,
-        pageSave: true,
-        pageLength: -1,
-        lengthChange: false,
-        responsive: true,
-        fixedHeader: true,
-        scrollY: 480,
-        language: {
-          url: "{{ asset('libs/datatables/js/cs.json') }}",
-        },
-        deferRender: true,
-        searchHighlight: true,
-        scroller: false,
-        order: [
-          [0, "desc"]
-        ],
-        ajax: {
-          type: "GET",
-          url: "{{ route('permissions') }}",
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          dataType: "json",
-          contentType: 'application/json; charset=utf-8',
-          data: function(data) {
-            console.log(data)
-          },
-          complete: function(response) {
-            console.log(response)
-          }
-        },
-        columns: [{
-            data: 'name',
-            "className": 'text-yellow',
-            "width": "30%",
-          },
-          {
-            data: 'guard_name',
-            "className": 'text-lime',
-            "width": "5%",
-          },
-          {
-            data: 'created_at',
-            "width": "10%",
-            render: function(data, type, full, meta) {
-              return moment(data).format('DD. MM. YYYY')
-            }
-          },
-          @role('admin')
-            {
-              data: 'buttons',
-              "width": "3%",
-              orderable: false,
-              searchable: false
-            }
-          @endrole
-        ]
-      });
-
-      $('#searchBox').on('keyup', function() {
-        myTable.search($(this).val()).draw()
       });
 
     });

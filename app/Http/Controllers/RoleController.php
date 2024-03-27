@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -12,8 +13,9 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
+        $permissions = Permission::orderBy('name')->get();
         if ($request->ajax()) {
-            $model = Role::with('permissions', 'users')->select('*', 'roles.id');
+            $model = Role::with('permissions', 'users')->where('name', '!=', 'admin')->select('*', 'roles.id');
             return DataTables::eloquent($model)
                 ->addColumn('buttons', function ($data) {
                     if (Auth::user()) {
@@ -33,28 +35,42 @@ class RoleController extends Controller
                 ->rawColumns(['buttons'])
                 ->toJson();
         }
-        return view('roles');
+        return view('roles', ['permissions' => $permissions]);
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         if ($request->ajax()) {
 
             $error = Validator::make($request->all(), [
-                'role_name' => 'required|unique:role,name,'
+                'role_name' => 'required|unique:roles,name',
             ]);
 
             if ($error->fails()) {
                 return response()->json(['errors' => $error->errors()->all()]);
             }
 
-            $permissions = [
-                'show'
-            ];
-
-            Role::create(['name' => $request->role_name])->givePermissionTo('show');
+            Role::create(['name' => $request->role_name])->givePermissionTo($request['permissions']);
 
             return response()->json(['success' => __('Role saved')]);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        if ($request->ajax()) {
+
+            $error = Validator::make($request->all(), [
+                'role_name' => 'required|unique:permissions,name,id_to_ignore',
+            ]);
+
+            if ($error->fails()) {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+            $role = Role::findById($id);
+            $role->syncPermissions($request['permissions'])->update(['name' => $request->role_name]);
+            return response()->json(['success' => 'Permission updated']);
         }
     }
 

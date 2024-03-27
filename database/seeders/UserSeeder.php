@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $admin = new User([
+        $admin = User::create([
             'name' => 'Administrator',
             'email' => 'admin@email.com',
             'email_verified_at' => now(),
@@ -25,10 +25,10 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->save();
-        $admin->assignRole('admin');
+        $admin->assignRole('admin')->getAllPermissions();
 
-        $supervisor = new User([
-            'name' => 'Supervisor',
+        $supervisor = User::create([
+            'name' => 'Supervisor User',
             'email' => 'supervisor@email.com',
             'email_verified_at' => now(),
             'password' => bcrypt('supervisor'),
@@ -36,10 +36,10 @@ class UserSeeder extends Seeder
         ]);
 
         $supervisor->save();
-        $supervisor->assignRole('supervisor');
+        $supervisor->assignRole('supervisor')->getAllPermissions();
 
-        $user = new User([
-            'name' => 'User',
+        $user = User::create([
+            'name' => 'Classic User',
             'email' => 'user@email.com',
             'email_verified_at' => now(),
             'password' => bcrypt('user'),
@@ -49,9 +49,21 @@ class UserSeeder extends Seeder
         $user->save();
         $user->assignRole('user');
 
+        $guest = User::create([
+            'name' => 'Guest user',
+            'email' => 'guest@email.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('user'),
+            'remember_token' => Str::random(10),
+        ]);
 
-        User::factory(7)->create()->each(function ($user) {
-            $user->assignRole('visitor');
-        });
+        $guest->save();
+        $guest->assignRole('guest');
+
+
+        // Testing users
+        // User::factory(7)->create()->each(function ($user) {
+        //     $user->assignRole('guest');
+        // });
     }
 }

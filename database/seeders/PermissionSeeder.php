@@ -19,9 +19,9 @@ class PermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'user create']);
+        // Create User Model permissions
         Permission::create(['name' => 'user show']);
+        Permission::create(['name' => 'user create']);
         Permission::create(['name' => 'user edit']);
         Permission::create(['name' => 'user delete']);
     }

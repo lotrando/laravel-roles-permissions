@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/roles.png') }}" rel="shortcut icon">
+  <link type="image/png" href="{{ asset('img/favicons/permissions.png') }}" rel="shortcut icon">
 @endsection
 
 @section('page-header')
@@ -17,13 +17,11 @@
           {{-- Page title --}}
           <h2 class="page-title text-blue h2">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
-              <span class="nav-link-icon d-md-none d-lg-inline-block">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt text-red" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0"></path>
-                </svg>
-              </span>
+              <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt text-red" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0"></path>
+              </svg>
             </span>
             {{ __('Roles') }}
           </h2>
@@ -33,15 +31,15 @@
           {{-- Buttons --}}
           <div class="btn-list">
             @role('admin')
-              <button class="btn btn-lime d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
                   <path d="M15 12h-6" />
                   <path d="M12 9v6" />
                 </svg>
-                {{ __('Create') }}
+                {{ __('New') }}
               </button>
             @endrole
           </div>
@@ -51,14 +49,11 @@
   </div>
 @endsection
 
-@section('searchbox')
-@endsection
-
 @section('page')
   <div class="col-12">
     <div class="card p-0 shadow-sm">
-      <div class="card-header bg-muted-lt p-2">
-        <div class="d-block col">
+      <div class="card-body p-2">
+        <div class="d-block col mb-1">
           <form method="get" autocomplete="off" novalidate="">
             <div class="input-icon">
               <span class="input-icon-addon">
@@ -73,19 +68,15 @@
             </div>
           </form>
         </div>
-      </div>
-      <div class="card-body p-0">
         <div class="table-responsive">
-          <table class="table-vcenter card-table table" id="roleTable">
+          <table class="table-vcenter card-table table" id="Table">
             <thead>
               <tr>
-                <th class="bg-muted-lt">{{ __('Role Name') }}</th>
-                <th class="bg-muted-lt">{{ __('Permissions') }}</th>
+                <th class="bg-muted-lt">{{ __('Name') }}</th>
+                <th class="bg-muted-lt">{{ __('Permissions of role') }}</th>
                 <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
                 <th class="bg-muted-lt">{{ __('Created') }}</th>
-                @role('admin')
-                  <th class="bg-muted-lt"></th>
-                @endrole
+                <th class="bg-muted-lt">{{ __('Updated') }}</th>
               </tr>
             </thead>
           </table>
@@ -97,37 +88,46 @@
 
 @section('modals')
   {{-- Create Modal --}}
-  <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
-        <form id="createForm" action="{{ route('role.create') }}" method="POST">
+        <form id="createForm">
           @csrf
           <div class="modal-header bg-lime-lt">
-            <h5 class="modal-title">{{ 'Create role' }}</h5>
+            <h5 class="modal-title"></h5>
             {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button> --}}
           </div>
           <div class="modal-body">
             <div class="input-icon mb-3">
               <span class="input-icon-addon">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-forms" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt text-red" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M12 3a3 3 0 0 0 -3 3v12a3 3 0 0 0 3 3" />
-                  <path d="M6 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3" />
-                  <path d="M13 7h7a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-7" />
-                  <path d="M5 7h-1a1 1 0 0 0 -1 1v8a1 1 0 0 0 1 1h1" />
-                  <path d="M17 12h.01" />
-                  <path d="M13 12h.01" />
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0"></path>
                 </svg>
               </span>
-              <input class="form-control @error('role_name') is-invalid is-invalid-lite @enderror"" id="name" name="role_name" type="text" value=""
-                placeholder="{{ __('e.g. post create') }}">
+              <input class="form-control @error('role_name') is-invalid is-invalid-lite @enderror" id="role_name" name="role_name" type="text" value=""
+                placeholder="{{ __('e.g. administrator') }}">
               </label>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-label">{{ __('Select permissions for this role') }}</div>
+              <select class="form-select" name="permissions[]" multiple="true" multiple size="10">
+                @foreach ($permissions as $permission)
+                  <option value="{{ $permission->name }}">{{ $permission->name }}</option>
+                @endforeach
+              </select>
             </div>
           </div>
           <div class="modal-footer">
+            <input id="action" type="hidden">
+            <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            <button class="btn btn-primary" id="submitButton" type="submit">{{ __('Save') }}</button>
+            @role('admin')
+              <button class="btn btn-danger" id="deleteButton" type="button"></button>
+              <button class="btn btn-primary" id="submitButton" type="submit"></button>
+            @endrole
           </div>
         </form>
       </div>
@@ -148,7 +148,7 @@
             <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
             <path d="M12 16h.01"></path>
           </svg>
-          <h3>{{ __('Do you really want to remove this role ?') }}</h3>
+          <h3>{{ __('Do you really want to remove this permission ?') }}</h3>
           <div class="text-red mt-2">
             {{ __('What you\'ve done cannot be undone.') }}
           </div>
@@ -162,7 +162,7 @@
                 </button>
               </div>
               <div class="col">
-                <button class="btn btn-danger w-100" id="deleteButton">
+                <button class="btn btn-danger w-100" id="deleteSubmit">
                   {{ __('Delete') }}
                 </button>
               </div>
@@ -178,8 +178,15 @@
   <script>
     $(document).ready(function() {
 
-      $('#searchBox').val('');
+      // Multiple select without Ctrl
+      $('option').mousedown(function(e) {
+        e.preventDefault()
+        $(this).toggleClass('selected')
+        $(this).prop('selected', !$(this).prop('selected'))
+        return false
+      });
 
+      // Toastr options
       toastr.options = {
         "closeButton": false,
         "debug": true,
@@ -198,92 +205,8 @@
         "hideMethod": "fadeOut"
       }
 
-      $('#createForm').submit(function(event) {
-        event.preventDefault();
-
-        var form = $(this);
-        var actionUrl = form.attr('action');
-        var actionType = form.attr('method');
-
-        $.ajax({
-          type: actionType,
-          url: actionUrl,
-          token: "{{ csrf_token() }}",
-          data: form.serialize(),
-          dataType: 'json',
-          beforeSend: function() {
-            $('#buttonSpinner').show();
-            $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
-            setTimeout(function() {
-              $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-            }, 2000)
-          },
-          success: function(data) {
-            if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                }, 2000);
-              }
-            } else {
-              if (data.success) {
-                toastr.success(data.success)
-                setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                  $('#createModal').modal('hide')
-                  $('#createForm')[0].reset()
-                }, 2000);
-                myTable.draw()
-              }
-            }
-          },
-          error: function(xhr, status, error) {
-            toastr.error(error)
-          }
-        });
-      });
-
-      $(document).on('click', '.delete', function() {
-        pid = this.id
-      });
-
-      $('#deleteButton').click(function() {
-        $.ajax({
-          url: "role/destroy/" + pid,
-          beforeSend: function() {
-            $('#buttonSpinner').show();
-            $('#deleteButton').addClass('btn-loading').attr('disabled', 'disabled')
-            setTimeout(function() {
-              $('#deleteButton').removeClass('btn-loading').removeAttr('disabled')
-            }, 2000)
-          },
-          success: function(data) {
-            if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#deleteButton').removeClass('btn-loading').removeAttr('disabled')
-                }, 2000);
-              }
-            } else {
-              if (data.success) {
-                toastr.success(data.success)
-                setTimeout(function() {
-                  $('#deleteModal').modal('hide')
-                  $('#deleteButton').removeClass('btn-loading').removeAttr('disabled')
-                }, 2000);
-                myTable.draw()
-              }
-            }
-          },
-          error: function(xhr, status, error) {
-            toastr.error(error)
-          }
-        })
-      });
-
-      var myTable = new DataTable('#roleTable', {
+      // Datatable
+      var myTable = new DataTable('#Table', {
         dom: 'lrt',
         paging: true,
         serverSide: true,
@@ -295,12 +218,12 @@
         responsive: true,
         fixedHeader: true,
         scrollY: 480,
-        language: {
-          url: "{{ asset('libs/datatables/js/cs.json') }}",
-        },
         deferRender: true,
         searchHighlight: true,
         scroller: false,
+        language: {
+          url: "{{ asset('libs/datatables/js/cs.json') }}",
+        },
         order: [
           [0, "desc"]
         ],
@@ -327,35 +250,163 @@
           {
             data: 'permissions[ | ].name',
             "className": 'text-yellow',
-            "width": "60%",
+            "width": "65%",
             orderable: false,
             searchable: false
           },
           {
             data: 'guard_name',
             "className": 'text-lime',
-            "width": "5%",
+            'width': '5%',
+            orderable: false,
+            searchable: false
           },
           {
             data: 'created_at',
-            "width": "5%",
+            'width': '8%',
             render: function(data, type, full, meta) {
-              return moment(data).format('DD. MM. YYYY')
+              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
             }
           },
-          @role('admin')
-            {
-              data: 'buttons',
-              "width": "1%",
-              orderable: false,
-              searchable: false
+          {
+            data: 'updated_at',
+            'width': '8%',
+            render: function(data, type, full, meta) {
+              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
             }
-          @endrole
+          }
         ]
       });
 
+      // Edit form after click datatable row
+      myTable.on('click', 'tbody tr', function() {
+        var data = myTable.row(this).data();
+        $('#action').val('Edit')
+        $('#role_name').val(data.name)
+        $('option:selected').removeAttr('selected');
+        $('#item-id').val(data.id)
+        $('#deleteButton').text("{{ __('Delete') }}")
+        $('#submitButton').text("{{ __('Update') }}")
+        $('#createModal .modal-title').text("{{ __('Edit role') }}")
+        $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
+        $('#deleteButton').show()
+        $('#createModal').modal('show')
+      });
+
+      // Datatable custom search box
       $('#searchBox').on('keyup', function() {
         myTable.search($(this).val()).draw()
+      });
+
+      // New button
+      $('#createButton').on('click', function() {
+        $('#deleteButton').hide()
+        $('option:selected').removeAttr('selected');
+        $('#createForm')[0].reset()
+        $('#createModal .modal-title').text("{{ __('Create role') }}")
+        $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
+        $('#submitButton').html("{{ __('Create') }}")
+        $('#action').val('Add')
+      });
+
+      // Delete button
+      $('#deleteButton').on('click', function() {
+        $('#createModal').modal('hide')
+        $('#deleteModal').modal('show')
+      });
+
+      // Delete confirm button - click delete item
+      $('#deleteSubmit').click(function() {
+        var id = $('#item-id').val()
+        var action = $('#action').val()
+        $.ajax({
+          url: "role/destroy/" + id,
+          beforeSend: function() {
+            $('#buttonSpinner').show();
+            $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
+            setTimeout(function() {
+              $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+            }, 2000)
+          },
+          success: function(data) {
+            if (data.errors) {
+              for (var count = 0; count < data.errors.length; count++) {
+                toastr.error(data.errors[count])
+                setTimeout(function() {
+                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+                }, 2000);
+              }
+            } else {
+              if (data.success) {
+                $('#createModal').modal('hide')
+                toastr.success(data.success)
+                setTimeout(function() {
+                  $('#deleteModal').modal('hide')
+                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+                }, 2000);
+                myTable.draw()
+              }
+            }
+          },
+          error: function(xhr, status, error) {
+            toastr.error(error)
+          }
+        })
+      });
+
+      // Create / Edit Form
+      $('#createForm').submit(function(event) {
+        event.preventDefault();
+
+        var form = $(this);
+        var type = $('#action').val()
+        if (type == 'Add') {
+          var action = 'role/store';
+          var method = 'POST';
+        }
+        if (type == 'Edit') {
+          var id = $('#item-id').val()
+          var action = 'role/update/' + id;
+          var method = 'POST';
+        }
+
+        $.ajax({
+          url: action,
+          type: method,
+          token: "{{ csrf_token() }}",
+          data: form.serialize(),
+          dataType: 'json',
+          beforeSend: function() {
+            $('#buttonSpinner').show();
+            $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
+            setTimeout(function() {
+              $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+            }, 2000)
+          },
+          success: function(data) {
+            if (data.errors) {
+              for (var count = 0; count < data.errors.length; count++) {
+                toastr.error(data.errors[count])
+                setTimeout(function() {
+                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                }, 2000);
+              }
+            } else {
+              if (data.success) {
+                toastr.success(data.success)
+                setTimeout(function() {
+                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                  $('option:selected').removeAttr('selected');
+                  $('#createModal').modal('hide')
+                }, 2000);
+                myTable.draw()
+              }
+            }
+          },
+          error: function(xhr, status, error) {
+            toastr.error(error)
+          }
+        });
       });
 
     });
