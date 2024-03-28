@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
         $user->assignRole('user');
 
         $guest = User::create([
-            'name' => 'Guest user',
+            'name' => 'Guest User',
             'email' => 'guest@email.com',
             'email_verified_at' => now(),
             'password' => bcrypt('user'),
@@ -62,8 +62,8 @@ class UserSeeder extends Seeder
 
 
         // Testing users
-        // User::factory(7)->create()->each(function ($user) {
-        //     $user->assignRole('guest');
-        // });
+        User::factory(200)->create()->each(function ($user) {
+            $user->assignRole('guest');
+        });
     }
 }

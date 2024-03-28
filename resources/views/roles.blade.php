@@ -113,7 +113,7 @@
 
             <div class="mb-3">
               <div class="form-label">{{ __('Select permissions for this role') }}</div>
-              <select class="form-select" name="permissions[]" multiple="true" multiple size="10">
+              <select class="form-select" name="permissions[]" multiple="true" multiple size="4">
                 @foreach ($permissions as $permission)
                   <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                 @endforeach
