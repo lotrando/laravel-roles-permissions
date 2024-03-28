@@ -64,7 +64,7 @@ class RoleController extends Controller
         if ($request->ajax()) {
 
             $error = Validator::make($request->all(), [
-                'role_name' => 'required|unique:permissions,name,id_to_ignore',
+                'role_name' => 'required|unique:roles,name,' . $id
             ]);
 
             if ($error->fails()) {

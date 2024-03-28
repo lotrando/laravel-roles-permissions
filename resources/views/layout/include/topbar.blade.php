@@ -30,18 +30,15 @@
               </a>
             </div>
             @guest
-              <a class="btn hover-shadow-sm" href="{{ route('login') }}" rel="noreferrer">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon text-success px-0" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <rect x="5" y="11" width="14" height="10" rx="2">
-                    </rect>
-                    <circle cx="12" cy="16" r="1"></circle>
-                    <path d="M8 11v-5a4 4 0 0 1 8 0"></path>
-                  </svg>
-                </span>
-                {{ __('Login') }}
+              <a class="btn btn-ghost-lime btn-icon" href="{{ route('login') }}" rel="noreferrer">
+                <svg class="icon px-0" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <rect x="5" y="11" width="14" height="10" rx="2">
+                  </rect>
+                  <circle cx="12" cy="16" r="1"></circle>
+                  <path d="M8 11v-5a4 4 0 0 1 8 0"></path>
+                </svg>
               </a>
             @endguest
           </div>

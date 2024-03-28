@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
@@ -21,49 +22,62 @@ class UserSeeder extends Seeder
             'email' => 'admin@email.com',
             'email_verified_at' => now(),
             'password' => bcrypt('admin'),
-            'remember_token' => Str::random(10),
         ]);
 
         $admin->save();
-        $admin->assignRole('admin')->getAllPermissions();
+        $admin->assignRole('admin');
+        $admin->givePermissionTo([
+            //
+        ]);
 
+        // User / Role User / Permissions [user show, post show, roles show, permission show]
         $supervisor = User::create([
-            'name' => 'Supervisor User',
-            'email' => 'supervisor@email.com',
+            'name' => 'Moderator',
+            'email' => 'moderator@email.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('supervisor'),
-            'remember_token' => Str::random(10),
+            'password' => bcrypt('moderator'),
         ]);
 
         $supervisor->save();
-        $supervisor->assignRole('supervisor')->getAllPermissions();
+        $supervisor->assignRole('moderator');
+        $supervisor->givePermissionTo([
+            'post create',
+            'post show',
+            'post edit'
+        ]);
 
+        // User / Role User / Permissions [user show, post show, roles show, permission show]
         $user = User::create([
-            'name' => 'Classic User',
+            'name' => 'User',
             'email' => 'user@email.com',
             'email_verified_at' => now(),
             'password' => bcrypt('user'),
-            'remember_token' => Str::random(10),
         ]);
 
         $user->save();
         $user->assignRole('user');
+        $user->givePermissionTo([
+            'post create',
+            'post show'
+        ]);
 
+        // Guest / Role Guest / Permissions [user show]
         $guest = User::create([
-            'name' => 'Guest User',
+            'name' => 'Guest',
             'email' => 'guest@email.com',
             'email_verified_at' => now(),
             'password' => bcrypt('user'),
-            'remember_token' => Str::random(10),
         ]);
 
         $guest->save();
         $guest->assignRole('guest');
-
+        $guest->givePermissionTo([
+            'post show'
+        ]);
 
         // Testing users
-        User::factory(17)->create()->each(function ($user) {
-            $user->assignRole('guest');
-        });
+        // User::factory(100)->create()->each(function ($user) {
+        //     $user->assignRole('guest')->givePermissionTo('_default');
+        // });
     }
 }

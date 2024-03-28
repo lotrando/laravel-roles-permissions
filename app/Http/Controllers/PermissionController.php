@@ -61,7 +61,7 @@ class PermissionController extends Controller
         if ($request->ajax()) {
 
             $error = Validator::make($request->all(), [
-                'permission_name' => 'required|unique:permissions,name,id_to_ignore'
+                'permission_name' => 'required|unique:permission,name,' . $id
             ]);
 
             if ($error->fails()) {

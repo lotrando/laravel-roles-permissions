@@ -35,12 +35,12 @@ Route::middleware(['auth'])->group(function () {
     })->name('home');
 
     // Defaut user role ( new user register ). Route group for all roles [user, supervisor, admin] allowed
-    Route::middleware('role:user|supervisor|admin')->prefix('user')->group(function () {
+    Route::middleware('role:user|supervisor|admin')->group(function () {
         Route::get('users', [UserController::class, 'index'])->name('users');
     });
 
     // Route group for roles [supervisor, admin] allowed
-    Route::middleware('role:supervisor|admin')->prefix('supervisor')->group(function () {
+    Route::middleware('role:supervisor|admin')->group(function () {
         Route::get('roles', [RoleController::class, 'index'])->name('roles');
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
     });

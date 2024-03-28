@@ -17,15 +17,14 @@
           {{-- Page title --}}
           <h2 class="page-title text-blue h2">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
-              <svg class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path>
-                <path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path>
-                <path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path>
-                <path d="M11 6l9 0"></path>
-                <path d="M11 12l9 0"></path>
-                <path d="M11 18l9 0"></path>
+                <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
+                <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
+                <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
+                <path d="M8 15a18 18 0 0 0 1.8 6"></path>
+                <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
               </svg>
             </span>
             {{ __('Permissions') }}
@@ -99,24 +98,23 @@
           @csrf
           <div class="modal-header bg-lime-lt">
             <h5 class="modal-title"></h5>
-            {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button> --}}
+            <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="input-icon mb-3">
               <span class="input-icon-addon">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path>
-                  <path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path>
-                  <path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path>
-                  <path d="M11 6l9 0"></path>
-                  <path d="M11 12l9 0"></path>
-                  <path d="M11 18l9 0"></path>
+                  <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
+                  <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
+                  <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
+                  <path d="M8 15a18 18 0 0 0 1.8 6"></path>
+                  <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
                 </svg>
               </span>
-              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text" value=""
-                placeholder="{{ __('e.g. post create') }}">
+              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text"
+                value="" placeholder="{{ __('e.g. post create') }}">
               </label>
             </div>
           </div>
@@ -303,7 +301,7 @@
         var id = $('#item-id').val()
         var action = $('#action').val()
         $.ajax({
-          url: "permission/destroy/" + id,
+          url: "admin/permission/destroy/" + id,
           beforeSend: function() {
             $('#buttonSpinner').show();
             $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
@@ -344,13 +342,15 @@
         var form = $(this);
         var type = $('#action').val()
         if (type == 'Add') {
-          var action = 'permission/store';
+          var action = 'admin/permission/store';
           var method = 'POST';
+          var modalClose = false
         }
         if (type == 'Edit') {
           var id = $('#item-id').val()
-          var action = 'permission/update/' + id;
+          var action = 'admin/permission/update/' + id;
           var method = 'POST';
+          var modalClose = true
         }
 
         $.ajax({
@@ -364,7 +364,7 @@
             $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
             setTimeout(function() {
               $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-            }, 2000)
+            }, 1000)
           },
           success: function(data) {
             if (data.errors) {
@@ -372,15 +372,17 @@
                 toastr.error(data.errors[count])
                 setTimeout(function() {
                   $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                }, 2000);
+                }, 1000);
               }
             } else {
               if (data.success) {
                 toastr.success(data.success)
                 setTimeout(function() {
                   $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                  // $('#createModal').modal('hide')
-                }, 2000);
+                  if (modalClose == true) {
+                    $('#createModal').modal('hide')
+                  }
+                }, 1000);
                 myTable.draw()
               }
             }

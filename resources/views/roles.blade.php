@@ -73,7 +73,7 @@
             <thead>
               <tr>
                 <th class="bg-muted-lt">{{ __('Name') }}</th>
-                <th class="bg-muted-lt">{{ __('Permissions of role') }}</th>
+                <th class="bg-muted-lt">{{ __('Role permissions') }}</th>
                 <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
                 <th class="bg-muted-lt">{{ __('Created') }}</th>
                 <th class="bg-muted-lt">{{ __('Updated') }}</th>
@@ -110,10 +110,9 @@
                 placeholder="{{ __('e.g. administrator') }}">
               </label>
             </div>
-
             <div class="mb-3">
               <div class="form-label">{{ __('Select permissions for this role') }}</div>
-              <select class="form-select" name="permissions[]" multiple="true" multiple size="4">
+              <select class="form-select" id="permissions" name="permissions[]" multiple="true" multiple size="4">
                 @foreach ($permissions as $permission)
                   <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                 @endforeach
@@ -186,6 +185,7 @@
         return false
       });
 
+
       // Toastr options
       toastr.options = {
         "closeButton": false,
@@ -225,7 +225,7 @@
           url: "{{ asset('libs/datatables/js/cs.json') }}",
         },
         order: [
-          [0, "desc"]
+          [0, "asc"]
         ],
         ajax: {
           type: "GET",
@@ -253,11 +253,18 @@
             "width": "10%",
           },
           {
-            data: 'permissions[ | ].name',
+            data: 'permissions[]',
             "className": 'text-yellow',
             "width": "65%",
             orderable: false,
-            searchable: false
+            searchable: false,
+            render: function(data, type, full, meta) {
+              var badges = '';
+              for (i = 0; i < data.length; i++) {
+                badges += '<span class="badge bg-yellow-lt m-1">' + data[i].name + '</span>'
+              }
+              return badges;
+            }
           },
           {
             data: 'guard_name',
@@ -288,7 +295,7 @@
         var data = myTable.row(this).data();
         if (data.id == 1) {
           $(this).addClass('text-red')
-          toastr.error('Admin Role, no edit and delete.')
+          toastr.error('Admin Role! No edit and delete')
           return
         }
         $('#action').val('Edit')
@@ -330,7 +337,7 @@
         var id = $('#item-id').val()
         var action = $('#action').val()
         $.ajax({
-          url: "role/destroy/" + id,
+          url: "admin/role/destroy/" + id,
           beforeSend: function() {
             $('#buttonSpinner').show();
             $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
@@ -371,13 +378,15 @@
         var form = $(this);
         var type = $('#action').val()
         if (type == 'Add') {
-          var action = 'role/store';
+          var action = 'admin/role/store';
           var method = 'POST';
+          var modalClose = false
         }
         if (type == 'Edit') {
           var id = $('#item-id').val()
-          var action = 'role/update/' + id;
+          var action = 'admin/role/update/' + id;
           var method = 'POST';
+          var modalClose = true
         }
 
         $.ajax({
@@ -391,7 +400,7 @@
             $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
             setTimeout(function() {
               $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-            }, 2000)
+            }, 1000)
           },
           success: function(data) {
             if (data.errors) {
@@ -399,7 +408,7 @@
                 toastr.error(data.errors[count])
                 setTimeout(function() {
                   $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                }, 2000);
+                }, 1000);
               }
             } else {
               if (data.success) {
@@ -407,8 +416,10 @@
                 setTimeout(function() {
                   $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
                   $('option:selected').removeAttr('selected');
-                  $('#createModal').modal('hide')
-                }, 2000);
+                  if (modalClose == true) {
+                    $('#createModal').modal('hide')
+                  }
+                }, 1000);
                 myTable.draw()
               }
             }
