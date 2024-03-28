@@ -242,6 +242,11 @@
             console.log(response)
           }
         },
+        "createdRow": function(row, data, dataIndex) {
+          if (data.id == 1) {
+            $(row).addClass('bg-red-lt');
+          }
+        },
         columns: [{
             data: 'name',
             "className": 'text-red',
@@ -281,6 +286,11 @@
       // Edit form after click datatable row
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
+        if (data.id == 1) {
+          $(this).addClass('text-red')
+          toastr.error('Admin Role, no edit and delete.')
+          return
+        }
         $('#action').val('Edit')
         $('#role_name').val(data.name)
         $('option:selected').removeAttr('selected');

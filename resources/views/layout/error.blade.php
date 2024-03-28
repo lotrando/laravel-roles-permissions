@@ -21,11 +21,11 @@
       }
 
       body {
-        /* font-feature-settings: "cv03", "cv04", "cv11";
-        background-image: url('../img/blocks.jpg');
+        font-feature-settings: "cv03", "cv04", "cv11";
+        background-image: url('../img/404.png');
         background-position: center;
         background-repeat: no-repeat;
-        background-size: cover; */
+        background-size: cover;
       }
     </style>
   </head>

@@ -12,10 +12,21 @@ class UserController extends Controller
     {
         // return $model;
         if ($request->ajax()) {
-            $model = User::with('roles', 'permissions')->where('id', '!=', 1)->select('*', 'users.id');
+            $model = User::with('roles', 'permissions')->select('*', 'users.id');
             return DataTables::eloquent($model)->toJson();
         }
         return view('users');
+    }
+
+    public function indexGrouped()
+    {
+        $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
+            return $item->name[0];
+        });
+        $groupedUsers->sortBy(function ($key) {
+            return $key;
+        });
+        return view('users', ['users' => $groupedUsers]);
     }
 
     public function destroy($id)

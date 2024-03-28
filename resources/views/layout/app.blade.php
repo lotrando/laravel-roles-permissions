@@ -63,6 +63,10 @@
         text-align: left;
         vertical-align: middle;
       }
+
+      #toast-container>div {
+        width: 350px;
+      }
     </style>
   </head>
 

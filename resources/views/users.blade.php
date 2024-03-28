@@ -75,6 +75,7 @@
           <table class="table-vcenter card-table table" id="Table">
             <thead>
               <tr>
+                <th class="bg-muted-lt">{{ __('UID') }}</th>
                 <th class="bg-muted-lt">{{ __('Name') }}</th>
                 <th class="bg-muted-lt">{{ __('Email') }}</th>
                 <th class="bg-muted-lt">{{ __('Roles') }}</th>
@@ -230,7 +231,16 @@
             console.log(response)
           }
         },
+        "createdRow": function(row, data, dataIndex) {
+          if (data.id == 1) {
+            $(row).addClass('bg-red-lt');
+          }
+        },
         columns: [{
+            data: 'id',
+            'width': '1%'
+          },
+          {
             data: 'name',
             'className': 'text-lime',
             'width': '15%'
@@ -273,6 +283,11 @@
       // Edit form after click datatable row
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
+        if (data.id == 1) {
+          $(this).addClass('text-red')
+          toastr.error('Admin User, no edit and delete.')
+          return
+        }
         $('#action').val('Edit')
         $('#name').val(data.name)
         $('#item-id').val(data.id)

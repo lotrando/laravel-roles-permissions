@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
 
 
         // Testing users
-        User::factory(200)->create()->each(function ($user) {
+        User::factory(17)->create()->each(function ($user) {
             $user->assignRole('guest');
         });
     }
