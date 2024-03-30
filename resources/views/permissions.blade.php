@@ -124,6 +124,8 @@
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
             @role('admin')
               <button class="btn btn-danger" id="deleteButton" type="button"></button>
+            @endrole
+            @role('modarator|admin')
               <button class="btn btn-primary" id="submitButton" type="submit"></button>
             @endrole
           </div>
@@ -225,12 +227,8 @@
           },
           dataType: "json",
           contentType: 'application/json; charset=utf-8',
-          data: function(data) {
-            console.log(data)
-          },
-          complete: function(response) {
-            console.log(response)
-          }
+          data: function(data) {},
+          complete: function(response) {}
         },
         columns: [{
             data: 'name',
@@ -264,7 +262,7 @@
       // Edit form after click datatable row
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
-        $('#action').val('Edit')
+        $('#action').val('Update')
         $('#permission_name').val(data.name)
         $('#item-id').val(data.id)
         $('#deleteButton').text("{{ __('Delete') }}")
@@ -287,7 +285,7 @@
         $('#createModal .modal-title').text("{{ __('Create permission') }}")
         $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
         $('#submitButton').html("{{ __('Create') }}")
-        $('#action').val('Add')
+        $('#action').val('Create')
       });
 
       // Delete button
@@ -301,22 +299,20 @@
         var id = $('#item-id').val()
         var action = $('#action').val()
         $.ajax({
-          url: "admin/permission/destroy/" + id,
+          url: "permission/destroy/" + id,
           beforeSend: function() {
             $('#buttonSpinner').show();
-            $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
+            $('#deleteSubmit').addClass('btn-loading').attr('disabled', true)
             setTimeout(function() {
               $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
             }, 2000)
           },
           success: function(data) {
-            if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
-                }, 2000);
-              }
+            if (data.error) {
+              toastr.error(data.error)
+              setTimeout(function() {
+                $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+              }, 1000);
             } else {
               if (data.success) {
                 $('#createModal').modal('hide')
@@ -341,14 +337,15 @@
 
         var form = $(this);
         var type = $('#action').val()
-        if (type == 'Add') {
-          var action = 'admin/permission/store';
+
+        if (type == 'Create') {
+          var action = 'permission/store';
           var method = 'POST';
           var modalClose = false
         }
-        if (type == 'Edit') {
+        if (type == 'Update') {
           var id = $('#item-id').val()
-          var action = 'admin/permission/update/' + id;
+          var action = 'permission/update/' + id;
           var method = 'POST';
           var modalClose = true
         }
@@ -361,19 +358,19 @@
           dataType: 'json',
           beforeSend: function() {
             $('#buttonSpinner').show();
-            $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
+            $('#submitButton').addClass('btn-loading').attr('disabled', true);
             setTimeout(function() {
               $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
             }, 1000)
           },
           success: function(data) {
             if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                }, 1000);
+              for (var key = 0; key < data.errors.length; key++) {
+                toastr.error(data.errors[key])
               }
+              setTimeout(function() {
+                $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+              }, 1000);
             } else {
               if (data.success) {
                 toastr.success(data.success)
@@ -392,7 +389,6 @@
           }
         });
       });
-
     });
   </script>
 @endpush

@@ -18,11 +18,11 @@
 
     body {
       font-feature-settings: "cv03", "cv04", "cv11";
-      background-image: url('../img/blue.jpg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      back`
+      /* background-image: url('../img/blue.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        back` */
     }
   </style>
 @endpush

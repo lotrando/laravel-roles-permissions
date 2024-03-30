@@ -112,12 +112,14 @@
             </div>
             <div class="mb-3">
               <div class="form-label">{{ __('Select permissions for this role') }}</div>
-              <select class="form-select" id="permissions" name="permissions[]" multiple="true" multiple size="4">
+              <select class="form-select" id="permissions" name="permissions[]" multiple="multiple">
                 @foreach ($permissions as $permission)
                   <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                 @endforeach
               </select>
             </div>
+            <button class="btn me-auto" id="select-all">select all</button>
+            <button class="btn me-auto" id="deselect-all">deselect all</button>
           </div>
           <div class="modal-footer">
             <input id="action" type="hidden">
@@ -177,14 +179,20 @@
   <script>
     $(document).ready(function() {
 
-      // Multiple select without Ctrl
-      $('option').mousedown(function(e) {
-        e.preventDefault()
-        $(this).toggleClass('selected')
-        $(this).prop('selected', !$(this).prop('selected'))
-        return false
+      // Multiple select Widget
+      $('#permissions').multiSelect({
+        keepOrder: true
       });
 
+      $('#select-all').click(function() {
+        $('#permissions').multiSelect('select_all');
+        return false;
+      });
+
+      $('#deselect-all').click(function() {
+        $('#permissions').multiSelect('deselect_all');
+        return false;
+      });
 
       // Toastr options
       toastr.options = {
@@ -299,8 +307,11 @@
           return
         }
         $('#action').val('Edit')
+        $('#permissions').multiSelect('refresh');
+        for (var i = 0; i < data.permissions.length; i++) {
+          $('#permissions').multiSelect('select', data.permissions[i])
+        }
         $('#role_name').val(data.name)
-        $('option:selected').removeAttr('selected');
         $('#item-id').val(data.id)
         $('#deleteButton').text("{{ __('Delete') }}")
         $('#submitButton').text("{{ __('Update') }}")
@@ -318,7 +329,7 @@
       // New button
       $('#createButton').on('click', function() {
         $('#deleteButton').hide()
-        $('option:selected').removeAttr('selected');
+        $('#permissions').multiSelect('refresh');
         $('#createForm')[0].reset()
         $('#createModal .modal-title').text("{{ __('Create role') }}")
         $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
@@ -337,7 +348,7 @@
         var id = $('#item-id').val()
         var action = $('#action').val()
         $.ajax({
-          url: "admin/role/destroy/" + id,
+          url: "role/destroy/" + id,
           beforeSend: function() {
             $('#buttonSpinner').show();
             $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
@@ -378,15 +389,15 @@
         var form = $(this);
         var type = $('#action').val()
         if (type == 'Add') {
-          var action = 'admin/role/store';
+          var action = 'role/store';
           var method = 'POST';
-          var modalClose = false
+          var modalClose = true
         }
         if (type == 'Edit') {
           var id = $('#item-id').val()
-          var action = 'admin/role/update/' + id;
+          var action = 'role/update/' + id;
           var method = 'POST';
-          var modalClose = true
+          var modalClose = false
         }
 
         $.ajax({

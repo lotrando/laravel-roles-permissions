@@ -15,13 +15,14 @@
       <div class="card card-md shadow-sm">
         <div class="card-stamp">
           <div class="card-stamp-icon bg-blue">
-            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-lock-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" />
-              <path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-              <path d="M8 11v-5a4 4 0 0 1 8 0" />
-            </svg>
+            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
+                        <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
+                        <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
+                        <path d="M8 15a18 18 0 0 0 1.8 6"></path>
+                        <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
+                      </svg>
           </div>
         </div>
         <div class="card-body">
@@ -62,15 +63,4 @@
       </div>
     </div>
   </div>
-
-  <script>
-    function showPassword() {
-      var element = document.getElementById("password");
-      if (element.type === "password") {
-        element.type = "text";
-      } else {
-        element.type = "password";
-      }
-    };
-  </script>
 @endsection

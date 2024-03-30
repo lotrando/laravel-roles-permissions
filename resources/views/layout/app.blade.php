@@ -8,14 +8,15 @@
     @yield('favicon')
     <title>{{ env('APP_NAME' ?? 'Laravel') }}</title>
     <meta name="csrf_token" content="{{ csrf_token() }}" />
+    <link href="{{ asset('libs/datatables/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/datatables/css/fixedHeader.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('libs/multiselect/css/multi-select.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tabler.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-flags.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-payments.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
     <link href="{{ asset('libs/toastr/toastr.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('libs/datatables/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/datatables/css/fixedHeader.dataTables.min.css') }}" rel="stylesheet">
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
@@ -104,6 +105,7 @@
     <script src="{{ asset('libs/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/dataTables.fixedHeader.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/dataTables.scroller.min.js') }}"></script>
+    <script src="{{ asset('libs/multiselect/js/jquery.multi-select.js') }}"></script>
     @stack('scripts')
   </body>
 

@@ -94,7 +94,7 @@
 @section('modals')
   {{-- Create Modal --}}
   <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
-    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
           @csrf
@@ -155,7 +155,7 @@
                     </span>
                     <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password" name="password" data-bs-container="body"
                       data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{ __('Password must have 8 letters') }}" type="password" value="{{ old('password') }}"
-                      placeholder="Zvolte si své heslo" autocomplete="off">
+                      placeholder="{{ __('Enter user password') }}" autocomplete="off">
                     @error('password')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -177,7 +177,7 @@
                       </svg>
                     </span>
                     <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password_confirmation" name="password_confirmation" type="password"
-                      value="{{ old('password_confirmation') }}" placeholder="Potvrďte vámi zvolené heslo" autocomplete="off">
+                      value="{{ old('password_confirmation') }}" placeholder="{{ __('Confirm password') }}" autocomplete="off">
                     @error('password_confirmation')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -218,6 +218,8 @@
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
             @role('admin')
               <button class="btn btn-danger" id="deleteButton" type="button"></button>
+            @endrole
+            @role('moderator|admin')
               <button class="btn btn-primary" id="submitButton" type="submit"></button>
             @endrole
           </div>

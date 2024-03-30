@@ -30,35 +30,43 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // Home page new registered users
-    Route::get('home', function () {
-        return view('home');
-    })->name('home');
-
-    // Defaut user role ( new user register ). Route group for all roles [user, supervisor, admin] allowed
-    Route::middleware('role:user|supervisor|admin')->group(function () {
-        Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::middleware('role:guest|user|moderator|admin')->group(function () {
+        Route::get('home', function () {
+            return view('home');
+        })->name('home');
     });
 
-    // Route group for roles [supervisor, admin] allowed
-    Route::middleware('role:supervisor|admin')->group(function () {
+    // Defaut User role Route group for all roles [user, supervisor, admin] allowed
+    Route::middleware('role:user|moderator|admin')->group(function () {
+        // Users routes
+        Route::get('users', [UserController::class, 'index'])->name('users');
+        // Roles routes
         Route::get('roles', [RoleController::class, 'index'])->name('roles');
+        // Permissions routes
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
     });
 
-    // Route group only admin allowed
-    Route::middleware('role:admin')->prefix('admin')->group(function () {
-
-        // Users
+    // Route group for roles [supervisor, admin] allowed
+    Route::middleware('role:moderator|admin')->group(function () {
+        // Users routes
         Route::post('user/store', [UserController::class, 'store'])->name('user.store');
         Route::post('user/update/{id}', [UserController::class, 'update'])->name('user.update');
-        Route::get('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
         // Roles routes
         Route::post('role/store', [RoleController::class, 'store'])->name('role.store');
         Route::post('role/update/{id}', [RoleController::class, 'update'])->name('role.update');
-        Route::get('role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
         // Permission routes
         Route::post('permission/store', [PermissionController::class, 'store'])->name('permission.store');
         Route::post('permission/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+    });
+
+    // Route group only admin allowed
+    Route::middleware('role:admin')->group(function () {
+
+        // Users routes
+        Route::get('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+        // Roles routes
+        Route::get('role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+        // Permission routes
         Route::get('permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
     });
 });
