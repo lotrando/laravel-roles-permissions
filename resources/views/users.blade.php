@@ -493,13 +493,13 @@
         var form = $(this);
         var type = $('#action').val()
         if (type == 'Add') {
-          var action = 'admin/user/store';
+          var action = 'user/store';
           var method = 'POST';
           var modalClose = false
         }
         if (type == 'Edit') {
           var id = $('#item-id').val()
-          var action = 'admin/user/update/' + id;
+          var action = 'user/update/' + id;
           var method = 'POST';
           var modalClose = true
         }

@@ -15,7 +15,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::orderBy('name')->get();
         if ($request->ajax()) {
-            $model = Role::with('permissions', 'users')->select('*', 'roles.id');
+            $model = Role::with('permissions', 'users')->where('id', '>', 1)->select('*', 'roles.id');
             return DataTables::eloquent($model)
                 ->addColumn('buttons', function ($data) {
                     if (Auth::user()) {

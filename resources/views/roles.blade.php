@@ -301,16 +301,8 @@
       // Edit form after click datatable row
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
-        if (data.id == 1) {
-          $(this).addClass('text-red')
-          toastr.error('Admin Role! No edit and delete')
-          return
-        }
-        $('#action').val('Edit')
         $('#permissions').multiSelect('refresh');
-        for (var i = 0; i < data.permissions.length; i++) {
-          $('#permissions').multiSelect('select', data.permissions[i])
-        }
+        $('#action').val('Edit')
         $('#role_name').val(data.name)
         $('#item-id').val(data.id)
         $('#deleteButton').text("{{ __('Delete') }}")
@@ -319,6 +311,9 @@
         $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
         $('#deleteButton').show()
         $('#createModal').modal('show')
+        for (var key = 0; key < data.permissions.length; key++) {
+          $('#permissions').multiSelect('select', data.permissions[key])
+        }
       });
 
       // Datatable custom search box
@@ -397,7 +392,7 @@
           var id = $('#item-id').val()
           var action = 'role/update/' + id;
           var method = 'POST';
-          var modalClose = false
+          var modalClose = true
         }
 
         $.ajax({

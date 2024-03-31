@@ -21,35 +21,39 @@ class RoleSeeder extends Seeder
             'name' => 'admin'
         ])->givePermissionTo(Permission::all());
 
-        // Supervisor
+        // Sekretariat
         Role::create([
-            'name' => 'moderator'
+            'name' => 'sekretariat'
         ])->givePermissionTo([
-            'user create',
-            'user edit',
-            'user show',
-            'role create',
-            'role edit',
-            'role show',
-            'permission create',
-            'permission edit',
-            'permission show',
+            'oznameni',
+            'dokumentace',
+            'standardy',
+            'isp',
+            'kvalita',
+        ]);
+
+        // Kuchyne
+        Role::create([
+            'name' => 'kuchyn'
+        ])->givePermissionTo([
+            'oznameni',
+            'strava',
+        ]);
+
+        // BOZP
+        Role::create([
+            'name' => 'bozp'
+        ])->givePermissionTo([
+            'oznameni',
+            'bozp',
+            'media'
         ]);
 
         // User
         Role::create([
             'name' => 'user'
         ])->givePermissionTo([
-            'user show',
-            'role show',
-            'permission show'
-        ]);
-
-        // Guest
-        Role::create([
-            'name' => 'guest'
-        ])->givePermissionTo([
-            'user show',
+            'oznameni',
         ]);
     }
 }

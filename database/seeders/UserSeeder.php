@@ -30,49 +30,60 @@ class UserSeeder extends Seeder
             //
         ]);
 
-        // User / Role User / Permissions [user show, post show, roles show, permission show]
+        // Test sekretarka
         $supervisor = User::create([
-            'name' => 'Moderator',
-            'email' => 'moderator@email.com',
+            'name' => 'Wojnarova Marcela',
+            'email' => 'wojnarova@khn.cz',
             'email_verified_at' => now(),
-            'password' => bcrypt('moderator'),
+            'password' => bcrypt('password'),
         ]);
 
         $supervisor->save();
-        $supervisor->assignRole('moderator');
+        $supervisor->assignRole('sekretariat');
         $supervisor->givePermissionTo([
-            'post create',
-            'post show',
-            'post edit'
+            'media'
         ]);
 
-        // User / Role User / Permissions [user show, post show, roles show, permission show]
+        // Test Kuchyne
         $user = User::create([
-            'name' => 'User',
-            'email' => 'user@email.com',
+            'name' => 'Weber Martin',
+            'email' => 'weber@khn.cz',
             'email_verified_at' => now(),
-            'password' => bcrypt('user'),
+            'password' => bcrypt('password'),
+        ]);
+
+        $user->save();
+        $user->assignRole('kuchyn');
+        $user->givePermissionTo([
+            'oznameni'
+        ]);
+
+        // Test Admin
+        $user = User::create([
+            'name' => 'Klika Miroslav',
+            'email' => 'klika@khn.cz',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
+        ]);
+
+        $user->save();
+        $user->assignRole('admin');
+        $user->givePermissionTo([
+            //
+        ]);
+
+        // Test User
+        $user = User::create([
+            'name' => 'Vanek Milan',
+            'email' => 'vanek@khn.cz',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
         ]);
 
         $user->save();
         $user->assignRole('user');
         $user->givePermissionTo([
-            'post create',
-            'post show'
-        ]);
-
-        // Guest / Role Guest / Permissions [user show]
-        $guest = User::create([
-            'name' => 'Guest',
-            'email' => 'guest@email.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('user'),
-        ]);
-
-        $guest->save();
-        $guest->assignRole('guest');
-        $guest->givePermissionTo([
-            'post show'
+            //
         ]);
 
         // Testing users
