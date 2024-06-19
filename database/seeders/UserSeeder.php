@@ -86,9 +86,9 @@ class UserSeeder extends Seeder
             //
         ]);
 
-        // Testing users
-        // User::factory(100)->create()->each(function ($user) {
-        //     $user->assignRole('guest')->givePermissionTo('_default');
-        // });
+        # Testing users
+        User::factory(100)->create()->each(function ($user) {
+            $user->assignRole('user')->givePermissionTo();
+        });
     }
 }
