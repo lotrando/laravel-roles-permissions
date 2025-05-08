@@ -452,7 +452,7 @@
         var id = $('#item-id').val()
         var action = $('#action').val()
         $.ajax({
-          url: "admin/user/destroy/" + id,
+          url: "user/destroy/" + id,
           beforeSend: function() {
             $('#buttonSpinner').show();
             $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
