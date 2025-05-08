@@ -258,12 +258,12 @@
         columns: [{
             data: 'name',
             "className": 'text-red',
-            "width": "10%",
+            "width": "auto",
           },
           {
             data: 'permissions[]',
             "className": 'text-yellow',
-            "width": "65%",
+            "width": "70%",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {

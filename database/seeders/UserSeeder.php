@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
-use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
@@ -30,54 +27,12 @@ class UserSeeder extends Seeder
             //
         ]);
 
-        // Test sekretarka
-        $supervisor = User::create([
-            'name' => 'Wojnarova Marcela',
-            'email' => 'wojnarova@khn.cz',
-            'email_verified_at' => now(),
-            'password' => bcrypt('password'),
-        ]);
-
-        $supervisor->save();
-        $supervisor->assignRole('sekretariat');
-        $supervisor->givePermissionTo([
-            'media'
-        ]);
-
-        // Test Kuchyne
-        $user = User::create([
-            'name' => 'Weber Martin',
-            'email' => 'weber@khn.cz',
-            'email_verified_at' => now(),
-            'password' => bcrypt('password'),
-        ]);
-
-        $user->save();
-        $user->assignRole('kuchyn');
-        $user->givePermissionTo([
-            'oznameni'
-        ]);
-
-        // Test Admin
-        $user = User::create([
-            'name' => 'Klika Miroslav',
-            'email' => 'klika@khn.cz',
-            'email_verified_at' => now(),
-            'password' => bcrypt('password'),
-        ]);
-
-        $user->save();
-        $user->assignRole('admin');
-        $user->givePermissionTo([
-            //
-        ]);
-
         // Test User
         $user = User::create([
-            'name' => 'Vanek Milan',
-            'email' => 'vanek@khn.cz',
+            'name' => 'User',
+            'email' => 'user@email.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('password'),
+            'password' => bcrypt('useruser'),
         ]);
 
         $user->save();
@@ -87,8 +42,8 @@ class UserSeeder extends Seeder
         ]);
 
         # Testing users
-        User::factory(100)->create()->each(function ($user) {
-            $user->assignRole('user')->givePermissionTo();
-        });
+        // User::factory(5)->create()->each(function ($user) {
+        //     $user->assignRole('user')->givePermissionTo();
+        // });
     }
 }

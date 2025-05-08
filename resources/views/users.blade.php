@@ -75,7 +75,6 @@
           <table class="table-vcenter card-table table" id="Table">
             <thead>
               <tr>
-                <th class="bg-muted-lt">{{ __('UID') }}</th>
                 <th class="bg-muted-lt">{{ __('User Name') }}</th>
                 <th class="bg-muted-lt">{{ __('UserEmail') }}</th>
                 <th class="bg-muted-lt">{{ __('User Roles') }}</th>
@@ -349,22 +348,18 @@
           }
         },
         columns: [{
-            data: 'id',
-            'width': '1%'
-          },
-          {
             data: 'name',
             'className': 'text-lime',
-            'width': '15%'
+            width: '10%'
           },
           {
             data: 'email',
-            'width': '15%'
+            width: 'auto'
           },
           {
             data: 'roles',
-            "className": 'text-red',
-            "width": "10%",
+            className: 'text-red',
+            width: "15%",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {
@@ -391,14 +386,14 @@
           },
           {
             data: 'created_at',
-            'width': '8%',
+            width: '8%',
             render: function(data, type, full, meta) {
               return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
             }
           },
           {
             data: 'updated_at',
-            'width': '8%',
+            width: '8%',
             render: function(data, type, full, meta) {
               return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
             }
@@ -538,8 +533,8 @@
               }
             }
           },
-          error: function(xhr, status, error) {
-            toastr.error(error)
+          error: function(xhr, status, error, message) {
+            toastr.error(error + ' ' + message)
           }
         });
       });

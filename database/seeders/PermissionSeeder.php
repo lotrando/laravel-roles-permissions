@@ -21,7 +21,7 @@ class PermissionSeeder extends Seeder
 
         // Create permissions
 
-        $permissionsA = [
+        $permissions = [
             'user create',
             'user edit',
             'user show',
@@ -36,25 +36,9 @@ class PermissionSeeder extends Seeder
             'permission edit',
             'permission show',
             'permission delete',
-
-            'post create',
-            'post edit',
-            'post show',
-            'post delete',
         ];
 
-        $permissionsB = [
-            'oznameni',
-            'strava',
-            'dokumentace',
-            'standardy',
-            'isp',
-            'bozp',
-            'kvalita',
-            'media',
-        ];
-
-        foreach ($permissionsB as $permission) {
+        foreach ($permissions as $permission) {
             Permission::create([
                 'name' => $permission
             ]);

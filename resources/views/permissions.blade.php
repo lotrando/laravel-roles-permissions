@@ -12,7 +12,7 @@
         <div class="col">
           {{-- Page pre-title --}}
           <div class="page-pretitle">
-            {{ __('Roles') }}
+            {{ __('Users') }}
           </div>
           {{-- Page title --}}
           <h2 class="page-title text-blue h2">
