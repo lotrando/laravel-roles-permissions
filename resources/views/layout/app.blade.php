@@ -32,11 +32,16 @@
 
       body {
         /* font-feature-settings: "cv03", "cv04", "cv11";
-        background-image: url('../img/blocks.jpg');
+        background-image: url('../img/blue.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         back` */
+        font-feature-settings: "cv03", "cv04", "cv11";
+        background: linear-gradient(to right, #0a2342 20%, #3a6ea5 100%);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
       }
 
       .modal-status {
@@ -65,8 +70,12 @@
         vertical-align: middle;
       }
 
+      tbody tr {
+        cursor: pointer;
+      }
+
       #toast-container>div {
-        width: 350px;
+        width: 450px;
       }
     </style>
   </head>

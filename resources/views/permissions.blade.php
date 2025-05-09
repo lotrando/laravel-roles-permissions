@@ -73,7 +73,7 @@
           </form>
         </div>
         <div class="table-responsive">
-          <table class="table-vcenter card-table table" id="Table">
+          <table class="table-vcenter card-table table" id="permissionTable">
             <thead>
               <tr>
                 <th class="bg-muted-lt">{{ __('Permission Name') }}</th>
@@ -183,13 +183,13 @@
         "closeButton": false,
         "debug": true,
         "newestOnTop": true,
-        "progressBar": false,
+        "progressBar": true,
         "positionClass": "toast-top-right",
         "preventDuplicates": true,
         "onclick": null,
         "showDuration": "500",
         "hideDuration": "500",
-        "timeOut": "2000",
+        "timeOut": "3500",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -198,7 +198,7 @@
       }
 
       // Datatable
-      var myTable = new DataTable('#Table', {
+      var myTable = new DataTable('#permissionTable', {
         dom: 'lrt',
         paging: true,
         serverSide: true,
@@ -232,26 +232,26 @@
         },
         columns: [{
             data: 'name',
-            "className": 'text-yellow',
-            'width': '75%',
+            className: 'text-yellow',
+            width: '75%',
           },
           {
             data: 'guard_name',
-            "className": 'text-lime',
-            'width': '5%',
+            className: 'text-lime',
+            width: '5%',
             orderable: false,
             searchable: false
           },
           {
             data: 'created_at',
-            'width': '8%',
+            width: '8%',
             render: function(data, type, full, meta) {
               return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
             }
           },
           {
             data: 'updated_at',
-            'width': '8%',
+            width: '8%',
             render: function(data, type, full, meta) {
               return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
             }
@@ -259,7 +259,7 @@
         ]
       });
 
-      // Edit form after click datatable row
+      // Row click event
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
         $('#action').val('Update')
@@ -278,7 +278,7 @@
         myTable.search($(this).val()).draw()
       });
 
-      // New button
+      // New permission button
       $('#createButton').on('click', function() {
         $('#deleteButton').hide()
         $('#createForm')[0].reset()
@@ -288,7 +288,7 @@
         $('#action').val('Create')
       });
 
-      // Delete button
+      // Delete button delete modal show
       $('#deleteButton').on('click', function() {
         $('#createModal').modal('hide')
         $('#deleteModal').modal('show')

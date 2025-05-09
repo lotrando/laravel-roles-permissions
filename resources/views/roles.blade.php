@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/permissions.png') }}" rel="shortcut icon">
+  <link type="image/png" href="{{ asset('img/favicons/roles.png') }}" rel="shortcut icon">
 @endsection
 
 @section('page-header')
@@ -69,7 +69,7 @@
           </form>
         </div>
         <div class="table-responsive">
-          <table class="table-vcenter card-table table" id="Table">
+          <table class="table-vcenter card-table table" id="rolesTable">
             <thead>
               <tr>
                 <th class="bg-muted-lt">{{ __('Name') }}</th>
@@ -199,13 +199,13 @@
         "closeButton": false,
         "debug": true,
         "newestOnTop": true,
-        "progressBar": false,
+        "progressBar": true,
         "positionClass": "toast-top-right",
         "preventDuplicates": true,
         "onclick": null,
         "showDuration": "500",
         "hideDuration": "500",
-        "timeOut": "2000",
+        "timeOut": "3500",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -214,7 +214,7 @@
       }
 
       // Datatable
-      var myTable = new DataTable('#Table', {
+      var myTable = new DataTable('#rolesTable', {
         dom: 'lrt',
         paging: true,
         serverSide: true,
@@ -301,7 +301,6 @@
       // Edit form after click datatable row
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
-        $('#permissions').multiSelect('refresh');
         $('#action').val('Edit')
         $('#role_name').val(data.name)
         $('#item-id').val(data.id)
@@ -311,9 +310,12 @@
         $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
         $('#deleteButton').show()
         $('#createModal').modal('show')
-        for (var key = 0; key < data.permissions.length; key++) {
-          $('#permissions').multiSelect('select', data.permissions[key])
-        }
+        $('#permissions').multiSelect('deselect_all');
+        var permissionNames = data.permissions.map(function(p) {
+          return p.name ? p.name : p;
+        });
+        $('#permissions').multiSelect('select', permissionNames);
+        $('#permissions').multiSelect('refresh');
       });
 
       // Datatable custom search box

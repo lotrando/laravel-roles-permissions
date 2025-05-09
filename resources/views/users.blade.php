@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/permissions.png') }}" rel="shortcut icon">
+  <link type="image/png" href="{{ asset('img/favicons/users.png') }}" rel="shortcut icon">
 @endsection
 
 @section('page-header')
@@ -12,7 +12,7 @@
         <div class="col">
           {{-- Page pre-title --}}
           <div class="page-pretitle">
-            {{ __('App') }}
+            {{ __('Application') }}
           </div>
           {{-- Page title --}}
           <h2 class="page-title text-blue h2">
@@ -67,16 +67,16 @@
                   <path d="M21 21l-6 -6"></path>
                 </svg>
               </span>
-              <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search…') }}">
+              <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search in users" placeholder="{{ __('Search user …') }}">
             </div>
           </form>
         </div>
         <div class="table-responsive">
-          <table class="table-vcenter card-table table" id="Table">
+          <table class="table-vcenter card-table table-hover table" id="usersTable">
             <thead>
               <tr>
                 <th class="bg-muted-lt">{{ __('User Name') }}</th>
-                <th class="bg-muted-lt">{{ __('UserEmail') }}</th>
+                <th class="bg-muted-lt">{{ __('User Email') }}</th>
                 <th class="bg-muted-lt">{{ __('User Roles') }}</th>
                 <th class="bg-muted-lt">{{ __('User Direct Permissions') }}</th>
                 <th class="bg-muted-lt">{{ __('Created') }}</th>
@@ -116,7 +116,6 @@
                   </span>
                   <input class="form-control @error('name') is-invalid is-invalid-lite @enderror" id="name" name="name" type="text" value=""
                     placeholder="{{ __('e.g. Doe Jon') }}">
-                  </label>
                 </div>
               </div>
               <div class="col-6">
@@ -132,7 +131,6 @@
                   </span>
                   <input class="form-control @error('email') is-invalid is-invalid-lite @enderror" id="email" name="email" type="text" value=""
                     placeholder="{{ __('e.g. doe@emai.com') }}">
-                  </label>
                 </div>
               </div>
             </div>
@@ -275,13 +273,13 @@
         "closeButton": false,
         "debug": true,
         "newestOnTop": true,
-        "progressBar": false,
+        "progressBar": true,
         "positionClass": "toast-top-right",
         "preventDuplicates": true,
         "onclick": null,
         "showDuration": "500",
         "hideDuration": "500",
-        "timeOut": "2000",
+        "timeOut": "3500",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -306,7 +304,7 @@
       });
 
       // Datatable
-      var myTable = new DataTable('#Table', {
+      var myTable = new DataTable('#usersTable', {
         dom: 'lrt',
         paging: true,
         serverSide: true,
@@ -406,9 +404,21 @@
         var data = myTable.row(this).data();
         if (data.id == 1) {
           $(this).addClass('text-red')
-          toastr.error('Admin User ! No edit and delete')
+          toastr.error('Admin ! No edit and delete')
           return
         }
+        var roleNames = data.roles.map(function(role) {
+          return role.name;
+        });
+        $('#rolesSelect option').each(function() {
+          $(this).prop('selected', roleNames.includes($(this).val()));
+        });
+        var permissionNames = data.permissions.map(function(permission) {
+          return permission.name;
+        });
+        $('#permissionsSelect option').each(function() {
+          $(this).prop('selected', permissionNames.includes($(this).val()));
+        });
         $('#action').val('Edit')
         $('#item-id').val(data.id)
         $('#name').val(data.name)
@@ -445,7 +455,7 @@
       // Delete confirm button - click delete item
       $('#deleteSubmit').click(function() {
         var id = $('#item-id').val()
-        var action = $('#action').val()
+
         $.ajax({
           url: "user/destroy/" + id,
           beforeSend: function() {
@@ -487,11 +497,13 @@
 
         var form = $(this);
         var type = $('#action').val()
+
         if (type == 'Add') {
           var action = 'user/store';
           var method = 'POST';
           var modalClose = false
         }
+
         if (type == 'Edit') {
           var id = $('#item-id').val()
           var action = 'user/update/' + id;
@@ -533,8 +545,8 @@
               }
             }
           },
-          error: function(xhr, status, error, message) {
-            toastr.error(error + ' ' + message)
+          error: function(xhr, status, error) {
+            toastr.error(error)
           }
         });
       });
