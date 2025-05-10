@@ -74,8 +74,6 @@
             <tr>
               <th class="bg-muted-lt">{{ __('Permission Name') }}</th>
               <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
-              <th class="bg-muted-lt">{{ __('Created') }}</th>
-              <th class="bg-muted-lt">{{ __('Updated') }}</th>
             </tr>
           </thead>
         </table>
@@ -108,8 +106,8 @@
                   <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
                 </svg>
               </span>
-              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text"
-                value="" placeholder="{{ __('e.g. post create') }}">
+              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text" value=""
+                placeholder="{{ __('e.g. post create') }}">
               </label>
             </div>
           </div>
@@ -204,7 +202,7 @@
         lengthChange: false,
         responsive: true,
         fixedHeader: true,
-        scrollY: 540,
+        scrollY: 550,
         deferRender: true,
         searchHighlight: true,
         scroller: false,
@@ -228,28 +226,14 @@
         columns: [{
             data: 'name',
             className: 'text-yellow',
-            width: '75%',
+            width: '15%',
           },
           {
             data: 'guard_name',
             className: 'text-lime',
-            width: '5%',
+            width: 'auto',
             orderable: false,
             searchable: false
-          },
-          {
-            data: 'created_at',
-            width: '8%',
-            render: function(data, type, full, meta) {
-              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-            }
-          },
-          {
-            data: 'updated_at',
-            width: '8%',
-            render: function(data, type, full, meta) {
-              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-            }
           }
         ]
       });

@@ -26,6 +26,21 @@
         <div class="d-print-none col-auto ms-auto">
           {{-- Buttons --}}
           <div class="btn-list">
+            <div class="d-block col-auto">
+              <form method="get" autocomplete="off" novalidate="">
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                      <path d="M21 21l-6 -6"></path>
+                    </svg>
+                  </span>
+                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search role ...') }}">
+                </div>
+              </form>
+            </div>
             @role('admin')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
                 <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
@@ -47,36 +62,17 @@
 
 @section('page')
   <div class="col-12">
-    <div class="card p-0 shadow-sm">
-      <div class="card-body p-2">
-        <div class="d-block col mb-1">
-          <form method="get" autocomplete="off" novalidate="">
-            <div class="input-icon">
-              <span class="input-icon-addon">
-                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                  <path d="M21 21l-6 -6"></path>
-                </svg>
-              </span>
-              <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search…') }}">
-            </div>
-          </form>
-        </div>
-        <div class="table-responsive">
-          <table class="table-vcenter card-table table" id="rolesTable">
-            <thead>
-              <tr>
-                <th class="bg-muted-lt">{{ __('Name') }}</th>
-                <th class="bg-muted-lt">{{ __('Role permissions') }}</th>
-                <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
-                <th class="bg-muted-lt">{{ __('Created') }}</th>
-                <th class="bg-muted-lt">{{ __('Updated') }}</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+    <div class="card px-1 shadow-sm">
+      <div class="table-responsive">
+        <table class="table-vcenter card-table table" id="rolesTable">
+          <thead>
+            <tr>
+              <th class="bg-muted-lt">{{ __('Name') }}</th>
+              <th class="bg-muted-lt">{{ __('Role permissions') }}</th>
+              <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
   </div>
@@ -221,7 +217,7 @@
         lengthChange: false,
         responsive: true,
         fixedHeader: true,
-        scrollY: 540,
+        scrollY: 550,
         deferRender: true,
         searchHighlight: true,
         scroller: false,
@@ -254,12 +250,12 @@
         columns: [{
             data: 'name',
             "className": 'text-red',
-            "width": "auto",
+            "width": "15%",
           },
           {
             data: 'permissions[]',
-            "className": 'text-yellow',
-            "width": "70%",
+            className: 'text-yellow',
+            width: "70%",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {
@@ -272,24 +268,10 @@
           },
           {
             data: 'guard_name',
-            "className": 'text-lime',
-            'width': '5%',
+            className: 'text-lime',
+            width: '5%',
             orderable: false,
             searchable: false
-          },
-          {
-            data: 'created_at',
-            'width': '8%',
-            render: function(data, type, full, meta) {
-              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-            }
-          },
-          {
-            data: 'updated_at',
-            'width': '8%',
-            render: function(data, type, full, meta) {
-              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-            }
           }
         ]
       });
