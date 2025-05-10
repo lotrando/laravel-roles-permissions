@@ -10,10 +10,6 @@
     <div class="container-fluid">
       <div class="row g-2 align-items-center">
         <div class="col">
-          {{-- Page pre-title --}}
-          <div class="page-pretitle">
-            {{ __('Users') }}
-          </div>
           {{-- Page title --}}
           <h2 class="page-title text-blue h2">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -225,7 +221,7 @@
         lengthChange: false,
         responsive: true,
         fixedHeader: true,
-        scrollY: 480,
+        scrollY: 540,
         deferRender: true,
         searchHighlight: true,
         scroller: false,

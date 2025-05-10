@@ -10,10 +10,6 @@
     <div class="container-fluid">
       <div class="row g-2 align-items-center">
         <div class="col">
-          {{-- Page pre-title --}}
-          <div class="page-pretitle">
-            {{ __('Application') }}
-          </div>
           {{-- Page title --}}
           <h2 class="page-title text-blue h2">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -33,16 +29,29 @@
         <div class="d-print-none col-auto ms-auto">
           {{-- Buttons --}}
           <div class="btn-list">
+            <div class="d-block col-auto">
+              <form method="get" autocomplete="off" novalidate="">
+                <div class="input-icon">
+                  <span class="input-icon-addon">
+                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                      <path d="M21 21l-6 -6"></path>
+                    </svg>
+                  </span>
+                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search user ...') }}">
+                </div>
+              </form>
+            </div>
             @role('admin')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                  <path d="M15 12h-6" />
-                  <path d="M12 9v6" />
+                <svg class="icon icon-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5l0 14"></path>
+                  <path d="M5 12l14 0"></path>
                 </svg>
-                {{ __('New') }}
+                {{ __('New user') }}
               </button>
             @endrole
           </div>
@@ -54,37 +63,20 @@
 
 @section('page')
   <div class="col-12">
-    <div class="card p-0 shadow-sm">
-      <div class="card-body p-2">
-        <div class="d-block col mb-1">
-          <form method="get" autocomplete="off" novalidate="">
-            <div class="input-icon">
-              <span class="input-icon-addon">
-                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                  <path d="M21 21l-6 -6"></path>
-                </svg>
-              </span>
-              <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search in users" placeholder="{{ __('Search user …') }}">
-            </div>
-          </form>
-        </div>
-        <div class="table-responsive">
-          <table class="table-vcenter card-table table-hover table" id="usersTable">
-            <thead>
-              <tr>
-                <th class="bg-muted-lt">{{ __('User Name') }}</th>
-                <th class="bg-muted-lt">{{ __('User Email') }}</th>
-                <th class="bg-muted-lt">{{ __('User Roles') }}</th>
-                <th class="bg-muted-lt">{{ __('User Direct Permissions') }}</th>
-                <th class="bg-muted-lt">{{ __('Created') }}</th>
-                <th class="bg-muted-lt">{{ __('Updated') }}</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+    <div class="card px-1 shadow-sm">
+      <div class="table-responsive">
+        <table class="table-vcenter card-table table-hover table" id="usersTable">
+          <thead>
+            <tr>
+              <th class="bg-muted-lt">{{ __('User name') }}</th>
+              <th class="bg-muted-lt">{{ __('User email') }}</th>
+              <th class="bg-muted-lt">{{ __('User roles') }}</th>
+              <th class="bg-muted-lt">{{ __('User permissions') }}</th>
+              <th class="bg-muted-lt">{{ __('Created') }}</th>
+              <th class="bg-muted-lt">{{ __('Updated') }}</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
   </div>
@@ -92,7 +84,7 @@
 
 @section('modals')
   {{-- Create Modal --}}
-  <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
@@ -104,7 +96,7 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-6">
-                <label class="form-label">{{ __('Name') }}</label>
+                <label class="form-label">{{ __('User name') }}</label>
                 <div class="input-icon mb-3">
                   <span class="input-icon-addon">
                     <svg class="icon icon-tabler icons-tabler-outline icon-tabler-user text-lime" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -119,7 +111,7 @@
                 </div>
               </div>
               <div class="col-6">
-                <label class="form-label">{{ __('Email address') }}</label>
+                <label class="form-label">{{ __('User email') }}</label>
                 <div class="input-icon mb-3">
                   <span class="input-icon-addon">
                     <svg class="icon icon-tabler icons-tabler-outline icon-tabler-mail text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -130,7 +122,7 @@
                     </svg>
                   </span>
                   <input class="form-control @error('email') is-invalid is-invalid-lite @enderror" id="email" name="email" type="text" value=""
-                    placeholder="{{ __('e.g. doe@emai.com') }}">
+                    placeholder="{{ __('e.g. doejon@email.com') }}">
                 </div>
               </div>
             </div>
@@ -174,7 +166,7 @@
                       </svg>
                     </span>
                     <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password_confirmation" name="password_confirmation" type="password"
-                      value="{{ old('password_confirmation') }}" placeholder="{{ __('Confirm password') }}" autocomplete="off">
+                      value="{{ old('password_confirmation') }}" placeholder="{{ __('Confirm user password') }}" autocomplete="off">
                     @error('password_confirmation')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -184,27 +176,29 @@
               <div class="row mt-2">
                 <div class="col-6">
                   <div class="mb-3">
-                    <div class="form-label"><kbd>Ctrl + Mouse</kbd> {{ __('Select role for this user') }}</div>
-                    <select class="form-select" id="rolesSelect" name="roles[]" multiple="true" multiple size="10">
+                    <div class="form-label"><kbd>Ctrl</kbd> + <kbd>{{ __('LMB') }}</kbd> {{ __('Select roles for this user') }}</div>
+                    <select class="form-select" id="rolesSelect" name="roles[]" multiple="true" multiple size="12">
                       @foreach ($roles as $role)
                         <option value="{{ $role->name }}">{{ $role->name }}</option>
                       @endforeach
                     </select>
                   </div>
-                  <button class="btn me-auto" id="selectAllRoles" name="selectAllRoles" type="button" value="Select All">Select All Roles</button>
-                  <button class="btn me-auto" id="unselectAllRoles" name="unselectAllRoles" type="button" value="Unselect All">Unselect All Roles</button>
+                  <button class="btn me-auto" id="selectAllRoles" name="selectAllRoles" type="button" value="Select All">{{ __('Select All Roles') }}</button>
+                  <button class="btn me-auto" id="unselectAllRoles" name="unselectAllRoles" type="button" value="Unselect All">{{ __('Unselect All Roles') }}</button>
                 </div>
                 <div class="col-6">
                   <div class="mb-3">
-                    <div class="form-label"><kbd>Ctrl + Mouse</kbd> {{ __('Select permissions for this user') }}</div>
-                    <select class="form-select" id="permissionsSelect" name="permissions[]" multiple="true" multiple size="10">
+                    <div class="form-label"><kbd>Ctrl</kbd> + <kbd>{{ __('LMB') }}</kbd> {{ __('Select permissions for this user') }}</div>
+                    <select class="form-select" id="permissionsSelect" name="permissions[]" multiple="true" multiple size="12">
                       @foreach ($permissions as $permission)
                         <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                       @endforeach
                     </select>
                   </div>
-                  <button class="btn me-auto" id="selectAllPermissions" name="selectAllPermissions" type="button" value="Select All">Select All Permissions</button>
-                  <button class="btn me-auto" id="unselectAllPermissions" name="unselectAllPermissions" type="button" value="Unselect All">Unselect All Permissions</button>
+                  <button class="btn me-auto" id="selectAllPermissions" name="selectAllPermissions" type="button"
+                    value="Select All">{{ __('Select All Permissions') }}</button>
+                  <button class="btn me-auto" id="unselectAllPermissions" name="unselectAllPermissions" type="button"
+                    value="Unselect All">{{ __('Unselect All Permissions') }}</button>
                 </div>
               </div>
             </div>
@@ -315,7 +309,7 @@
         lengthChange: false,
         responsive: true,
         fixedHeader: true,
-        scrollY: 480,
+        scrollY: 600,
         deferRender: true,
         searchHighlight: true,
         scroller: false,
@@ -404,7 +398,7 @@
         var data = myTable.row(this).data();
         if (data.id == 1) {
           $(this).addClass('text-red')
-          toastr.error('Admin ! No edit and delete')
+          toastr.error('Administrator ! No Edit and DSelete')
           return
         }
         var roleNames = data.roles.map(function(role) {
@@ -536,10 +530,10 @@
               if (data.success) {
                 toastr.success(data.success)
                 setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
                   if (modalClose = true) {
                     $('#createModal').modal('hide')
                   }
+                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
                 }, 1000);
                 myTable.draw()
               }

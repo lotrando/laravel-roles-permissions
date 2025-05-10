@@ -27,13 +27,14 @@
           </div>
         </div>
         <div class="card-body">
-          <h2 class="h2 mb-4 text-center">Register your account</h2>
+          <h2 class="h2 mb-4 text-center">{{ __('Register your account') }}</h2>
           <form action="{{ route('register') }}" method="POST">
             @csrf
 
             <div class="mb-2">
               <label class="form-label">{{ __('Email address') }}</label>
-              <input class="form-control @error('email') is-invalid is-invalid-lite @enderror" name="email" type="text" value="{{ old('personal_number') }}" placeholder="Email">
+              <input class="form-control @error('email') is-invalid is-invalid-lite @enderror" name="email" type="text" value="{{ old('personal_number') }}"
+                placeholder="{{ __('Your email address') }}">
               @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -41,7 +42,7 @@
             <div class="mb-2">
               <label class="form-label">{{ __('Name') }}</label>
               <input class="form-control @error('name') is-invalid is-invalid-lite @enderror" name="name" type="text" value="{{ old('name') }}"
-                placeholder="Zadejte své příjmení a jméno">
+                placeholder="{{ __('Enter your last name and first name') }}">
               @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -49,9 +50,8 @@
             <div class="mb-3">
               <label class="form-label">{{ __('Password') }}</label>
               <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password" name="password" data-bs-container="body" data-bs-toggle="popover"
-                data-bs-placement="top"
-                data-bs-content="{{ __('Zvolte si své heslo. Musí mít 8 znaků nebo více a dobře si ho zapamatujte, heslo budete používat ke všem autorizovaným aplikacím na Intranetu KHN.') }}"
-                type="password" value="{{ old('password') }}" placeholder="Zvolte si své heslo" autocomplete="off">
+                data-bs-placement="top" data-bs-content="{{ __('Zvolte si své heslo. Musí mít 8 znaků nebo více a dobře si ho zapamatujte') }}" type="password"
+                value="{{ old('password') }}" placeholder="{{ __('Choose your password') }}" autocomplete="off">
               @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -59,7 +59,7 @@
             <div class="mb-3">
               <label class="form-label">{{ __('Password confirmation') }}</label>
               <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password_confirmation" name="password_confirmation" type="password"
-                value="{{ old('password_confirmation') }}" placeholder="Potvrďte vámi zvolené heslo" autocomplete="off">
+                value="{{ old('password_confirmation') }}" placeholder="{{ __('Confirm your chosen password.') }}" autocomplete="off">
               @error('password_confirmation')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -67,17 +67,17 @@
             <div class="mt-5">
               <label class="form-check">
                 <input class="form-check-input" id="terms" name="terms" type="checkbox" onClick="check_agree(this.form)" />
-                <span class="form-check-label">{{ __('Agree the') }} <a data-bs-toggle="modal" data-bs-target="#modal-terms" href="#">{{ __('terms and policy') }}</a>.</span>
+                <span class="form-check-label">{{ __('Agree to') }} <a data-bs-toggle="modal" data-bs-target="#modal-terms" href="#">{{ __('terms and policy') }}</a></span>
               </label>
             </div>
             <div class="form-footer">
-              <button class="btn btn-primary w-100 text-uppercase" id="submitButton" type="submit" value="{{ __('Sign up') }}" disabled>{{ __('Sign up') }}</button>
+              <button class="btn btn-primary w-100 text-uppercase" id="submitButton" type="submit" value="{{ __('Register') }}" disabled>{{ __('Register') }}</button>
             </div>
           </form>
-          <div class="text-secondary mt-3 text-center">
-            Already have account? <a href="{{ route('login') }}" tabindex="-1">Sign in</a>
-          </div>
         </div>
+      </div>
+      <div class="mt-3 text-center text-white">
+        {{ __('Already have account?') }} <a class="text-azure" href="{{ route('login') }}" tabindex="-1">{{ __('Login') }}</a>
       </div>
     </div>
   </div>
@@ -88,16 +88,15 @@
     <div class="modal-dialog modal-md modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header bg-azure-lt">
-          <h5 class="modal-title">Jaké osobní údaje společnost zpracovává ?</h5>
+          <h5 class="modal-title">{{ __('What personal data does the company process?') }}</h5>
           <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <h3 class="text-center">
-            Společnost o Vás může shromažďovat údaje, které ji sami sdělíte !
+            {{ __('The company may collect data that you provide to it!') }}
           </h3>
           <p class="text-justify">
-            Takovými osobními údaji jsou zejména údaje, které uvedete ve vyplněném registračním, objednávkovém či jiném formuláři, nebo
-            které společnosti sdělíte.
+            {{ __('Such personal data includes, in particular, the data that you provide in a completed registration, order or other form, or that you provide yourself.') }}
           </p>
         </div>
         {{-- <div class="modal-footer">
@@ -110,6 +109,8 @@
 
 @push('scripts')
   <script>
+    $('#terms').focus();
+
     function check_agree(form) {
       if (form.terms.checked) {
         form.submitButton.disabled = false;

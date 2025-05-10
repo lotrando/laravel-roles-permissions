@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
@@ -74,7 +73,7 @@ class UserController extends Controller
         if ($request->ajax()) {
 
             $error = Validator::make($request->all(), [
-                'name' => 'required',
+                'name'  => 'required',
                 'email' => 'required|string|email|unique:users,email,' . $request->id
             ]);
 
@@ -90,7 +89,7 @@ class UserController extends Controller
 
             $user->syncPermissions($request['permissions'])->syncRoles($request['roles']);
 
-            return response()->json(['success' => 'User updated']);
+            return response()->json(['success' => __('User updated')]);
         }
     }
 

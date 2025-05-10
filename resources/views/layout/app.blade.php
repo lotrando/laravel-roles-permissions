@@ -19,10 +19,10 @@
     <link href="{{ asset('libs/toastr/toastr.min.css') }}" rel="stylesheet" />
 
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
       :root {
-        --tblr-font-sans-serif: 'Ubuntu', sans-serif;
+        --tblr-font-sans-serif: 'Inter', sans-serif;
         --tblr-body-color: #516274;
       }
 
@@ -31,17 +31,13 @@
       }
 
       body {
-        /* font-feature-settings: "cv03", "cv04", "cv11";
+        font-feature-settings: "cv03", "cv04", "cv11";
         background-image: url('../img/blue.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        back` */
-        font-feature-settings: "cv03", "cv04", "cv11";
-        background: linear-gradient(to right, #0a2342 20%, #3a6ea5 100%);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+        background-attachment: fixed;
+        background-color: #f8f9fa;
       }
 
       .modal-status {
@@ -75,7 +71,7 @@
       }
 
       #toast-container>div {
-        width: 450px;
+        width: 400px;
       }
     </style>
   </head>
@@ -115,6 +111,31 @@
     <script src="{{ asset('libs/datatables/js/dataTables.fixedHeader.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/dataTables.scroller.min.js') }}"></script>
     <script src="{{ asset('libs/multiselect/js/jquery.multi-select.js') }}"></script>
+    <script>
+      var currentLocale = '{{ app()->getLocale() }}';
+
+      function updateLangFlag(locale) {
+        if (locale === 'en') {
+          $('#lang-flag').removeClass().addClass('flag flag-xs flag-country-cz');
+          $('#lang-toggle').attr('title', 'Čeština');
+        } else {
+          $('#lang-flag').removeClass().addClass('flag flag-xs flag-country-gb');
+          $('#lang-toggle').attr('title', 'English');
+        }
+      }
+
+      updateLangFlag(currentLocale);
+
+      $('#lang-toggle').on('click', function() {
+        var newLocale = (currentLocale === 'cs') ? 'en' : 'cs';
+        $.post('/set-locale', {
+          locale: newLocale,
+          _token: '{{ csrf_token() }}'
+        }, function() {
+          location.reload();
+        });
+      });
+    </script>
     @stack('scripts')
   </body>
 

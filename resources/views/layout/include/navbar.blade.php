@@ -21,12 +21,12 @@
                   </span>
                 </a>
               </li>
-              @role('user|moderator|admin')
-              <li class="nav-item {{ request()->segment(1) == 'users' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('users') }}">
-                  <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'users' ? 'text-lime' : '' }}">
-                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              @role('guest|user|moderator|admin')
+                <li class="nav-item {{ request()->segment(1) == 'users' ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('users') }}">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'users' ? 'text-lime' : '' }}">
+                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
                         <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
@@ -41,11 +41,11 @@
                 </li>
               @endrole
               @role('moderator|admin')
-                              <li class="nav-item {{ request()->segment(1) == 'roles' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('roles') }}">
-                  <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'roles' ? 'text-red' : '' }}">
-                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <li class="nav-item {{ request()->segment(1) == 'roles' ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('roles') }}">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'roles' ? 'text-red' : '' }}">
+                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" />
                       </svg>
@@ -55,11 +55,11 @@
                     </span>
                   </a>
                 </li>
-                              <li class="nav-item {{ request()->segment(1) == 'permissions' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('permissions') }}">
-                  <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'permissions' ? 'text-yellow' : '' }}">
-                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <li class="nav-item {{ request()->segment(1) == 'permissions' ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('permissions') }}">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'permissions' ? 'text-yellow' : '' }}">
+                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
                         <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>

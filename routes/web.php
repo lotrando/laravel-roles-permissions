@@ -3,11 +3,9 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +17,20 @@ use Spatie\Permission\Models\Role;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Index page
+// Default route
 Route::get('/', function () {
-    return view('test');
+    return view('index');
 })->name('index');
 
+// Locales switcher
+Route::post('/set-locale', function (Request $request) {
+    $locale = $request->input('locale');
+    if (in_array($locale, ['cs', 'en'])) {
+        session(['locale' => $locale]);
+        app()->setLocale($locale);
+    }
+    return response()->json(['success' => true]);
+});
 
 // Routes group for all authorized users
 Route::middleware(['auth'])->group(function () {
@@ -37,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Defaut User role Route group for all roles [user, supervisor, admin] allowed
-    Route::middleware('role:user|moderator|admin')->group(function () {
+    Route::middleware(['role:user|moderator|admin'])->group(function () {
         // Users routes
         Route::get('users', [UserController::class, 'index'])->name('users');
         // Roles routes
@@ -61,7 +67,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Route group only admin allowed
     Route::middleware('role:admin')->group(function () {
-
         // Users routes
         Route::get('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
         // Roles routes

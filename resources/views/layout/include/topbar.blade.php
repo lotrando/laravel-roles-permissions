@@ -1,11 +1,10 @@
 <!-- Topbar -->
 <header class="navbar navbar-expand-md d-print-none">
   <div class="container-fluid">
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-menu" type="button" aria-controls="navbar-menu" aria-expanded="false"
-      aria-label="Toggle navigation">
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-menu" type="button" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <h1 class="navbar-brand d-none-navbar-horizontal pe-md-3 pe-0">
+    <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-md-3 pe-0">
       <a href="{{ route('index') }}">
         <img class="navbar-brand-image" src="{{ asset('img/logo.png') }}" alt="Laravel logo">
       </a>
@@ -13,6 +12,9 @@
     <div class="navbar-nav order-md-last flex-row">
       <div class="nav-item d-none d-md-flex nav-item d-none d-md-flex">
         <div class="btn-list">
+          <span class="nav-link cursor-pointer px-0" id="lang-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">
+            <span class="flag" id="lang-flag"></span>
+          </span>
           <div class="d-none d-md-flex">
             <a class="nav-link hide-theme-dark px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" href="?theme=dark" title="{{ __('Dark Mode') }}">
               <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -32,36 +34,37 @@
           </div>
           @guest
             <a class="nav-link" href="{{ route('register') }}">
-                  <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'register' ? 'text-green' : '' }}">
-                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-lock-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M12.5 21h-5.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 1.74 1.012"></path>
-              <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
-              <path d="M8 11v-4a4 4 0 1 1 8 0v4"></path>
-              <path d="M16 19h6"></path>
-              <path d="M19 16v6"></path>
-            </svg>
-                    </span>
-                    <span class="nav-link-title">
-                      {{ __('Register') }}
-                    </span>
-                  </a>
-                  <a class="nav-link" href="{{ route('login') }}">
-                    <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'login' ? 'text-green' : '' }}">
-                      <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
-                      <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
-                      <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
-                      <path d="M8 15a18 18 0 0 0 1.8 6"></path>
-                      <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
-                    </svg>
-                  </span>
-                  <span class="nav-link-title">
-                    {{ __('login') }}
-                  </span>
-                </a>
+              <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'register' ? 'text-green' : '' }}">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-lock-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M12.5 21h-5.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 1.74 1.012"></path>
+                  <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+                  <path d="M8 11v-4a4 4 0 1 1 8 0v4"></path>
+                  <path d="M16 19h6"></path>
+                  <path d="M19 16v6"></path>
+                </svg>
+              </span>
+              <span class="nav-link-title">
+                {{ __('Register') }}
+              </span>
+            </a>
+            <a class="nav-link" href="{{ route('login') }}">
+              <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'login' ? 'text-green' : '' }}">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
+                  <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
+                  <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
+                  <path d="M8 15a18 18 0 0 0 1.8 6"></path>
+                  <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
+                </svg>
+              </span>
+              <span class="nav-link-title">
+                {{ __('Login') }}
+              </span>
+            </a>
           @endguest
         </div>
       </div>

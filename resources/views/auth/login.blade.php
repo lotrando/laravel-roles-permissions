@@ -15,23 +15,25 @@
       <div class="card card-md shadow-sm">
         <div class="card-stamp">
           <div class="card-stamp-icon bg-blue">
-            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
-                        <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
-                        <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
-                        <path d="M8 15a18 18 0 0 0 1.8 6"></path>
-                        <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
-                      </svg>
+            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
+              <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
+              <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
+              <path d="M8 15a18 18 0 0 0 1.8 6"></path>
+              <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
+            </svg>
           </div>
         </div>
         <div class="card-body">
-          <h2 class="h2 mb-4 text-center">Login to your account</h2>
+          <h2 class="h2 mb-4 text-center">{{ __('Login to your account') }}</h2>
           <form action="{{ route('login') }}" method="POST" autocomplete="off">
             @csrf
             <div class="mb-2">
               <label class="form-label">{{ __('Email address') }}</label>
-              <input class="form-control @error('email') is-invalid is-invalid-lite @enderror" name="email" type="text" value="{{ old('personal_number') }}" placeholder="Email">
+              <input class="form-control @error('email') is-invalid is-invalid-lite @enderror" name="email" type="text" value="{{ old('email') }}"
+                placeholder="{{ __('Your email address') }}">
               @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -41,26 +43,34 @@
                 {{ __('Password') }}
               </label>
               <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password" name="password" type="password" value="{{ old('password') }}"
-                placeholder="{{ __('User password') }}" autocomplete="off">
+                placeholder="{{ __('Password') }}" autocomplete="off">
               @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mt-5">
               <label class="form-check">
-                <input class="form-check-input" name="remember" type="checkbox" />
+                <input class="form-check-input" id="remember" name="remember" type="checkbox" />
                 <span class="form-check-label">{{ __('Remember me on this device') }}</span>
               </label>
             </div>
             <div class="form-footer">
-              <button class="btn btn-blue w-100 text-uppercase hover-shadow mb-2" type="submit">{{ __('Sign in') }}</button>
+              <button class="btn btn-blue w-100 text-uppercase hover-shadow mb-2" type="submit">{{ __('Login') }}</button>
             </div>
           </form>
         </div>
       </div>
-      <div class="text-secondary mt-3 text-center">
-        Don't have account yet? <a href="{{ route('register') }}" tabindex="-1">Sign up</a>
+      <div class="mt-3 text-center text-white">
+        {{ __('Don\'t have account yet?') }} <a class="text-azure" href="{{ route('register') }}" tabindex="-1">{{ __('Register') }}</a>
       </div>
     </div>
   </div>
 @endsection
+
+@push('scripts')
+  <script>
+    $(document).ready(function() {
+      $('#remember, #email').focus()
+    });
+  </script>
+@endpush
