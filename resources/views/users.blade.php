@@ -340,11 +340,11 @@
         columns: [{
             data: 'name',
             'className': 'text-lime',
-            width: '10%'
+            width: '15%'
           },
           {
             data: 'email',
-            width: 'auto'
+            width: '15%'
           },
           {
             data: 'roles',
@@ -363,7 +363,7 @@
           {
             data: 'permissions',
             "className": 'text-yellow',
-            "width": "65%",
+            "width": "55%",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {
