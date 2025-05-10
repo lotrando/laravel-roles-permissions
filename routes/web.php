@@ -42,8 +42,13 @@ Route::middleware(['auth'])->group(function () {
         })->name('home');
     });
 
+    // Qr code modal for two factor authentication
+    Route::middleware(['auth'])->get('/two-factor-qr', function () {
+        return view('auth.two-factor-qr');
+    })->name('two-factor.qr');
+
     // Defaut User role Route group for all roles [user, supervisor, admin] allowed
-    Route::middleware(['role:user|moderator|admin'])->group(function () {
+    Route::middleware(['role:user|admin'])->group(function () {
         // Users routes
         Route::get('users', [UserController::class, 'index'])->name('users');
         // Roles routes
@@ -52,8 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
     });
 
-    // Route group for roles [supervisor, admin] allowed
-    Route::middleware('role:moderator|admin')->group(function () {
+    // Route group for roles [admin] allowed
+    Route::middleware(['role:admin'])->group(function () {
         // Users routes
         Route::post('user/store', [UserController::class, 'store'])->name('user.store');
         Route::post('user/update/{id}', [UserController::class, 'update'])->name('user.update');

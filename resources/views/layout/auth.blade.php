@@ -8,15 +8,11 @@
     @yield('favicon')
     <title>{{ env('APP_NAME' ?? 'Laravel') }}</title>
     <meta name="csrf_token" content="{{ csrf_token() }}" />
-    <link href="{{ asset('libs/datatables/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/datatables/css/fixedHeader.dataTables.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/multiselect/css/multi-select.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tabler.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-flags.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-payments.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
-    <link href="{{ asset('libs/toastr/toastr.min.css') }}" rel="stylesheet" />
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
@@ -32,6 +28,12 @@
 
       body {
         font-feature-settings: "cv03", "cv04", "cv11";
+        background-image: url('../img/blue.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-color: #f8f9fa;
       }
 
       .modal-status {
@@ -55,15 +57,6 @@
         background-color: var(--tblr-dropdown-link-hover-bg);
       }
 
-      td {
-        text-align: left;
-        vertical-align: middle;
-      }
-
-      tbody tr {
-        cursor: pointer;
-      }
-
       #toast-container>div {
         width: 400px;
       }
@@ -77,8 +70,6 @@
     <div class="page">
       {{-- Topbar --}}
       @include('layout.include.topbar')
-      {{-- Navbar --}}
-      @include('layout.include.navbar')
       {{-- Page wrapper --}}
       <div class="page-wrapper">
         {{-- Page header --}}
@@ -86,7 +77,6 @@
         {{-- Page body --}}
         <div class="page-body">
           <div class="container-fluid">
-            @yield('searchbox')
             @yield('page')
           </div>
         </div>
@@ -96,31 +86,10 @@
     </div>
     @include('layout.include.logout')
     @yield('modals')
-    <!-- Modal pro QR kód -->
-    <div class="modal fade" id="twoFactorQrModal" aria-labelledby="twoFactorQrModalLabel" aria-hidden="true" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" id="twoFactorQrModalContent">
-          <!-- Sem se načte obsah přes AJAX -->
-        </div>
-      </div>
-    </div>
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('js/demo.min.js') }}" defer></script>
-    <script src="{{ asset('libs/toastr/toastr.min.js') }}" defer></script>
-    <script src="{{ asset('libs/moment/moment-with-locales.min.js') }}" defer></script>
-    <script src="{{ asset('libs/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('libs/datatables/js/dataTables.fixedHeader.min.js') }}"></script>
-    <script src="{{ asset('libs/datatables/js/dataTables.scroller.min.js') }}"></script>
-    <script src="{{ asset('libs/multiselect/js/jquery.multi-select.js') }}"></script>
     <script>
-      $('#showTwoFactorQr').on('click', function() {
-        $.get('{{ route('two-factor.qr') }}', function(data) {
-          $('#twoFactorQrModalContent').html(data);
-          $('#twoFactorQrModal').modal('show');
-        });
-      });
-
       var currentLocale = '{{ app()->getLocale() }}';
 
       function updateLangFlag(locale) {

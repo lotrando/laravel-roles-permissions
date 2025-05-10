@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
         $user->save();
         $user->assignRole('user');
         $user->givePermissionTo([
-            //
+            'user show'
         ]);
 
         # Testing users

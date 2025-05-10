@@ -209,8 +209,6 @@
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
             @role('admin')
               <button class="btn btn-danger" id="deleteButton" type="button"></button>
-            @endrole
-            @role('moderator|admin')
               <button class="btn btn-primary" id="submitButton" type="submit"></button>
             @endrole
           </div>
@@ -398,7 +396,7 @@
         var data = myTable.row(this).data();
         if (data.id == 1) {
           $(this).addClass('text-red')
-          toastr.error('Administrator ! No Edit and DSelete')
+          toastr.error('Administrator account, no edit and delete !')
           return
         }
         var roleNames = data.roles.map(function(role) {

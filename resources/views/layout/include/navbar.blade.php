@@ -1,4 +1,4 @@
-@role('guest|user|moderator|admin')
+@role('user|admin')
   <div class="sticky-top">
     <header class="navbar-expand-md">
       <div class="navbar-collapse collapse" id="navbar-menu">
@@ -21,7 +21,7 @@
                   </span>
                 </a>
               </li>
-              @role('guest|user|moderator|admin')
+              @role('user|admin')
                 <li class="nav-item {{ request()->segment(1) == 'users' ? 'active' : '' }}">
                   <a class="nav-link" href="{{ route('users') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'users' ? 'text-lime' : '' }}">
@@ -40,7 +40,7 @@
                   </a>
                 </li>
               @endrole
-              @role('moderator|admin')
+              @role('user|admin')
                 <li class="nav-item {{ request()->segment(1) == 'roles' ? 'active' : '' }}">
                   <a class="nav-link" href="{{ route('roles') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'roles' ? 'text-red' : '' }}">
@@ -55,6 +55,8 @@
                     </span>
                   </a>
                 </li>
+              @endrole
+              @role('user|admin')
                 <li class="nav-item {{ request()->segment(1) == 'permissions' ? 'active' : '' }}">
                   <a class="nav-link" href="{{ route('permissions') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'permissions' ? 'text-yellow' : '' }}">

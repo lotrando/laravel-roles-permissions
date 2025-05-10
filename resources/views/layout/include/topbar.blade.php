@@ -79,6 +79,42 @@
           </a>
           {{-- User Dropdown Menu --}}
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+            @if (!auth()->user()->two_factor_secret)
+              <form method="POST" action="{{ url('user/two-factor-authentication') }}">
+                @csrf
+                <button class="dropdown-item" type="submit">
+                  <svg class="icon dropdown-item-icon text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M7 16h-4l3.47 -4.66a2 2 0 1 0 -3.47 -1.54" />
+                    <path d="M10 16v-8h4" />
+                    <path d="M10 12l3 0" />
+                    <path d="M17 16v-6a2 2 0 0 1 4 0v6" />
+                    <path d="M17 13l4 0" />
+                  </svg>
+                  {{ __('Enable Two-Factor Auth') }}
+                </button>
+              </form>
+            @endif
+            <button class="dropdown-item" id="showTwoFactorQr">
+              <svg class="icon dropdown-item-icon text-blue" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M7 17l0 .01" />
+                <path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M7 7l0 .01" />
+                <path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M17 7l0 .01" />
+                <path d="M14 14l3 0" />
+                <path d="M20 14l0 .01" />
+                <path d="M14 14l0 3" />
+                <path d="M14 20l3 0" />
+                <path d="M17 17l3 0" />
+                <path d="M20 17l0 3" />
+              </svg>
+              {{ __('Show Two-Factor QR Code') }}
+            </button>
             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal" href="#">
               <svg class="icon dropdown-item-icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                 stroke-linecap="round" stroke-linejoin="round">
