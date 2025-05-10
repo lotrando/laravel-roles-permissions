@@ -43,14 +43,21 @@
             </div>
             @role('admin')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                  <path d="M15 12h-6" />
+                  <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
+                  <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
+                  <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
+                  <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
+                  <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
+                  <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
+                  <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
+                  <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
+                  <path d="M9 12h6" />
                   <path d="M12 9v6" />
                 </svg>
-                {{ __('New') }}
+                {{ __('New role') }}
               </button>
             @endrole
           </div>
@@ -67,9 +74,9 @@
         <table class="table-vcenter card-table table" id="rolesTable">
           <thead>
             <tr>
-              <th class="bg-muted-lt">{{ __('Name') }}</th>
+              <th class="bg-muted-lt">{{ __('Role name') }}</th>
               <th class="bg-muted-lt">{{ __('Role permissions') }}</th>
-              <th class="bg-muted-lt">{{ __('Guard Name') }}</th>
+              <th class="bg-muted-lt">{{ __('Guard name') }}</th>
             </tr>
           </thead>
         </table>
@@ -191,13 +198,13 @@
         "closeButton": false,
         "debug": true,
         "newestOnTop": true,
-        "progressBar": true,
+        "progressBar": false,
         "positionClass": "toast-top-right",
         "preventDuplicates": true,
         "onclick": null,
-        "showDuration": "500",
-        "hideDuration": "500",
-        "timeOut": "3500",
+        "showDuration": "1500",
+        "hideDuration": "1500",
+        "timeOut": "1500",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -222,7 +229,7 @@
         searchHighlight: true,
         scroller: false,
         language: {
-          url: "{{ asset('libs/datatables/js/cs.json') }}",
+          url: "{{ asset('libs/datatables/js/' . app()->getLocale() . '.json') }}",
         },
         order: [
           [0, "asc"]
@@ -249,13 +256,13 @@
         },
         columns: [{
             data: 'name',
-            "className": 'text-red',
-            "width": "15%",
+            className: 'text-red',
+            width: "auto",
           },
           {
             data: 'permissions[]',
             className: 'text-yellow',
-            width: "70%",
+            width: "auto",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {

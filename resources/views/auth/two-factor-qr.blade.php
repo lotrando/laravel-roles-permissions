@@ -1,4 +1,4 @@
-<div class="modal-header">
+{{-- <div class="modal-header">
   <h5 class="modal-title">{{ __('Two-Factor QR Code') }}</h5>
   <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
 </div>
@@ -23,4 +23,4 @@
   @else
     <p>{{ __('Two-factor authentication is not enabled.') }}</p>
   @endif
-</div>
+</div> --}}

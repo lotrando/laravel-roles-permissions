@@ -36,16 +36,21 @@ Route::post('/set-locale', function (Request $request) {
 Route::middleware(['auth'])->group(function () {
 
     // Home page new registered users
-    Route::middleware('role:guest|user|moderator|admin')->group(function () {
+    Route::middleware('role:user|admin')->group(function () {
+        // Home page for all users
         Route::get('home', function () {
             return view('home');
         })->name('home');
+        // Qr code modal for two factor authentication
+        Route::get('/two-factor-qr', function () {
+            return response()->json([
+                'qr' => auth()->user()->two_factor_qr,
+                'secret' => auth()->user()->two_factor_secret,
+            ]);
+        })->name('two-factor.qr');
     });
 
-    // Qr code modal for two factor authentication
-    Route::middleware(['auth'])->get('/two-factor-qr', function () {
-        return view('auth.two-factor-qr');
-    })->name('two-factor.qr');
+
 
     // Defaut User role Route group for all roles [user, supervisor, admin] allowed
     Route::middleware(['role:user|admin'])->group(function () {

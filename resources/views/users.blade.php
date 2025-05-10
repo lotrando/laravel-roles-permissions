@@ -11,7 +11,7 @@
       <div class="row g-2 align-items-center">
         <div class="col">
           {{-- Page title --}}
-          <h2 class="page-title text-blue h2">
+          <h2 class="page-title h2">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
               <svg class="icon icon-tabler icons-tabler-outline icon-tabler-users text-lime" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -46,10 +46,19 @@
             </div>
             @role('admin')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 5l0 14"></path>
-                  <path d="M5 12l14 0"></path>
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
+                  <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
+                  <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
+                  <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
+                  <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
+                  <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
+                  <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
+                  <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
+                  <path d="M9 12h6" />
+                  <path d="M12 9v6" />
                 </svg>
                 {{ __('New user') }}
               </button>
@@ -85,13 +94,13 @@
 @section('modals')
   {{-- Create Modal --}}
   <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
           @csrf
           <div class="modal-header bg-lime-lt">
             <h5 class="modal-title"></h5>
-            <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+            <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="{{ __('Close') }}"></button>
           </div>
           <div class="modal-body">
             <div class="row">
@@ -265,13 +274,13 @@
         "closeButton": false,
         "debug": true,
         "newestOnTop": true,
-        "progressBar": true,
+        "progressBar": false,
         "positionClass": "toast-top-right",
         "preventDuplicates": true,
         "onclick": null,
-        "showDuration": "500",
-        "hideDuration": "500",
-        "timeOut": "3500",
+        "showDuration": "1500",
+        "hideDuration": "1500",
+        "timeOut": "1500",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -312,7 +321,7 @@
         searchHighlight: true,
         scroller: false,
         language: {
-          url: "{{ asset('libs/datatables/js/cs.json') }}",
+          url: "{{ asset('libs/datatables/js/' . app()->getLocale() . '.json') }}",
         },
         order: [
           [0, "asc"]
@@ -339,17 +348,17 @@
         },
         columns: [{
             data: 'name',
-            'className': 'text-lime',
-            width: '15%'
+            className: 'text-lime',
+            width: 'auto'
           },
           {
             data: 'email',
-            width: '15%'
+            width: 'auto'
           },
           {
             data: 'roles',
             className: 'text-red',
-            width: "15%",
+            width: "auto",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {
@@ -362,8 +371,8 @@
           },
           {
             data: 'permissions',
-            "className": 'text-yellow',
-            "width": "55%",
+            className: 'text-yellow',
+            width: "auto",
             orderable: false,
             searchable: false,
             render: function(data, type, full, meta) {
@@ -396,7 +405,7 @@
         var data = myTable.row(this).data();
         if (data.id == 1) {
           $(this).addClass('text-red')
-          toastr.error('Administrator account, no edit and delete !')
+          toastr.error("{{ __('Administrator account is locked !') }}")
           return
         }
         var roleNames = data.roles.map(function(role) {
