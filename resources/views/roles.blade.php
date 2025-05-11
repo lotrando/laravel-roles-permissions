@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/roles.png') }}" rel="shortcut icon">
+  <link type="image/svg" href="{{ asset('img/favicons/roles.svg') }}" rel="shortcut icon">
 @endsection
 
 @section('page-header')
@@ -197,7 +197,7 @@
         ],
         ajax: {
           type: "GET",
-          url: "{{ route('roles') }}",
+          url: "{{ route('role.index') }}",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },

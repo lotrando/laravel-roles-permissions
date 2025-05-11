@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/home.png') }}" rel="shortcut icon">
+  <link type="image/svg" href="{{ asset('img/favicons/home.svg') }}" rel="shortcut icon">
 @endsection
 
 @section('page-header')
@@ -11,7 +11,7 @@
         <div class="col">
           <h2 class="page-title h2">
             <span class="nav-link-icon d-inline-block">
-              <svg class="icon text-blue" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+              <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <polyline points="5 12 3 12 12 3 21 12 19 12"></polyline>

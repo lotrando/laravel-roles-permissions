@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/users.png') }}" rel="icon">
+  <link type="image/svg" href="{{ asset('img/favicons/users.svg') }}" rel="icon">
 @endsection
 
 @section('page-header')
@@ -25,7 +25,7 @@
         </div>
         <div class="d-print-none col-auto ms-auto">
           <div class="btn-list">
-            @can('permission create')
+            @can('user create')
               @include('layout.partials.create-button')
             @endcan
             <div class="d-block col-auto">
@@ -184,10 +184,13 @@
             <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
             @can('user delete')
-              <button class="btn btn-danger" id="deleteButton" type="button"></button>
+              <button class="btn btn-danger" id="deleteButton" type="button">{{ __('Delete') }}</button>
             @endcan
             @can('user create')
-              <button class="btn btn-primary" id="submitButton" type="submit"></button>
+              <button class="btn btn-lime" id="submitCreateButton" type="submit">{{ __('Create') }}</button>
+            @endcan
+            @can('user edit')
+              <button class="btn btn-yellow" id="submitUpdateButton" type="submit">{{ __('Update') }}</button>
             @endcan
           </div>
         </form>
@@ -286,7 +289,7 @@
         ],
         ajax: {
           type: "GET",
-          url: "{{ route('users') }}",
+          url: "{{ route('user.index') }}",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
@@ -351,6 +354,11 @@
         ]
       });
 
+      // Datatable custom search box
+      $('#searchBox').on('keyup', function() {
+        myTable.search($(this).val()).draw()
+      });
+
       // Edit form after click datatable row
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
@@ -375,134 +383,126 @@
         $('#item-id').val(data.id)
         $('#name').val(data.name)
         $('#email').val(data.email)
-        $('#deleteButton').text("{{ __('Delete') }}")
-        $('#submitButton').text("{{ __('Update') }}")
-        $('#createModal .modal-title').text("{{ __('Edit user') }}")
+        $('#submitCreateButton').hide()
+        $('#submitUpdateButton, #deleteButton').show()
+        $('#createModal .modal-title').text("{{ __('Edit permission') }}")
         $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
-        $('#deleteButton').show()
         $('#createModal').modal('show')
       });
 
-      // Datatable custom search box
-      $('#searchBox').on('keyup', function() {
-        myTable.search($(this).val()).draw()
-      });
-
-      // New button
+      // Create new button event
       $('#createButton').on('click', function() {
         $('#deleteButton').hide()
         $('#createForm')[0].reset()
-        $('#createModal .modal-title').text("{{ __('Create user') }}")
+        $('#createModal .modal-title').text("{{ __('Create permission') }}")
         $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
-        $('#submitButton').html("{{ __('Create') }}")
-        $('#action').val('Add')
+        $('#submitCreateButton').show()
+        $('#submitUpdateButton').hide()
+        $('#action').val('Create')
       });
+    });
 
-      // Delete button
-      $('#deleteButton').on('click', function() {
-        $('#createModal').modal('hide')
-        $('#deleteModal').modal('show')
-      });
+    // Delete button
+    $('#deleteButton').on('click', function() {
+      $('#createModal').modal('hide')
+      $('#deleteModal').modal('show')
+    });
 
-      // Delete confirm button - click delete item
-      $('#deleteSubmit').click(function() {
-        var id = $('#item-id').val()
+    // Delete confirm button - click delete item
+    $('#deleteSubmit').click(function() {
+      var id = $('#item-id').val()
 
-        $.ajax({
-          url: "user/destroy/" + id,
-          beforeSend: function() {
-            $('#buttonSpinner').show();
-            $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
-            setTimeout(function() {
-              $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
-            }, 1000)
-          },
-          success: function(data) {
-            if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
-                }, 1000);
-              }
-            } else {
-              if (data.success) {
-                $('#createModal').modal('hide')
-                toastr.success(data.success)
-                setTimeout(function() {
-                  $('#deleteModal').modal('hide')
-                  $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
-                }, 1000);
-                myTable.draw()
-              }
+      $.ajax({
+        url: "user/destroy/" + id,
+        beforeSend: function() {
+          $('#buttonSpinner').show();
+          $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
+          setTimeout(function() {
+            $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+          }, 1000)
+        },
+        success: function(data) {
+          if (data.errors) {
+            for (var count = 0; count < data.errors.length; count++) {
+              toastr.error(data.errors[count])
+              setTimeout(function() {
+                $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+              }, 1000);
             }
-          },
-          error: function(xhr, status, error) {
-            toastr.error(error)
-          }
-        })
-      });
-
-      // Create / Edit Form
-      $('#createForm').submit(function(event) {
-        event.preventDefault();
-
-        var form = $(this);
-        var type = $('#action').val()
-
-        if (type == 'Add') {
-          var action = 'user/store';
-          var method = 'POST';
-          var modalClose = false
-        }
-
-        if (type == 'Edit') {
-          var id = $('#item-id').val()
-          var action = 'user/update/' + id;
-          var method = 'POST';
-          var modalClose = true
-        }
-
-        $.ajax({
-          url: action,
-          type: method,
-          token: "{{ csrf_token() }}",
-          data: form.serialize(),
-          dataType: 'json',
-          beforeSend: function() {
-            $('#buttonSpinner').show();
-            $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
-            setTimeout(function() {
-              $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-            }, 1000)
-          },
-          success: function(data) {
-            if (data.errors) {
-              for (var count = 0; count < data.errors.length; count++) {
-                toastr.error(data.errors[count])
-                setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                }, 1000);
-              }
-            } else {
-              if (data.success) {
-                toastr.success(data.success)
-                setTimeout(function() {
-                  if (modalClose = true) {
-                    $('#createModal').modal('hide')
-                  }
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                }, 1000);
-                myTable.draw()
-              }
+          } else {
+            if (data.success) {
+              $('#createModal').modal('hide')
+              toastr.success(data.success)
+              setTimeout(function() {
+                $('#deleteModal').modal('hide')
+                $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
+              }, 1000);
+              myTable.draw()
             }
-          },
-          error: function(xhr, status, error) {
-            toastr.error(error)
           }
-        });
-      });
+        },
+        error: function(xhr, status, error) {
+          toastr.error(error)
+        }
+      })
+    });
 
+    // Create / Edit Form
+    $('#createForm').submit(function(event) {
+      event.preventDefault();
+
+      var form = $(this);
+      var type = $('#action').val()
+      var id = $('#item-id').val()
+
+      if (type == 'Create') {
+        var action = 'user/store';
+        var modalClose = false
+      }
+
+      if (type == 'Update') {
+        var action = 'user/update/' + id;
+        var modalClose = true
+      }
+
+      $.ajax({
+        url: action,
+        type: 'POST',
+        token: "{{ csrf_token() }}",
+        data: form.serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+          $('#buttonSpinner').show();
+          $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
+          setTimeout(function() {
+            $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+          }, 1000)
+        },
+        success: function(data) {
+          if (data.errors) {
+            for (var count = 0; count < data.errors.length; count++) {
+              toastr.error(data.errors[count])
+              setTimeout(function() {
+                $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+              }, 1000);
+            }
+          } else {
+            if (data.success) {
+              toastr.success(data.success)
+              setTimeout(function() {
+                if (modalClose = true) {
+                  $('#createModal').modal('hide')
+                }
+                $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+              }, 1000);
+              myTable.draw()
+            }
+          }
+        },
+        error: function(xhr, status, error) {
+          toastr.error(error)
+        }
+      });
     });
   </script>
 @endpush

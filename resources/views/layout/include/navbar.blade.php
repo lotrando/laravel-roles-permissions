@@ -6,7 +6,7 @@
           <ul class="navbar-nav">
             <li class="nav-item {{ request()->segment(1) == 'home' ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('home') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'home' ? 'text-blue' : '' }}">
+                <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'home' ? 'text-azure' : '' }}">
                   <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -22,7 +22,7 @@
             </li>
             @can('user show')
               <li class="nav-item {{ request()->segment(1) == 'users' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('users') }}">
+                <a class="nav-link" href="{{ route('user.index') }}">
                   <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'users' ? 'text-lime' : '' }}">
                     <svg class="icon icon-tabler icons-tabler-outline icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -41,7 +41,7 @@
             @endcan
             @can('role show')
               <li class="nav-item {{ request()->segment(1) == 'roles' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('roles') }}">
+                <a class="nav-link" href="{{ route('role.index') }}">
                   <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'roles' ? 'text-red' : '' }}">
                     <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -57,7 +57,7 @@
             @endcan
             @can('permission show')
               <li class="nav-item {{ request()->segment(1) == 'permissions' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('permissions') }}">
+                <a class="nav-link" href="{{ route('permission.index') }}">
                   <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'permissions' ? 'text-yellow' : '' }}">
                     <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
