@@ -21,7 +21,7 @@
           <form method="POST" action="{{ url('/two-factor-challenge') }}">
             @csrf
             <div class="mb-2">
-              <label class="form-label">{{ __('Authentication Code') }}</label>
+              <label class="form-label">{{ __('Authentication code') }}</label>
               <input class="form-control @error('code') is-invalid is-invalid-lite @enderror" name="code" type="text" inputmode="numeric" autocomplete="one-time-code"
                 placeholder="{{ __('Code') }}" autofocus>
               @error('code')
@@ -29,7 +29,7 @@
               @enderror
             </div>
             <div class="mb-2">
-              <label class="form-label">{{ __('Recovery Code') }}</label>
+              <label class="form-label">{{ __('Recovery code') }}</label>
               <input class="form-control @error('recovery_code') is-invalid is-invalid-lite @enderror" name="recovery_code" type="text" autocomplete="one-time-code"
                 placeholder="{{ __('Recovery code') }}">
               @error('recovery_code')

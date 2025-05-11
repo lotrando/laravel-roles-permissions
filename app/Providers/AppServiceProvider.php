@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Register a custom Blade directive to check if the user has a specific role or permission use in blade @roleOrPermission ['admin', 'edit-posts']
+
         // Blade::if('roleOrPermission', function ($role, $permission) {
         //     $user = auth()->user();
         //     return $user && ($user->hasRole($role) || $user->can($permission));

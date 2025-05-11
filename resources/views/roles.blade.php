@@ -5,14 +5,12 @@
 @endsection
 
 @section('page-header')
-  {{-- Page header --}}
   <div class="page-header d-print-none">
     <div class="container-fluid">
       <div class="row g-2 align-items-center">
         <div class="col">
-          {{-- Page title --}}
           <h2 class="page-title h2">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <span class="icon-demo-message-icon d-inline-block">
               <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt text-red" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -22,9 +20,7 @@
             {{ __('Roles') }}
           </h2>
         </div>
-        {{-- Page title actions --}}
         <div class="d-print-none col-auto ms-auto">
-          {{-- Buttons --}}
           <div class="btn-list">
             <div class="d-block col-auto">
               <form method="get" autocomplete="off" novalidate="">
@@ -37,14 +33,14 @@
                       <path d="M21 21l-6 -6"></path>
                     </svg>
                   </span>
-                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search role ...') }}">
+                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search ...') }}">
                 </div>
               </form>
             </div>
             @can('role create')
-              <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <button class="btn btn-lime btn-icon" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
+                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
                   <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
@@ -57,7 +53,6 @@
                   <path d="M9 12h6" />
                   <path d="M12 9v6" />
                 </svg>
-                {{ __('New role') }}
               </button>
             @endcan
           </div>
@@ -87,8 +82,8 @@
 
 @section('modals')
   {{-- Create Modal --}}
-  <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
           @csrf
@@ -180,41 +175,32 @@
   <script>
     $(document).ready(function() {
 
-      // Multiple select Widget
+      // Toastr options
+      $.ajax({
+        url: "{{ asset('libs/toastr/toastr.config.json') }}",
+        success: function(data) {
+          return toastr.options = data
+        }
+      });
+
+      // Multiple select
       $('#permissions').multiSelect({
         keepOrder: true
       });
 
+      // Select all
       $('#select-all').click(function() {
         $('#permissions').multiSelect('select_all');
         return false;
       });
 
+      // Deselect all
       $('#deselect-all').click(function() {
         $('#permissions').multiSelect('deselect_all');
         return false;
       });
 
-      // Toastr options
-      toastr.options = {
-        "closeButton": false,
-        "debug": true,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "1500",
-        "hideDuration": "1500",
-        "timeOut": "1500",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-      }
-
-      // Datatable
+      // Roles datatable
       var myTable = new DataTable('#rolesTable', {
         dom: 'lrt',
         paging: true,

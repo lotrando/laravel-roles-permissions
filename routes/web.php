@@ -22,7 +22,7 @@ Route::post('/set-locale', function (Request $request) {
 });
 
 // Routes group for all authorized users
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('home', function () {
         return view('home');

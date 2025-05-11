@@ -17,86 +17,27 @@
     <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
     <link href="{{ asset('libs/toastr/toastr.min.css') }}" rel="stylesheet" />
-
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
-      :root {
-        --tblr-font-sans-serif: 'Inter', sans-serif;
-        --tblr-body-color: #516274;
-      }
-
-      .navbar-expand-md .navbar-nav .nav-link {
-        --tblr-navbar-nav-link-padding-x: 0.55rem;
-      }
-
-      body {
-        font-feature-settings: "cv03", "cv04", "cv11";
-      }
-
-      .modal-status {
-        height: 5px;
-      }
-
-      .dropdown-menu {
-        --tblr-dropdown-padding-x: 0.25rem;
-        --tblr-dropdown-padding-y: 0.25rem;
-        --tblr-dropdown-item-padding-x: 0.5rem;
-        --tblr-dropdown-item-padding-y: 0.5rem;
-        --tblr-dropdown-header-padding-x: 0.75rem;
-        --tblr-dropdown-header-padding-y: 0.25rem;
-        --tblr-dropdown-link-hover-bg: rgba(var(--tblr-blue-rgb), 0.08);
-        border: var(--tblr-dropdown-border-width) solid var(--tblr-dropdown-border-color);
-        border-radius: var(--tblr-dropdown-border-radius);
-      }
-
-      .dropdown-item:hover {
-        border-radius: 4px;
-        background-color: var(--tblr-dropdown-link-hover-bg);
-      }
-
-      td {
-        text-align: left;
-        vertical-align: middle;
-      }
-
-      tbody tr {
-        cursor: pointer;
-      }
-
-      #toast-container>div {
-        width: 350px;
-      }
-    </style>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
   </head>
 
   <body>
-    <!-- particles.js container -->
-    <script src="{{ asset('js/demo-theme.min.js') }}"></script>
-    {{-- Page --}}
+    <script src="{{ asset('js/demo-theme.min.js') }}" defer></script>
     <div class="page">
-      {{-- Topbar --}}
       @include('layout.include.topbar')
-      {{-- Navbar --}}
       @include('layout.include.navbar')
-      {{-- Page wrapper --}}
       <div class="page-wrapper">
-        {{-- Page header --}}
         @yield('page-header')
-        {{-- Page body --}}
         <div class="page-body">
           <div class="container-fluid">
-            @yield('searchbox')
             @yield('page')
           </div>
         </div>
-        {{-- Footer --}}
         @include('layout.include.footer')
       </div>
     </div>
     @include('layout.include.logout')
     @yield('modals')
-    <!-- Modal pro QR kód -->
+    <!-- Modal pro 2FA QR kód -->
     <div class="modal fade" id="twoFactorQrModal" aria-labelledby="twoFactorQrModalLabel" aria-hidden="true" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -107,7 +48,7 @@
           <div class="modal-body text-center">
             @if (auth()->user()->two_factor_secret)
               <p>{{ __('Scan this QR code with your two-factor authentication app.') }}</p>
-              <div style="display:inline-block; background:#fff; padding:16px; border-radius:8px; box-shadow:0 0 4px #ccc;">
+              <div style="display:inline-block; background:#fff; padding:16px; border-radius:8px; box-shadow:0 0 8px #ccc;">
                 {!! auth()->user()->twoFactorQrCodeSvg() !!}
               </div>
               <p class="mt-3">{{ __('Recovery codes:') }}</p>
@@ -164,25 +105,15 @@
     <script src="{{ asset('libs/datatables/js/dataTables.scroller.min.js') }}"></script>
     <script src="{{ asset('libs/multiselect/js/jquery.multi-select.js') }}"></script>
     <script>
+      // 2FA Modal trigger
       $('#showTwoFactorQr').on('click', function() {
         $('#twoFactorQrModal').modal('show');
       });
 
+      // Localization
       var currentLocale = '{{ app()->getLocale() }}';
 
-      function updateLangFlag(locale) {
-        if (locale === 'en') {
-          $('#lang-flag').removeClass().addClass('flag flag-xs flag-country-cz');
-          $('#lang-toggle').attr('title', 'Čeština');
-        } else {
-          $('#lang-flag').removeClass().addClass('flag flag-xs flag-country-gb');
-          $('#lang-toggle').attr('title', 'English');
-        }
-      }
-
-      updateLangFlag(currentLocale);
-
-      $('#lang-toggle').on('click', function() {
+      $('#lang-toggle').click(function() {
         var newLocale = (currentLocale === 'cs') ? 'en' : 'cs';
         $.post('/set-locale', {
           locale: newLocale,
@@ -191,6 +122,18 @@
           location.reload();
         });
       });
+
+      function updateLangFlag(locale) {
+        if (locale === 'en') {
+          $('#lang-flag').removeClass().addClass('flag flag-xs flag-country-cz');
+          $('#lang-toggle').attr('title', 'CZE');
+        } else {
+          $('#lang-flag').removeClass().addClass('flag flag-xs flag-country-gb');
+          $('#lang-toggle').attr('title', 'ENG');
+        }
+      }
+
+      updateLangFlag(currentLocale);
     </script>
     @stack('scripts')
   </body>

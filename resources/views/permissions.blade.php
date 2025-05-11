@@ -5,16 +5,14 @@
 @endsection
 
 @section('page-header')
-  {{-- Page header --}}
   <div class="page-header d-print-none">
     <div class="container-fluid">
       <div class="row g-2 align-items-center">
         <div class="col">
-          {{-- Page title --}}
           <h2 class="page-title h2">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
-              <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <span class="nav-link-icon d-inline-block">
+              <svg class="icon text-yellow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
                 <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
@@ -26,45 +24,14 @@
             {{ __('Permissions') }}
           </h2>
         </div>
-        {{-- Page title actions --}}
         <div class="d-print-none col-auto ms-auto">
-          {{-- Buttons --}}
           <div class="btn-list">
-            <div class="d-block col-auto">
-              <form method="get" autocomplete="off" novalidate="">
-                <div class="input-icon">
-                  <span class="input-icon-addon">
-                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                      stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                      <path d="M21 21l-6 -6"></path>
-                    </svg>
-                  </span>
-                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page"
-                    placeholder="{{ __('Search permission ...') }}">
-                </div>
-              </form>
-            </div>
             @can('permission create')
-              <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
-                  <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
-                  <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
-                  <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
-                  <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
-                  <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
-                  <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
-                  <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
-                  <path d="M9 12h6" />
-                  <path d="M12 9v6" />
-                </svg>
-                {{ __('New permission') }}
-              </button>
+              @include('layout.partials.create-button')
             @endcan
+            <div class="d-block col-auto">
+              @include('layout.partials.search-form')
+            </div>
           </div>
         </div>
       </div>
@@ -91,7 +58,7 @@
 
 @section('modals')
   {{-- Create Modal --}}
-  <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
+  <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
@@ -114,8 +81,8 @@
                   <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
                 </svg>
               </span>
-              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text"
-                value="" placeholder="{{ __('e.g. post create') }}">
+              <input class="form-control @error('permission_name') is-invalid is-invalid-lite @enderror" id="permission_name" name="permission_name" type="text" value=""
+                placeholder="{{ __('e.g. post create') }}">
               </label>
             </div>
           </div>
@@ -127,7 +94,7 @@
               <button class="btn btn-danger" id="deleteButton" type="button">{{ __('Delete') }}</button>
             @endcan
             @can('permission create')
-              <button class="btn btn-primary" id="submitCreateButton" type="submit">{{ __('Create') }}</button>
+              <button class="btn btn-lime" id="submitCreateButton" type="submit">{{ __('Create') }}</button>
             @endcan
             @can('permission edit')
               <button class="btn btn-yellow" id="submitUpdateButton" type="submit">{{ __('Update') }}</button>
@@ -182,25 +149,14 @@
     $(document).ready(function() {
 
       // Toastr options
-      toastr.options = {
-        "closeButton": false,
-        "debug": true,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "1500",
-        "hideDuration": "1500",
-        "timeOut": "1500",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-      }
+      $.ajax({
+        url: "{{ asset('libs/toastr/toastr.config.json') }}",
+        success: function(data) {
+          return toastr.options = data
+        }
+      });
 
-      // Datatable
+      // Permissions datatable
       var myTable = new DataTable('#permissionTable', {
         dom: 'lrt',
         paging: true,
@@ -220,15 +176,15 @@
           url: "{{ asset('libs/datatables/js/' . app()->getLocale() . '.json') }}",
         },
         order: [
-          [0, "desc"]
+          [0, "asc"]
         ],
         ajax: {
-          type: "GET",
-          url: "{{ route('permissions') }}",
+          type: 'GET',
+          url: '/permissions',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-          dataType: "json",
+          dataType: 'json',
           contentType: 'application/json; charset=utf-8',
           data: function(data) {},
           complete: function(response) {}
@@ -248,7 +204,7 @@
         ]
       });
 
-      // Row click event
+      // Datatable row click event
       myTable.on('click', 'tbody tr', function() {
         var data = myTable.row(this).data();
         $('#action').val('Update')
@@ -266,7 +222,7 @@
         myTable.search($(this).val()).draw()
       });
 
-      // New permission button
+      // Create new button event
       $('#createButton').on('click', function() {
         $('#deleteButton').hide()
         $('#createForm')[0].reset()
@@ -277,16 +233,15 @@
         $('#action').val('Create')
       });
 
-      // Delete button delete modal show
+      // Delete button and delete modal show
       $('#deleteButton').on('click', function() {
         $('#createModal').modal('hide')
         $('#deleteModal').modal('show')
       });
 
-      // Delete confirm button - click delete item
+      // Delete confirm button -> click delete item
       $('#deleteSubmit').click(function() {
         var id = $('#item-id').val()
-        var action = $('#action').val()
         $.ajax({
           url: "permission/destroy/" + id,
           beforeSend: function() {
@@ -309,7 +264,7 @@
                 setTimeout(function() {
                   $('#deleteModal').modal('hide')
                   $('#deleteSubmit').removeClass('btn-loading').removeAttr('disabled')
-                }, 2000);
+                }, 1000);
                 myTable.draw()
               }
             }
@@ -335,7 +290,7 @@
         if (type == 'Update') {
           var id = $('#item-id').val()
           var action = 'permission/update/' + id;
-          var method = 'POST';
+          var method = 'PATCH';
           var modalClose = true
         }
 
@@ -365,7 +320,7 @@
                 toastr.success(data.success)
                 setTimeout(function() {
                   $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
-                  if (modalClose == true) {
+                  if (modalClose) {
                     $('#createModal').modal('hide')
                   }
                 }, 1000);

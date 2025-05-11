@@ -5,14 +5,12 @@
 @endsection
 
 @section('page-header')
-  {{-- Page header --}}
   <div class="page-header d-print-none">
     <div class="container-fluid">
       <div class="row g-2 align-items-center">
         <div class="col">
-          {{-- Page title --}}
           <h2 class="page-title h2">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <span class="nav-link-icon d-inline-block">
               <svg class="icon text-blue" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -31,12 +29,12 @@
 
 @section('page')
   <div class="page-body">
-    <div class="col-12">
+    <div class="col-10 mx-auto">
       <div class="card card-md">
         <div class="card-stamp card-stamp-lg">
           <div class="card-stamp-icon bg-primary">
-            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
               <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6" />

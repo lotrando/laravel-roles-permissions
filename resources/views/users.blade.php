@@ -1,18 +1,16 @@
 @extends('layout.app')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/favicons/users.png') }}" rel="shortcut icon">
+  <link type="image/png" href="{{ asset('img/favicons/users.png') }}" rel="icon">
 @endsection
 
 @section('page-header')
-  {{-- Page header --}}
   <div class="page-header d-print-none">
     <div class="container-fluid">
       <div class="row g-2 align-items-center">
         <div class="col">
-          {{-- Page title --}}
           <h2 class="page-title h2">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
+            <span class="icon-demo-message-icon d-inline-block">
               <svg class="icon icon-tabler icons-tabler-outline icon-tabler-users text-lime" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -25,9 +23,7 @@
             {{ __('Users') }}
           </h2>
         </div>
-        {{-- Page title actions --}}
         <div class="d-print-none col-auto ms-auto">
-          {{-- Buttons --}}
           <div class="btn-list">
             <div class="d-block col-auto">
               <form method="get" autocomplete="off" novalidate="">
@@ -40,14 +36,14 @@
                       <path d="M21 21l-6 -6"></path>
                     </svg>
                   </span>
-                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search user ...') }}">
+                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search ...') }}">
                 </div>
               </form>
             </div>
             @can('user create')
-              <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <button class="btn btn-icon btn-lime" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
+                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
                   <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
@@ -60,7 +56,6 @@
                   <path d="M9 12h6" />
                   <path d="M12 9v6" />
                 </svg>
-                {{ __('New user') }}
               </button>
             @endcan
           </div>
@@ -94,7 +89,7 @@
 @section('modals')
   {{-- Create Modal --}}
   <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
           @csrf
