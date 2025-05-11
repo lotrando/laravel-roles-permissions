@@ -7,11 +7,7 @@
 @section('page')
   <div class="page-body">
     <div class="col-12">
-      @if (session('status'))
-        <div class="alert alert-success bg-success-lt mb-3" role="alert">
-          {{ session('status') }}
-        </div>
-      @endif
+
       <div class="card card-md">
         <div class="card-stamp card-stamp-lg">
           <div class="card-stamp-icon bg-primary">
@@ -27,7 +23,12 @@
         </div>
         <div class="card-body">
           <div class="row align-items-center">
-            <div class="col-10">
+            <div class="col-12">
+              @if (session('status'))
+                <div class="alert alert-success bg-success-lt mb-3" role="alert">
+                  {{ session('status') }}
+                </div>
+              @endif
               <h3 class="h1">{{ __('Email verification') }}</h3>
               <div class="markdown text-secondary">
                 <p class="auth-text">{{ __('Before proceeding, please check your email for a verification link.') }}<br>

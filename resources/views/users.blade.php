@@ -49,8 +49,7 @@
               <th class="bg-muted-lt">{{ __('User email') }}</th>
               <th class="bg-muted-lt">{{ __('User roles') }}</th>
               <th class="bg-muted-lt">{{ __('User permissions') }}</th>
-              {{-- <th class="bg-muted-lt">{{ __('Created') }}</th>
-              <th class="bg-muted-lt">{{ __('Updated') }}</th> --}}
+              <th class="bg-muted-lt">{{ __('Registered at') }}</th>
             </tr>
           </thead>
         </table>
@@ -342,20 +341,13 @@
               return badges;
             }
           },
-          // {
-          //   data: 'created_at',
-          //   width: '8%',
-          //   render: function(data, type, full, meta) {
-          //     return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-          //   }
-          // },
-          // {
-          //   data: 'updated_at',
-          //   width: '8%',
-          //   render: function(data, type, full, meta) {
-          //     return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-          //   }
-          // }
+          {
+            data: 'created_at',
+            width: '8%',
+            render: function(data, type, full, meta) {
+              return moment(data).locale($('html').attr('lang')).format('DD.MM.YYYY')
+            }
+          }
         ]
       });
 

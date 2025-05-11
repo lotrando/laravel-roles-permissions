@@ -6,6 +6,7 @@
     "Back to login": "Zpět na přihlášení",
     "Cancel": "Zrušit",
     "Choose your password": "Zvolte si své heslo",
+    "Click the button below to reset your password": "Klikněte na tlačítko níže pro obnovení hesla",
     "Close": "Zavřít",
     "Code": "Kód",
     "Confirm user password": "Potvrďte heslo uživatele",
@@ -27,6 +28,7 @@
     "Forget it": "Zapomeň na to",
     "Forgot your password ?": "Zapomněli jste heslo ?",
     "Guard name": "Název strážce",
+    "Good day": "Dobrý den",
     "Home": "Domů",
     "Homepage": "Domovská stránka",
     "I forgot password": "Zapomněl jsem heslo",
@@ -48,6 +50,7 @@
     "Recovery code": "Záložní kód",
     "Recovery codes:": "Záložní kódy:",
     "Register": "Registrovat",
+    "Registered at": "Registrován dne",
     "Register your account": "Zaregistrujte svůj účet",
     "Remember me on this device": "Zapamatovat si mě na tomto zařízení",
     "Resend verification email": "Znovu odeslat ověřovací e-mail",
@@ -86,6 +89,7 @@
     "User updated": "Uživatel upraven",
     "Users": "Uživatelé",
     "What personal data does the company process?": "Jaké osobní údaje společnost zpracovává?",
+    "You are receiving this email because we received a password reset request for your account.": "Tento e-mail dostáváte, protože jsme obdrželi žádost o obnovení hesla pro váš účet.",
     "Your email address": "Vaše e-mailová adresa",
     "Zpět": "zpět"
 }

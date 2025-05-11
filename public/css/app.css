@@ -47,3 +47,8 @@ tbody tr {
 #toast-container>div {
   width: 350px;
 }
+
+select[multiple] option:checked {
+  background-color: rgba(68, 105, 155, 0.5);
+  color: #fff;
+}
