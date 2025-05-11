@@ -126,9 +126,10 @@ return [
     ],
 
     'attributes' => [
-        'email' => 'Email uživatele',
-        'password' => 'Heslo uživatele',
-        'name' => 'Jméno uživatele',
+        'email'           => 'Email uživatele',
+        'password'        => 'Heslo uživatele',
+        'name'            => 'Jméno uživatele',
+        'permission_name' => 'Název oprávnění',
     ],
 
 ];

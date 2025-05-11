@@ -65,7 +65,7 @@
       }
 
       #toast-container>div {
-        width: 400px;
+        width: 350px;
       }
     </style>
   </head>
@@ -106,6 +106,7 @@
           </div>
           <div class="modal-body text-center">
             @if (auth()->user()->two_factor_secret)
+              <p>{{ __('Scan this QR code with your two-factor authentication app.') }}</p>
               <div style="display:inline-block; background:#fff; padding:16px; border-radius:8px; box-shadow:0 0 4px #ccc;">
                 {!! auth()->user()->twoFactorQrCodeSvg() !!}
               </div>
@@ -116,7 +117,9 @@
                 @endforeach
               </ul>
             @else
-              <p>{{ __('Two-factor authentication is not enabled.') }}</p>
+              <div class="alert alert-warning" role="alert">
+                {{ __('Two-factor authentication is not enabled.') }}
+              </div>
             @endif
           </div>
           <div class="modal-footer">

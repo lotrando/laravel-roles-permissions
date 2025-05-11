@@ -46,10 +46,10 @@
                 </div>
               </form>
             </div>
-            @role('admin')
+            @can('permission create')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
                   <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
@@ -64,7 +64,7 @@
                 </svg>
                 {{ __('New permission') }}
               </button>
-            @endrole
+            @endcan
           </div>
         </div>
       </div>
@@ -101,6 +101,7 @@
             <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <label class="form-label">{{ __('Permission name') }}</label>
             <div class="input-icon mb-3">
               <span class="input-icon-addon">
                 <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint text-yellow" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -122,12 +123,15 @@
             <input id="action" type="hidden">
             <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            @role('admin')
-              <button class="btn btn-danger" id="deleteButton" type="button"></button>
-            @endrole
-            @role('modarator|admin')
-              <button class="btn btn-primary" id="submitButton" type="submit"></button>
-            @endrole
+            @can('permission delete')
+              <button class="btn btn-danger" id="deleteButton" type="button">{{ __('Delete') }}</button>
+            @endcan
+            @can('permission create')
+              <button class="btn btn-primary" id="submitCreateButton" type="submit">{{ __('Create') }}</button>
+            @endcan
+            @can('permission edit')
+              <button class="btn btn-yellow" id="submitUpdateButton" type="submit">{{ __('Update') }}</button>
+            @endcan
           </div>
         </form>
       </div>
@@ -139,7 +143,6 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-status bg-danger"></div>
-        {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button> --}}
         <div class="modal-body py-4 text-center">
           <svg class="icon text-danger icon-lg mb-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
             stroke-linecap="round" stroke-linejoin="round">
@@ -148,7 +151,7 @@
             <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
             <path d="M12 16h.01"></path>
           </svg>
-          <h3>{{ __('Do you really want to remove this permission ?') }}</h3>
+          <h3>{{ __('Do you really want to remove this permission?') }}</h3>
           <div class="text-red mt-2">
             {{ __('What you\'ve done cannot be undone.') }}
           </div>
@@ -251,11 +254,10 @@
         $('#action').val('Update')
         $('#permission_name').val(data.name)
         $('#item-id').val(data.id)
-        $('#deleteButton').text("{{ __('Delete') }}")
-        $('#submitButton').text("{{ __('Update') }}")
+        $('#submitCreateButton').hide()
+        $('#submitUpdateButton, #deleteButton').show()
         $('#createModal .modal-title').text("{{ __('Edit permission') }}")
         $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
-        $('#deleteButton').show()
         $('#createModal').modal('show')
       });
 
@@ -270,7 +272,8 @@
         $('#createForm')[0].reset()
         $('#createModal .modal-title').text("{{ __('Create permission') }}")
         $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
-        $('#submitButton').html("{{ __('Create') }}")
+        $('#submitCreateButton').show()
+        $('#submitUpdateButton').hide()
         $('#action').val('Create')
       });
 

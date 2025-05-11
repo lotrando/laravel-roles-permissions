@@ -63,34 +63,6 @@
                   </span>
                 @endif
               </div>
-              <div class="mt-3">
-                @if (!auth()->user()->two_factor_secret)
-                  <form method="POST" action="{{ url('user/two-factor-authentication') }}">
-                    @csrf
-                    <button class="btn btn-primary" type="submit">
-                      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M16 9a3 3 0 1 1 -3 3l.005 -.176a3 3 0 0 1 2.995 -2.824" />
-                        <path d="M16 5a7 7 0 0 1 0 14h-8a7 7 0 0 1 0 -14zm0 2h-8a5 5 0 1 0 0 10h8a5 5 0 0 0 0 -10" />
-                      </svg>
-                      {{ __('Enable') }}
-                    </button>
-                  </form>
-                @else
-                  <form method="POST" action="{{ url('user/two-factor-authentication') }}">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger" type="submit">
-                      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M16 9a3 3 0 1 1 -3 3l.005 -.176a3 3 0 0 1 2.995 -2.824" />
-                        <path d="M16 5a7 7 0 0 1 0 14h-8a7 7 0 0 1 0 -14zm0 2h-8a5 5 0 1 0 0 10h8a5 5 0 0 0 0 -10" />
-                      </svg>
-                      {{ __('Disable') }}
-                    </button>
-                  </form>
-                @endif
-              </div>
             </div>
           </div>
         </div>

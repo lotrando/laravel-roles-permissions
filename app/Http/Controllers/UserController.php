@@ -27,16 +27,16 @@ class UserController extends Controller
         return view('users', compact('roles', 'permissions'));
     }
 
-    public function indexGrouped()
-    {
-        $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
-            return $item->name[0];
-        });
-        $groupedUsers->sortBy(function ($key) {
-            return $key;
-        });
-        return view('users', ['users' => $groupedUsers]);
-    }
+    // public function indexGrouped()
+    // {
+    //     $groupedUsers = User::orderBy('name')->get()->groupBy(function ($item) {
+    //         return $item->name[0];
+    //     });
+    //     $groupedUsers->sortBy(function ($key) {
+    //         return $key;
+    //     });
+    //     return view('users', ['users' => $groupedUsers]);
+    // }
 
     public function store(Request $request)
     {

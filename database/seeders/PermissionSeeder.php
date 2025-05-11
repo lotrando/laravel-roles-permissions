@@ -20,7 +20,6 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
-
         $permissions = [
             'user create',
             'user edit',

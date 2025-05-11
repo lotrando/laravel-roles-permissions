@@ -44,7 +44,7 @@
                 </div>
               </form>
             </div>
-            @role('admin')
+            @can('user create')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
                 <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -62,7 +62,7 @@
                 </svg>
                 {{ __('New user') }}
               </button>
-            @endrole
+            @endcan
           </div>
         </div>
       </div>
@@ -81,8 +81,8 @@
               <th class="bg-muted-lt">{{ __('User email') }}</th>
               <th class="bg-muted-lt">{{ __('User roles') }}</th>
               <th class="bg-muted-lt">{{ __('User permissions') }}</th>
-              <th class="bg-muted-lt">{{ __('Created') }}</th>
-              <th class="bg-muted-lt">{{ __('Updated') }}</th>
+              {{-- <th class="bg-muted-lt">{{ __('Created') }}</th>
+              <th class="bg-muted-lt">{{ __('Updated') }}</th> --}}
             </tr>
           </thead>
         </table>
@@ -94,7 +94,7 @@
 @section('modals')
   {{-- Create Modal --}}
   <div class="modal modal-blur fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-modal="true" tabindex="-1">
-    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <form id="createForm">
           @csrf
@@ -216,10 +216,12 @@
             <input id="action" type="hidden">
             <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            @role('admin')
+            @can('user delete')
               <button class="btn btn-danger" id="deleteButton" type="button"></button>
+            @endcan
+            @can('user create')
               <button class="btn btn-primary" id="submitButton" type="submit"></button>
-            @endrole
+            @endcan
           </div>
         </form>
       </div>
@@ -274,13 +276,13 @@
         "closeButton": false,
         "debug": true,
         "newestOnTop": true,
-        "progressBar": false,
+        "progressBar": true,
         "positionClass": "toast-top-right",
         "preventDuplicates": true,
         "onclick": null,
         "showDuration": "1500",
         "hideDuration": "1500",
-        "timeOut": "1500",
+        "timeOut": "2500",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -349,11 +351,11 @@
         columns: [{
             data: 'name',
             className: 'text-lime',
-            width: 'auto'
+            width: '15%'
           },
           {
             data: 'email',
-            width: 'auto'
+            width: '15%'
           },
           {
             data: 'roles',
@@ -383,20 +385,20 @@
               return badges;
             }
           },
-          {
-            data: 'created_at',
-            width: '8%',
-            render: function(data, type, full, meta) {
-              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-            }
-          },
-          {
-            data: 'updated_at',
-            width: '8%',
-            render: function(data, type, full, meta) {
-              return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
-            }
-          }
+          // {
+          //   data: 'created_at',
+          //   width: '8%',
+          //   render: function(data, type, full, meta) {
+          //     return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
+          //   }
+          // },
+          // {
+          //   data: 'updated_at',
+          //   width: '8%',
+          //   render: function(data, type, full, meta) {
+          //     return moment(data).locale($('html').attr('lang')).format('DD.MMMM.YYYY')
+          //   }
+          // }
         ]
       });
 
@@ -405,7 +407,7 @@
         var data = myTable.row(this).data();
         if (data.id == 1) {
           $(this).addClass('text-red')
-          toastr.error("{{ __('Administrator account is locked !') }}")
+          toastr.error("{{ __('Administrator\'s account is locked !') }}")
           return
         }
         var roleNames = data.roles.map(function(role) {

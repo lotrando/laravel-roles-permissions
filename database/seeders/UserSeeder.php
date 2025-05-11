@@ -38,11 +38,11 @@ class UserSeeder extends Seeder
         $user->save();
         $user->assignRole('user');
         $user->givePermissionTo([
-            'user show'
+            //
         ]);
 
-        # Testing users
-        // User::factory(5)->create()->each(function ($user) {
+        // Testing users
+        // User::factory(50)->create()->each(function ($user) {
         //     $user->assignRole('user')->givePermissionTo();
         // });
     }

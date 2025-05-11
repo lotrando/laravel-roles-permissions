@@ -11,7 +11,7 @@
       <div class="row g-2 align-items-center">
         <div class="col">
           {{-- Page title --}}
-          <h2 class="page-title text-blue h2">
+          <h2 class="page-title h2">
             <span class="nav-link-icon d-md-none d-lg-inline-block">
               <svg class="icon icon-tabler icons-tabler-outline icon-tabler-shirt text-red" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -41,10 +41,10 @@
                 </div>
               </form>
             </div>
-            @role('admin')
+            @can('role create')
               <button class="btn btn-lime d-none d-sm-inline-block" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
                   <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
@@ -59,7 +59,7 @@
                 </svg>
                 {{ __('New role') }}
               </button>
-            @endrole
+            @endcan
           </div>
         </div>
       </div>
@@ -124,10 +124,12 @@
             <input id="action" type="hidden">
             <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            @role('admin')
+            @can('role delete')
               <button class="btn btn-danger" id="deleteButton" type="button"></button>
+            @endcan
+            @can('role create')
               <button class="btn btn-primary" id="submitButton" type="submit"></button>
-            @endrole
+            @endcan
           </div>
         </form>
       </div>
@@ -257,7 +259,7 @@
         columns: [{
             data: 'name',
             className: 'text-red',
-            width: "auto",
+            width: "10%",
           },
           {
             data: 'permissions[]',

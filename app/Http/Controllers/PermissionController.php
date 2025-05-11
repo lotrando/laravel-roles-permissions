@@ -48,7 +48,7 @@ class PermissionController extends Controller
             $permission->assignRole('admin');
 
             // Success
-            return response()->json(['success' => __('New permisssion saved')]);
+            return response()->json(['success' => __('Permission saved')]);
         }
     }
 
@@ -72,7 +72,7 @@ class PermissionController extends Controller
             ]);
 
             // Success
-            return response()->json(['success' => 'Permission updated']);
+            return response()->json(['success' => __('Permission updated')]);
         }
     }
 
