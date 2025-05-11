@@ -38,59 +38,59 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // User Model //
 // [user show] allowed
-Route::middleware(['permission:user show'])->group(function () {
+Route::middleware(['permission:show user'])->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('user.index');
 });
 // [user create] allowed
-Route::middleware(['permission:user create'])->group(function () {
+Route::middleware(['permission:create user'])->group(function () {
     Route::post('user/store', [UserController::class, 'store'])->name('user.store');
 });
 // [user edit] allowed
-Route::middleware(['permission:user edit'])->group(function () {
+Route::middleware(['permission:edit user'])->group(function () {
     Route::post('user/update/{id}', [UserController::class, 'update'])->name('user.update');
 });
 // [user delete] allowed
-Route::middleware(['permission:user delete'])->group(function () {
+Route::middleware(['permission:delete user'])->group(function () {
     Route::get('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
 
 // Role Model //
 // [role show] allowed
-Route::middleware(['permission:role show'])->group(function () {
+Route::middleware(['permission:show role'])->group(function () {
     Route::get('roles', [RoleController::class, 'index'])->name('role.index');
 });
 // [role create] allowed
-Route::middleware(['permission:role create'])->group(function () {
+Route::middleware(['permission:create role'])->group(function () {
     Route::post('role/store', [RoleController::class, 'store'])->name('role.store');
 });
 // [role edit] allowed
-Route::middleware(['permission:role edit'])->group(function () {
+Route::middleware(['permission:edit role'])->group(function () {
     Route::post('role/update/{id}', [RoleController::class, 'update'])->name('role.update');
 });
 // [role delete] allowed
-Route::middleware(['permission:role delete'])->group(function () {
-    Route::get('role/destroy/{id}', [UserController::class, 'destroy'])->name('role.destroy');
+Route::middleware(['permission:delete role'])->group(function () {
+    Route::get('role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
 });
 
 
 
 // Permission Model //
 // [permission show] allowed
-Route::middleware(['permission:permission show'])->group(function () {
+Route::middleware(['permission:show permission'])->group(function () {
     Route::get('permissions', [PermissionController::class, 'index'])->name('permission.index');
 });
 // [permission create] allowed
-Route::middleware(['permission:permission create'])->group(function () {
+Route::middleware(['permission:create permission'])->group(function () {
     Route::post('permission/store', [PermissionController::class, 'store'])->name('permission.store');
 });
 
 // [permission edit] allowed
-Route::middleware(['permission:permission edit'])->group(function () {
+Route::middleware(['permission:edit permission'])->group(function () {
     Route::post('permission/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
 });
 
 // [permission delete] allowed
-Route::middleware(['permission:permission delete'])->group(function () {
+Route::middleware(['permission:delete permission'])->group(function () {
     Route::get('permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 });

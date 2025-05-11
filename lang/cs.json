@@ -83,6 +83,7 @@
     "User authentication settings": "Nastavení uživatelské autentizace",
     "User created": "Uživatel vytvořen",
     "User deleted": "Uživatel smazán",
+    "User direct permissions": "Přímá uživatelská oprávnění",
     "User does not have the right roles or permissions to access this page.": "Uživatel nemá správné role nebo oprávnění pro přístup na tuto stránku.",
     "User email": "E-mail uživatele",
     "User name": "Uživatelské jméno",
@@ -95,5 +96,6 @@
     "You are receiving this email because we received a password reset request for your account.": "Tento e-mail dostáváte, protože jsme obdrželi žádost o obnovení hesla pro váš účet.",
     "You just found an error page": "Právě jste našli chybovou stránku",
     "Your email address": "Vaše e-mailová adresa",
-    "Zpět": "zpět"
+    "Zpět": "zpět",
+    "show user": "zobrazit uzivatele"
 }

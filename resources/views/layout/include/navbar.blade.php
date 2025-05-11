@@ -20,7 +20,7 @@
                 </span>
               </a>
             </li>
-            @can('user show')
+            @can('show user')
               <li class="nav-item {{ request()->segment(1) == 'users' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('user.index') }}">
                   <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'users' ? 'text-lime' : '' }}">
@@ -39,7 +39,7 @@
                 </a>
               </li>
             @endcan
-            @can('role show')
+            @can('show role')
               <li class="nav-item {{ request()->segment(1) == 'roles' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('role.index') }}">
                   <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'roles' ? 'text-red' : '' }}">
@@ -55,7 +55,7 @@
                 </a>
               </li>
             @endcan
-            @can('permission show')
+            @can('show permission')
               <li class="nav-item {{ request()->segment(1) == 'permissions' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('permission.index') }}">
                   <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'permissions' ? 'text-yellow' : '' }}">

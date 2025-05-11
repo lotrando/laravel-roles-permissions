@@ -24,25 +24,18 @@ class RoleSeeder extends Seeder
         Role::create([
             'name' => 'editor'
         ])->givePermissionTo([
-            'user show',
-            'user create',
-            'user delete',
-        ]);
-
-        // Guest
-        Role::create([
-            'name' => 'guest'
-        ])->givePermissionTo([
-            //
+            'show user',
+            'create user',
+            'delete user',
         ]);
 
         // User
         Role::create([
             'name' => 'user'
         ])->givePermissionTo([
-            'user show',
-            'role show',
-            'permission show'
+            'show user',
+            'show role',
+            'show permission'
         ]);
     }
 }

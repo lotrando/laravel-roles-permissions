@@ -26,7 +26,7 @@
         </div>
         <div class="d-print-none col-auto ms-auto">
           <div class="btn-list">
-            @can('permission create')
+            @can('create permission')
               @include('layout.partials.create-button')
             @endcan
             <div class="d-block col-auto">
@@ -90,13 +90,13 @@
             <input id="action" type="hidden">
             <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            @can('permission delete')
+            @can('delete permission')
               <button class="btn btn-danger" id="deleteButton" type="button">{{ __('Delete') }}</button>
             @endcan
-            @can('permission create')
+            @can('create permission')
               <button class="btn btn-lime" id="submitCreateButton" type="submit">{{ __('Create') }}</button>
             @endcan
-            @can('permission edit')
+            @can('edit permission')
               <button class="btn btn-yellow" id="submitUpdateButton" type="submit">{{ __('Update') }}</button>
             @endcan
           </div>
@@ -224,10 +224,10 @@
 
       // Create new button event
       $('#createButton').on('click', function() {
-        $('#deleteButton').hide()
         $('#createForm')[0].reset()
         $('#createModal .modal-title').text("{{ __('Create permission') }}")
         $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
+        $('#deleteButton').hide()
         $('#submitCreateButton').show()
         $('#submitUpdateButton').hide()
         $('#action').val('Create')
@@ -258,9 +258,9 @@
           dataType: 'json',
           beforeSend: function() {
             $('#buttonSpinner').show();
-            $('#submitButton').addClass('btn-loading').attr('disabled', true);
+            $('#submitCreateButton, #submitUpdateButton').addClass('btn-loading').attr('disabled', true);
             setTimeout(function() {
-              $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+              $('#submitCreateButton, #submitUpdateButton').removeClass('btn-loading').removeAttr('disabled');
             }, 1000)
           },
           success: function(data) {
@@ -269,13 +269,13 @@
                 toastr.error(data.errors[key])
               }
               setTimeout(function() {
-                $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                $('#submitCreateButton, #submitUpdateButton').removeClass('btn-loading').removeAttr('disabled');
               }, 1000);
             } else {
               if (data.success) {
                 toastr.success(data.success)
                 setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                  $('#submitCreateButton, #submitUpdateButton').removeClass('btn-loading').removeAttr('disabled');
                   if (modalClose == true) {
                     $('#createModal').modal('hide')
                   }

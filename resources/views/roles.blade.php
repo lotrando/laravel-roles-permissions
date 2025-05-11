@@ -22,7 +22,7 @@
         </div>
         <div class="d-print-none col-auto ms-auto">
           <div class="btn-list">
-            @can('permission create')
+            @can('create role')
               @include('layout.partials.create-button')
             @endcan
             <div class="d-block col-auto">
@@ -62,7 +62,6 @@
           @csrf
           <div class="modal-header bg-lime-lt">
             <h5 class="modal-title"></h5>
-            {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button> --}}
           </div>
           <div class="modal-body">
             <div class="input-icon mb-3">
@@ -92,11 +91,14 @@
             <input id="action" type="hidden">
             <input id="item-id" type="hidden">
             <button class="btn me-auto" data-bs-dismiss="modal" type="button">{{ __('Close') }}</button>
-            @can('role delete')
-              <button class="btn btn-danger" id="deleteButton" type="button"></button>
+            @can('delete role')
+              <button class="btn btn-danger" id="deleteButton" type="button">{{ __('Delete') }}</button>
             @endcan
-            @can('role create')
-              <button class="btn btn-primary" id="submitButton" type="submit"></button>
+            @can('create role')
+              <button class="btn btn-lime" id="submitCreateButton" type="submit">{{ __('Create') }}</button>
+            @endcan
+            @can('edit role')
+              <button class="btn btn-yellow" id="submitUpdateButton" type="submit">{{ __('Update') }}</button>
             @endcan
           </div>
         </form>
@@ -198,9 +200,7 @@
         ajax: {
           type: "GET",
           url: "{{ route('role.index') }}",
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
+          token: "{{ csrf_token() }}",
           dataType: "json",
           contentType: 'application/json; charset=utf-8',
           data: function(data) {
@@ -250,11 +250,10 @@
         $('#action').val('Edit')
         $('#role_name').val(data.name)
         $('#item-id').val(data.id)
-        $('#deleteButton').text("{{ __('Delete') }}")
-        $('#submitButton').text("{{ __('Update') }}")
         $('#createModal .modal-title').text("{{ __('Edit role') }}")
         $('#createModal .modal-header').removeClass('bg-lime-lt').addClass('bg-yellow-lt')
-        $('#deleteButton').show()
+        $('#submitCreateButton').hide()
+        $('#submitUpdateButton, #deleteButton').show()
         $('#createModal').modal('show')
         $('#permissions').multiSelect('deselect_all');
         var permissionNames = data.permissions.map(function(p) {
@@ -271,13 +270,14 @@
 
       // New button
       $('#createButton').on('click', function() {
-        $('#deleteButton').hide()
-        $('#permissions').multiSelect('refresh');
+        $('#permissions').multiSelect('deselect_all');
         $('#createForm')[0].reset()
         $('#createModal .modal-title').text("{{ __('Create role') }}")
         $('#createModal .modal-header').removeClass('bg-purple-lt').addClass('bg-lime-lt')
-        $('#submitButton').html("{{ __('Create') }}")
-        $('#action').val('Add')
+        $('#deleteButton').hide()
+        $('#submitCreateButton').show()
+        $('#submitUpdateButton').hide()
+        $('#action').val('Create')
       });
 
       // Delete button
@@ -292,6 +292,7 @@
         var action = $('#action').val()
         $.ajax({
           url: "role/destroy/" + id,
+          token: "{{ csrf_token() }}",
           beforeSend: function() {
             $('#buttonSpinner').show();
             $('#deleteSubmit').addClass('btn-loading').attr('disabled', 'disabled')
@@ -331,29 +332,28 @@
 
         var form = $(this);
         var type = $('#action').val()
-        if (type == 'Add') {
+        var id = $('#item-id').val()
+
+        if (type == 'Create') {
           var action = 'role/store';
-          var method = 'POST';
-          var modalClose = true
+          var modalClose = false
         }
         if (type == 'Edit') {
-          var id = $('#item-id').val()
           var action = 'role/update/' + id;
-          var method = 'POST';
           var modalClose = true
         }
 
         $.ajax({
           url: action,
-          type: method,
+          type: 'POST',
           token: "{{ csrf_token() }}",
           data: form.serialize(),
           dataType: 'json',
           beforeSend: function() {
             $('#buttonSpinner').show();
-            $('#submitButton').addClass('btn-loading').attr('disabled', 'disabled');
+            $('#submitCreateButton').addClass('btn-loading').attr('disabled', 'disabled');
             setTimeout(function() {
-              $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+              $('#submitCreateButton').removeClass('btn-loading').removeAttr('disabled');
             }, 1000)
           },
           success: function(data) {
@@ -361,14 +361,14 @@
               for (var count = 0; count < data.errors.length; count++) {
                 toastr.error(data.errors[count])
                 setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                  $('#submitCreateButton').removeClass('btn-loading').removeAttr('disabled');
                 }, 1000);
               }
             } else {
               if (data.success) {
                 toastr.success(data.success)
                 setTimeout(function() {
-                  $('#submitButton').removeClass('btn-loading').removeAttr('disabled');
+                  $('#submitCreateButton').removeClass('btn-loading').removeAttr('disabled');
                   $('option:selected').removeAttr('selected');
                   if (modalClose == true) {
                     $('#createModal').modal('hide')
@@ -383,7 +383,6 @@
           }
         });
       });
-
     });
   </script>
 @endpush
