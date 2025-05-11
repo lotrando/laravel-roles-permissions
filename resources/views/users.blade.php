@@ -25,39 +25,12 @@
         </div>
         <div class="d-print-none col-auto ms-auto">
           <div class="btn-list">
-            <div class="d-block col-auto">
-              <form method="get" autocomplete="off" novalidate="">
-                <div class="input-icon">
-                  <span class="input-icon-addon">
-                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                      stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                      <path d="M21 21l-6 -6"></path>
-                    </svg>
-                  </span>
-                  <input class="form-control" id="searchBox" name="searchbox" type="text" value="" aria-label="Search on page" placeholder="{{ __('Search ...') }}">
-                </div>
-              </form>
-            </div>
-            @can('user create')
-              <button class="btn btn-icon btn-lime" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
-                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
-                  <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" />
-                  <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
-                  <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" />
-                  <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
-                  <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" />
-                  <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
-                  <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" />
-                  <path d="M9 12h6" />
-                  <path d="M12 9v6" />
-                </svg>
-              </button>
+            @can('permission create')
+              @include('layout.partials.create-button')
             @endcan
+            <div class="d-block col-auto">
+              @include('layout.partials.search-form')
+            </div>
           </div>
         </div>
       </div>
@@ -267,23 +240,12 @@
     $(document).ready(function() {
 
       // Toastr options
-      toastr.options = {
-        "closeButton": false,
-        "debug": true,
-        "newestOnTop": true,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "1500",
-        "hideDuration": "1500",
-        "timeOut": "2500",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-      }
+      $.ajax({
+        url: "{{ asset('libs/toastr/toastr.config.json') }}",
+        success: function(data) {
+          return toastr.options = data
+        }
+      });
 
       $('#selectAllRoles').click(function() {
         $('#rolesSelect option').prop('selected', true);
