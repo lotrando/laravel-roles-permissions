@@ -108,8 +108,8 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
-    //'faker_locale' => 'cs_CZ',
+    // 'faker_locale' => 'en_US',
+    'faker_locale' => 'cs_CZ',
 
     /*
     |--------------------------------------------------------------------------

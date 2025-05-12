@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Moderní šablona</title>
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <style>
+            body {
+                margin: 0;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                background: #f4f6fa;
+                color: #222;
+            }
+
+            /* Responsive Navigation */
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #222;
+                color: #fff;
+                padding: 1rem 2rem;
+            }
+
+            .navbar .logo {
+                font-weight: bold;
+                font-size: 1.3rem;
+            }
+
+            .navbar ul {
+                display: flex;
+                gap: 1.5rem;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .navbar a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 1rem;
+                transition: color 0.2s;
+            }
+
+            .navbar a:hover {
+                color: #4f8cff;
+            }
+
+            .navbar .menu-toggle {
+                display: none;
+                font-size: 1.8rem;
+                cursor: pointer;
+            }
+
+            @media (max-width: 768px) {
+                .navbar ul {
+                    display: none;
+                    flex-direction: column;
+                    background: #222;
+                    position: absolute;
+                    top: 60px;
+                    right: 0;
+                    width: 180px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                }
+
+                .navbar ul.active {
+                    display: flex;
+                }
+
+                .navbar .menu-toggle {
+                    display: block;
+                }
+            }
+
+            /* Cards Section */
+            .cards-section {
+                display: flex;
+                gap: 2rem;
+                padding: 2rem;
+                max-width: 900px;
+                margin: 2rem auto 0 auto;
+            }
+
+            .card {
+                flex: 1;
+                background: #fff;
+                border-radius: 1rem;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                transition: box-shadow 0.2s;
+            }
+
+            .card:hover {
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
+            }
+
+            .card h2 {
+                margin: 0 0 1rem 0;
+                font-size: 1.3rem;
+            }
+
+            .card p {
+                margin: 0;
+                color: #555;
+            }
+
+            @media (max-width: 768px) {
+                .cards-section {
+                    flex-direction: column;
+                    gap: 1.2rem;
+                    padding: 1rem;
+                }
+            }
+
+            /* Swiper Section */
+            .swiper-section {
+                max-width: 900px;
+                margin: 2rem auto;
+                padding: 0 2rem 2rem 2rem;
+            }
+
+            .swiper {
+                border-radius: 1rem;
+                background: #fff;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            }
+
+            .swiper-slide {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                height: 220px;
+                color: #fff;
+                background: linear-gradient(135deg, #4f8cff 0%, #bd0996 100%);
+                border-radius: 1rem;
+            }
+
+            @media (max-width: 768px) {
+                .swiper-section {
+                    padding: 0 1rem 1.5rem 1rem;
+                }
+
+                .swiper-slide {
+                    font-size: 1rem;
+                    height: 150px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">MojeApp</div>
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+            <ul id="nav-menu">
+                <li><a href="#">Domů</a></li>
+                <li><a href="#">O nás</a></li>
+                <li><a href="#">Služby</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <!-- Cards Section -->
+        <section class="cards-section">
+            <div class="card">
+                <h2>Karta 1</h2>
+                <p>Moderní design, čisté rozhraní a responzivní rozložení pro vaše projekty.</p>
+            </div>
+            <div class="card">
+                <h2>Karta 2</h2>
+                <p>Snadná úprava a rozšíření. Připraveno pro mobilní zařízení i desktop.</p>
+            </div>
+        </section>
+
+        <!-- Swiper Slider Section -->
+        <section class="swiper-section">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">Slide 1: Ukázka obsahu</div>
+                    <div class="swiper-slide">Slide 2: Další informace</div>
+                    <div class="swiper-slide">Slide 3: Třetí slide</div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </section>
+
+        <!-- Swiper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            // Mobile menu toggle
+            document.getElementById('menu-toggle').onclick = function () {
+                document.getElementById('nav-menu').classList.toggle('active');
+            };
+
+            // Swiper initialization
+            const swiper = new Swiper('.swiper', {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        </script>
+    </body>
+
+</html>
