@@ -28,8 +28,8 @@
 @endsection
 
 @section('page')
-  <div class="page-body">
-    <div class="col-10 mx-auto">
+  <div class="page-body m-0">
+    <div class="col-12 m-0 mx-auto">
       <div class="card card-md">
         <div class="card-stamp card-stamp-lg">
           <div class="card-stamp-icon bg-primary">
