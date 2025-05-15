@@ -13,7 +13,7 @@
     <link href="{{ asset('css/tabler-payments.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
-
+    <script src="{{ asset('libs/aos/aos.js') }}"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
@@ -89,6 +89,13 @@
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('js/demo.min.js') }}" defer></script>
+    <script src="{{ asset('libs/aos/aos.js') }}"></script>
+    <script>
+      AOS.init({
+        duration: 500,
+        once: true
+      });
+    </script>
     <script>
       var currentLocale = '{{ app()->getLocale() }}';
 
