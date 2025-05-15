@@ -15,20 +15,25 @@
       <div class="card card-md shadow-sm">
         <div class="card-stamp">
           <div class="card-stamp-icon bg-blue">
-            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-lock-plus" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-lock-cog" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M12.5 21h-5.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 1.74 1.012" />
+              <path d="M12 21h-5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10c.564 0 1.074 .234 1.437 .61" />
               <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
               <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
-              <path d="M16 19h6" />
-              <path d="M19 16v6" />
+              <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M19.001 15.5v1.5" />
+              <path d="M19.001 21v1.5" />
+              <path d="M22.032 17.25l-1.299 .75" />
+              <path d="M17.27 20l-1.3 .75" />
+              <path d="M15.97 17.25l1.3 .75" />
+              <path d="M20.733 20l1.3 .75" />
             </svg>
           </div>
         </div>
 
         <div class="card-body">
-          <h2 class="h2 mb-4 text-center">{{ __('Reset Password') }}</h2>
+          <h2 class="h2 mb-4 text-center">{{ __('Reset password') }}</h2>
           @if ($errors->any())
             <div class="alert alert-danger mb-3" role="alert">
               {{ __('There was a problem resetting your password.') }}
@@ -59,7 +64,7 @@
                 autocomplete="new-password">
             </div>
             <div class="form-footer">
-              <button class="btn btn-primary w-100 text-uppercase" type="submit">{{ __('Reset Password') }}</button>
+              <button class="btn btn-primary w-100 text-uppercase" type="submit">{{ __('Reset password') }}</button>
             </div>
           </form>
         </div>

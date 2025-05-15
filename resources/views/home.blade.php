@@ -44,7 +44,7 @@
             </svg>
           </div>
         </div>
-        <div class="card-header bg-primary-lt">
+        <div class="card-header bg-lime-lt">
           <h3 class="card-title">{{ __('Two factor authentication') }}</h3>
         </div>
         <div class="card-body">

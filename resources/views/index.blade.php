@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.auth')
 
 @section('favicon')
   <link type="image/png" href="{{ asset('img/favicons/home.png') }}" rel="shortcut icon">

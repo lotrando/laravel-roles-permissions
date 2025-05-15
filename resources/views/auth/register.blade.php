@@ -50,7 +50,7 @@
             <div class="mb-3">
               <label class="form-label">{{ __('Password') }}</label>
               <input class="form-control @error('password') is-invalid is-invalid-lite @enderror" id="password" name="password" data-bs-container="body" data-bs-toggle="popover"
-                data-bs-placement="top" data-bs-content="{{ __('Zvolte si své heslo. Musí mít 8 znaků nebo více a dobře si ho zapamatujte') }}" type="password"
+                data-bs-placement="top" data-bs-content="{{ __('Choose your password. It must be 8 characters or more and be sure to remember it.') }}" type="password"
                 value="{{ old('password') }}" placeholder="{{ __('Choose your password') }}" autocomplete="off">
               @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -65,6 +65,10 @@
               @enderror
             </div>
             <div class="mt-5">
+              <label class="form-check">
+                <input class="form-check-input" id="showpass" name="showpass" type="checkbox" onclick="showPassword()" />
+                <span class="form-check-label">{{ __('Visible password') }}</span>
+              </label>
               <label class="form-check">
                 <input class="form-check-input" id="terms" name="terms" type="checkbox" onClick="check_agree(this.form)" />
                 <span class="form-check-label">{{ __('Agree to') }} <a data-bs-toggle="modal" data-bs-target="#modal-terms" href="#">{{ __('terms and policy') }}</a></span>
@@ -126,6 +130,15 @@
         form.submitButton.disabled = false;
       } else {
         form.submitButton.disabled = true;;
+      }
+    }
+
+    function showPassword() {
+      var $element = $("#password, #password_confirmation");
+      if ($element.attr("type") === "password") {
+        $element.attr("type", "text");
+      } else {
+        $element.attr("type", "password");
       }
     }
   </script>
