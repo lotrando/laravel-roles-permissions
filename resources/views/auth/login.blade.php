@@ -90,17 +90,15 @@
 
 @push('scripts')
   <script>
-    $(document).ready(function() {
-      $('#remember, #email').focus()
+    $('#remember, #email').focus()
 
-      function showPassword() {
-        var $element = $("#password");
-        if ($element.attr("type") === "password") {
-          $element.attr("type", "text");
-        } else {
-          $element.attr("type", "password");
-        }
+    function showPassword() {
+      var $element = $("#password");
+      if ($element.attr("type") === "password") {
+        $element.attr("type", "text");
+      } else {
+        $element.attr("type", "password");
       }
-    });
+    }
   </script>
 @endpush

@@ -30,7 +30,7 @@
 @section('page')
   <div class="page-body m-0">
     <div class="col-12 m-0 mx-auto">
-      <div class="card card-md" data-aos="fade-up">
+      <div class="card card-md shadow-sm" data-aos="fade-up">
         <div class="card-stamp card-stamp-lg">
           <div class="card-stamp-icon bg-primary">
             <svg class="icon icon-tabler icons-tabler-outline icon-tabler-auth-2fa" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"

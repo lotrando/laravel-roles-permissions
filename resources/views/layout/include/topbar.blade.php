@@ -51,14 +51,13 @@
             </a>
             <a class="nav-link" href="{{ route('login') }}">
               <span class="nav-link-icon d-md-none d-lg-inline-block {{ request()->segment(1) == 'login' ? 'text-green' : '' }}">
-                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <svg class="icon icon-tabler icons-tabler-outline icon-tabler-lock-check" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
-                  <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
-                  <path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
-                  <path d="M8 15a18 18 0 0 0 1.8 6"></path>
-                  <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                  <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                  <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                  <path d="M15 19l2 2l4 -4" />
                 </svg>
               </span>
               <span class="nav-link-title">
