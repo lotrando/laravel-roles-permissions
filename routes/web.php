@@ -11,6 +11,7 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
+
 // Locale switcher
 Route::post('/set-locale', function (Request $request) {
     $locale = $request->input('locale');
@@ -20,6 +21,7 @@ Route::post('/set-locale', function (Request $request) {
     }
     return response()->json(['success' => true]);
 });
+
 
 // Routes group for all authorized users
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -35,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('two-factor.qr');
 });
+
 
 // User Model //
 // [user show] allowed
@@ -72,7 +75,6 @@ Route::middleware(['permission:edit role'])->group(function () {
 Route::middleware(['permission:delete role'])->group(function () {
     Route::get('role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
 });
-
 
 
 // Permission Model //
