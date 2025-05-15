@@ -18,10 +18,11 @@
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
     <link href="{{ asset('libs/toastr/toastr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/aos/aos.css') }}" rel="stylesheet">
   </head>
 
   <body>
-    <script src="{{ asset('js/demo-theme.min.js') }}" defer></script>
+    <script src="{{ asset('js/demo-theme.min.js') }}"></script>
     <div class="page">
       @include('layout.include.topbar')
       @include('layout.include.navbar')
@@ -108,6 +109,13 @@
     <script src="{{ asset('libs/datatables/js/dataTables.fixedHeader.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/dataTables.scroller.min.js') }}"></script>
     <script src="{{ asset('libs/multiselect/js/jquery.multi-select.js') }}"></script>
+    <script src="{{ asset('libs/aos/aos.js') }}"></script>
+    <script>
+      AOS.init({
+        duration: 500,
+        once: true
+      });
+    </script>
     <script>
       // 2FA Modal trigger
       $('#showTwoFactorQr').on('click', function() {

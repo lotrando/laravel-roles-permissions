@@ -37,7 +37,7 @@
 
 @section('page')
   <div class="col-12">
-    <div class="card px-1 shadow-sm">
+    <div class="card px-1 shadow-sm" data-aos="fade-up">
       <div class="table-responsive">
         <table class="table-vcenter card-table table" id="rolesTable">
           <thead>

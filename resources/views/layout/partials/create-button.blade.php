@@ -1,5 +1,5 @@
 {{-- Create button --}}
-<button class="btn btn-icon btn-lime" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal">
+<button class="btn btn-icon btn-lime" id="createButton" data-bs-toggle="modal" data-bs-target="#createModal" data-aos="fade-left" data-aos-delay="300">
   <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />

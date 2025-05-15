@@ -1,5 +1,5 @@
 {{-- Search form box --}}
-<form method="get" autocomplete="off" novalidate="">
+<form data-aos="zoom-in" method="get" autocomplete="off" novalidate="">
   <div class="input-icon">
     <span class="input-icon-addon">
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
