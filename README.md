@@ -1,6 +1,6 @@
 ## Screenshot
 <p align="center">
-    <img src="public/documentation/users.png"
+    <img src="public/documentation/users.png"/>
 </p>
 
 ## Instalation
@@ -44,22 +44,22 @@ php artisan serve
 
 ## Other screens
 <p align="center">
-    <img src="public/documentation/login.png"
+    <img src="public/documentation/login.png"/>
 </p>
 <p align="center">
-    <img src="public/documentation/register.png"
+    <img src="public/documentation/register.png"/>
 </p>
 <p align="center">
-    <img src="public/documentation/roles.png"
+    <img src="public/documentation/roles.png"/>
 </p>
 <p align="center">
-    <img src="public/documentation/permissions.png"
+    <img src="public/documentation/permissions.png"/>
 </p>
 <p align="center">
-    <img src="public/documentation/2fa.png"
+    <img src="public/documentation/2fa.png"/>
 </p>
 <p align="center">
-    <img src="public/documentation/2faModal.png"
+    <img src="public/documentation/2faModal.png"/>
 </p>
 
 
