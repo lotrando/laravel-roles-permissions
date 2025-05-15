@@ -73,7 +73,7 @@ class RoleController extends Controller
 
             $role = Role::findById($id);
             $role->syncPermissions($request['permissions'])->update(['name' => $request->role_name]);
-            return response()->json(['success' => 'Permission updated']);
+            return response()->json(['success' => __('Role updated')]);
         }
     }
 
