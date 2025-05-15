@@ -310,11 +310,11 @@
         columns: [{
             data: 'name',
             className: 'text-lime',
-            width: '15%'
+            width: 'auto'
           },
           {
             data: 'email',
-            width: '15%'
+            width: 'auto'
           },
           {
             data: 'roles',

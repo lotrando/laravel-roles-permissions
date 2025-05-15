@@ -68,7 +68,7 @@ class UserFactory extends Factory
             return strtr($string, $unwanted_array);
         };
 
-        $email = Str::lower($transliterate($lastName) . '.' . $transliterate($firstName)) . '@' . $this->faker->domainName();
+        $email = Str::lower($transliterate($lastName) . '.' . $transliterate($firstName)) . '@' . $this->faker->freeEmailDomain();
 
         return [
             'name' => $name,

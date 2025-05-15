@@ -33,21 +33,23 @@
       <div class="card card-md">
         <div class="card-stamp card-stamp-lg">
           <div class="card-stamp-icon bg-primary">
-            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            <svg class="icon icon-tabler icons-tabler-outline icon-tabler-auth-2fa" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
-              <path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6" />
-              <path d="M12 11v2a14 14 0 0 0 2.5 8" />
-              <path d="M8 15a18 18 0 0 0 1.8 6" />
-              <path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95" />
+              <path d="M7 16h-4l3.47 -4.66a2 2 0 1 0 -3.47 -1.54" />
+              <path d="M10 16v-8h4" />
+              <path d="M10 12l3 0" />
+              <path d="M17 16v-6a2 2 0 0 1 4 0v6" />
+              <path d="M17 13l4 0" />
             </svg>
           </div>
+        </div>
+        <div class="card-header bg-primary-lt">
+          <h3 class="card-title">{{ __('Two factor authentication') }}</h3>
         </div>
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-10">
-              <h3 class="h1">{{ __('Two factor authentication') }}</h3>
               <div class="markdown text-secondary">
                 @if (!auth()->user()->two_factor_secret)
                   <span class="status status-red">
@@ -55,14 +57,62 @@
                     {{ __('Disabled') }}
                   </span>
                 @else
-                  <span class="status status-lime">
+                  <span class="status status-lime mb-3">
                     <span class="status-dot status-dot-animated"></span>
                     {{ __('Enabled') }}
                   </span>
+                  @auth
+                    @if (auth()->user()->two_factor_secret)
+                      <p>{{ __('Scan this QR code with your two-factor authentication app.') }}</p>
+                      <div style="display:inline-block; background:#fff; padding:16px; border-radius:8px; box-shadow:0 0 8px #ccc;">
+                        {!! auth()->user()->twoFactorQrCodeSvg() !!}
+                      </div>
+                      <p class="mt-3">{{ __('Recovery codes:') }}</p>
+                      <ul class="list-unstyled">
+                        @foreach (json_decode(decrypt(auth()->user()->two_factor_recovery_codes), true) as $code)
+                          <li><code>{{ $code }}</code></li>
+                        @endforeach
+                      </ul>
+                    @else
+                      <div class="alert alert-warning" role="alert">
+                        {{ __('Two-factor authentication is not enabled.') }}
+                      </div>
+                    @endif
+                  @endauth
                 @endif
               </div>
             </div>
           </div>
+        </div>
+        <div class="card-footer">
+          @auth
+            @if (!auth()->user()->two_factor_secret)
+              <form method="POST" action="{{ url('user/two-factor-authentication') }}">
+                @csrf
+                <button class="btn btn-lime" type="submit">
+                  <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M16 9a3 3 0 1 1 -3 3l.005 -.176a3 3 0 0 1 2.995 -2.824" />
+                    <path d="M16 5a7 7 0 0 1 0 14h-8a7 7 0 0 1 0 -14zm0 2h-8a5 5 0 1 0 0 10h8a5 5 0 0 0 0 -10" />
+                  </svg>
+                  {{ __('Enable') }}
+                </button>
+              </form>
+            @else
+              <form method="POST" action="{{ url('user/two-factor-authentication') }}">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger" type="submit">
+                  <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M16 9a3 3 0 1 1 -3 3l.005 -.176a3 3 0 0 1 2.995 -2.824" />
+                    <path d="M16 5a7 7 0 0 1 0 14h-8a7 7 0 0 1 0 -14zm0 2h-8a5 5 0 1 0 0 10h8a5 5 0 0 0 0 -10" />
+                  </svg>
+                  {{ __('Disable') }}
+                </button>
+              </form>
+            @endif
+          @endauth
         </div>
       </div>
     </div>
