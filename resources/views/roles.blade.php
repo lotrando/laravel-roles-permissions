@@ -73,7 +73,7 @@
                 </svg>
               </span>
               <input class="form-control @error('role_name') is-invalid is-invalid-lite @enderror" id="role_name" name="role_name" type="text" value=""
-                placeholder="{{ __('e.g. administrator') }}">
+                placeholder="{{ __('e.g. supervisor') }}">
               </label>
             </div>
             <div class="mb-3">
@@ -84,8 +84,8 @@
                 @endforeach
               </select>
             </div>
-            <button class="btn me-auto" id="select-all">select all</button>
-            <button class="btn me-auto" id="deselect-all">deselect all</button>
+            <button class="btn me-auto" id="select-all">{{ __('select all') }}</button>
+            <button class="btn me-auto" id="deselect-all">{{ __('deselect all') }}</button>
           </div>
           <div class="modal-footer">
             <input id="action" type="hidden">
